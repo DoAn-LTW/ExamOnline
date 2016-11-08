@@ -1,0 +1,10 @@
+eclipse.preferences.version=1
+encoding//src/controller/CheckEmailServlet.java=UTF-8
+encoding//src/controller/CheckRole.java=UTF-8
+encoding//src/controller/Doimatkhau.java=UTF-8
+encoding//src/controller/MonHocServlet.java=UTF-8
+encoding//src/controller/NoiDungThiServlet.java=UTF-8
+encoding//src/controller/RoleServlet.java=UTF-8
+encoding//src/controller/ThemCauHoi.java=UTF-8
+encoding//src/controller/UserServlet.java=UTF-8
+encoding//src/dao/UsersDAO.java=UTF-8
