@@ -66,7 +66,7 @@
 					var user_name = $(this).val();
 					x_timer = setTimeout(function() {
 						check_username_ajax(user_name);
-					}, 100);
+					}, 1000);
 				});
 
 				function check_username_ajax(username) {
@@ -134,28 +134,20 @@
 							aria-labelledby="Preview">
 							<!-- item-->
 							<div class="dropdown-item noti-title">
-								<%
-									if (users != null) {
-								%>
+								
 								<h5 class="text-overflow">
 									<small>Xin chào <%=users.getUserName()%></small>
 								</h5>
-								<%
-									}
-								%>
+								
 							</div>
 
 							<!-- item-->
-							<%
-								if (users != null) {
-							%>
+							
 							<a href="Profile.jsp?UserName=<%=users.getUserName()%>"
 								class="dropdown-item notify-item"> <i
 								class="zmdi zmdi-account-circle"></i> <span>Profile</span>
 							</a>
-							<%
-								}
-							%>
+							
 							<!-- item-->
 							<a href="Doimatkhau.jsp" class="dropdown-item notify-item"> <i
 								class="zmdi zmdi-lock-open"></i> <span>Đổi mật khẩu</span>

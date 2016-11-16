@@ -26,6 +26,7 @@
     <link href="assets/material-design-iconic-font/css/material-design-iconic-font.min.css" rel="stylesheet" type="text/css" />
     <link href="assets/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+   
     <script src="assets/JS/angular.min.js" type="text/javascript"></script>
 </head>
 
@@ -148,6 +149,7 @@
                                          <button type="submit" class="btn btn-primary" ng-disabled="!form.$dirty || (form.$dirty && form.$invalid)">
                             Đăng nhập
                         </button>
+                       
                                         
                                     </div>
 
@@ -163,7 +165,8 @@
         <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
         <jsp:include page="Footer.jsp"></jsp:include>
     </div>
-    <script src="assets/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+   
+        <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 
     <script>
         var demoApp = angular.module('demoApp', [])

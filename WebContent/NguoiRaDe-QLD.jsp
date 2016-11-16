@@ -5,6 +5,10 @@
 --%>
 
 <%@page import="model.Users"%>
+<%@page import="model.MonHoc"%>
+<%@page import="model.NoiDung"%>
+<%@page import="dao.MonhocDAO"%>
+<%@page import="dao.NoiDungThiDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -28,6 +32,9 @@
 <body>
      <%
         Users users=null;
+     	MonhocDAO mhDAO=new MonhocDAO();
+     	NoiDungThiDAO ndtDAO=new NoiDungThiDAO();
+     	NoiDung noiDung=new NoiDung();
         if(session.getAttribute("userQLDE")!=null)
         {
             users=(Users) session.getAttribute("userQLDE");
@@ -130,8 +137,12 @@
                                                 <div class="form-group">
                                                     <label for="mon" class="col-sm-4 control-label">Môn thi: </label>
                                                     <div class="col-sm-8">
-                                                        <select class="form-control" value="">
-                                                            <option>1</option>                                                           
+                                                        <select class="form-control" name="mamh">
+                                                        <%for(MonHoc c:mhDAO.getlistMH()){ %>
+                                                            <option value=<%=c.getMaMH()%>>
+                                                            	<%=c.getMaMH()%>
+                                                            </option>  
+                                                            <%} %>                                                         
                                                         </select>
                                                     </div>
                                                 </div>
@@ -157,11 +168,13 @@
                                                 <div class="form-group">
                                                     <label for="noidung" class="col-sm-4 control-label">Nội dung: </label>
                                                     <div class="col-sm-8">
-                                                        <select class="form-control" id="noidung">
-                                                           <option>Nội dung 1</option>
-                                                           <option>Nội dung 2</option>
-                                                           <option>Nội dung 3</option>
-                                                           <option>Nội dung 4</option>
+                                                        <select class="form-control" id="noidung" name="mand">
+                                                        <%String maMH=request.getParameter("mamh");
+                                                        for(NoiDung nd:ndtDAO.getListNDwithMH(maMH)){%>
+                                                           <option value=<%=nd.getMaND()%>>
+                                                           	<%=nd.getMaND()%>
+                                                           </option>
+                                                           <%} %>
                                                         </select>
                                                     </div>
                                                 </div>

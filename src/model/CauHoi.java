@@ -8,7 +8,6 @@ public class CauHoi {
 	private String DapAnC;
 	private String DapAnD;
 	private String DapAn;
-	private String Diem;
 	private String maMH;
 	private String maND;
 	public CauHoi() {
@@ -16,7 +15,7 @@ public class CauHoi {
 		// TODO Auto-generated constructor stub
 	}
 	public CauHoi(String maCH, String noiDung, String dapAnA, String dapAnB, String dapAnC, String dapAnD, String dapAn,
-			String diem, String maMH, String maND) {
+			 String maMH, String maND) {
 		super();
 		this.maCH = maCH;
 		this.noiDung = noiDung;
@@ -25,7 +24,6 @@ public class CauHoi {
 		DapAnC = dapAnC;
 		DapAnD = dapAnD;
 		DapAn = dapAn;
-		Diem = diem;
 		this.maMH = maMH;
 		this.maND = maND;
 	}
@@ -71,12 +69,6 @@ public class CauHoi {
 	public void setDapAn(String dapAn) {
 		DapAn = dapAn;
 	}
-	public String getDiem() {
-		return Diem;
-	}
-	public void setDiem(String diem) {
-		Diem = diem;
-	}
 	public String getMaMH() {
 		return maMH;
 	}
@@ -89,7 +81,4 @@ public class CauHoi {
 	public void setMaND(String maND) {
 		this.maND = maND;
 	}
-	
-	
-	
 }

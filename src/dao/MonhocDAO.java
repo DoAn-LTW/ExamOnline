@@ -46,6 +46,22 @@ public class MonhocDAO {
         return false;
         
     }
+    public static boolean check(String maMH){
+    	 Connection connect=DBconnect.getConnecttion();
+         String sql="SELECT * FROM monhoc WHERE MaMH='"+maMH+"'";
+         PreparedStatement ps;
+         try {
+             ps=connect.prepareCall(sql);
+             ResultSet rs=ps.executeQuery();
+             while (rs.next()) {
+                 connect.close();
+                 return true; 
+          }
+         } catch (SQLException e) {
+             Logger.getLogger(MonhocDAO.class.getName()).log(Level.SEVERE,null,e);
+         }
+         return false;
+    }
     public static void main(String[] args) {
         
     }

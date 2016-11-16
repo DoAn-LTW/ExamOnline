@@ -15,36 +15,69 @@ import model.NoiDung;
  * @author Kelvin
  */
 public class NoiDungThiDAO {
-    
-    public boolean insertNDThi(NoiDung nd) throws SQLException{
-       Connection connect=DBconnect.getConnecttion();
-        String sql="Insert into noidung values (?,?,?)";
-        try {
-            PreparedStatement ps=connect.prepareCall(sql);
-            ps.setString(1,nd.getMaND());
-            ps.setString(2,nd.getTenND());
-            ps.setString(3,nd.getMaMH());
-            ps.executeUpdate();
-            return true;
-        } catch (SQLException e) {
-             Logger.getLogger(NoiDungThiDAO.class.getName()).log(Level.SEVERE,null,e);
-        }
-        return false;
-    }
-    public ArrayList<NoiDung> getListND() throws SQLException{
-        Connection con=DBconnect.getConnecttion();
-        String sql="select MaND from noidung";
-        PreparedStatement ps=con.prepareCall(sql);
-        ResultSet rs=ps.executeQuery();
-        ArrayList<NoiDung> list=new ArrayList<>();
-        while(rs.next()){
-            NoiDung noiDung=new NoiDung();
-            noiDung.setMaND(rs.getString("MaND"));
-            list.add(noiDung);
-        }
-        return list;
-    }
-    public static void main(String[] args) {
-        
-    }
+
+	public boolean insertNDThi(NoiDung nd) throws SQLException {
+		Connection connect = DBconnect.getConnecttion();
+		String sql = "Insert into noidung values (?,?,?)";
+		try {
+			PreparedStatement ps = connect.prepareCall(sql);
+			ps.setString(1, nd.getMaND());
+			ps.setString(2, nd.getTenND());
+			ps.setString(3, nd.getMaMH());
+			ps.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			Logger.getLogger(NoiDungThiDAO.class.getName()).log(Level.SEVERE, null, e);
+		}
+		return false;
+	}
+
+	public ArrayList<NoiDung> getListND() throws SQLException {
+		Connection con = DBconnect.getConnecttion();
+		String sql = "select MaND from noidung";
+		PreparedStatement ps = con.prepareCall(sql);
+		ResultSet rs = ps.executeQuery();
+		ArrayList<NoiDung> list = new ArrayList<>();
+		while (rs.next()) {
+			NoiDung noiDung = new NoiDung();
+			noiDung.setMaND(rs.getString("MaND"));
+			list.add(noiDung);
+		}
+		return list;
+	}
+
+	public static boolean check(String maND) {
+		Connection con = DBconnect.getConnecttion();
+		String sql = "select * from noidung where MaND='" + maND + "'";
+		PreparedStatement ps;
+		try {
+			ps = con.prepareCall(sql);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				con.close();
+				return true;
+			}
+		} catch (SQLException e) {
+			Logger.getLogger(NoiDungThiDAO.class.getName()).log(Level.SEVERE, null, e);
+		}
+		return false;
+	}
+	public ArrayList<NoiDung> getListNDwithMH(String maMH) throws SQLException
+	{
+		Connection con=DBconnect.getConnecttion();
+		String sql="select * from noidung where MaMH='"+maMH+"'";
+		PreparedStatement ps=con.prepareCall(sql);
+		ResultSet rs = ps.executeQuery();
+		ArrayList<NoiDung> list=new ArrayList<>();
+		while(rs.next()) {
+			NoiDung n =new NoiDung();
+			n.setMaND(rs.getString("MaND"));
+			n.setTenND(rs.getString("TenND"));
+			list.add(n);
+		}
+		return list;
+	}
+	public static void main(String[] args) {
+
+	}
 }

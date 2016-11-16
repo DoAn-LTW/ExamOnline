@@ -95,7 +95,7 @@
                                             <li><a href="Profile.jsp?UserName=<%=users.getUserName()%>">Thông tin cá nhân</a>
                                             </li>
 
-                                            <li><a href="Doimatkhau.jsp">Đổi mật khẩu</a>
+                                            <li><a href="Doimatkhau.jsp?UserName=<%=users.getUserName()%>">Đổi mật khẩu</a>
                                             </li>
                                             <li><a href="Login.jsp">Thoát</a>
                                             </li>
@@ -119,80 +119,91 @@
                     <div class="customDiv-2">
                         <div class="col-md-6"></div>
                         <div class="col-md-6">
-                            <form class="form-horizontal" method="post" action="UserServlet">
-                                <div class="form-group">
-                                   
-                                    <div class="col-sm-10">
-                                        <input name="UserName" type="hidden" class="form-control" id="inputUsername" placeholder="" value="<%=users.getUserName()%>"/>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                  <label for="inputFullname" class="col-sm-2 control-label">Họ và tên</label>
-                                  <div class="col-sm-10">
-                                    <input name="fullname" type="text" class="form-control" id="inputFullname" placeholder="" value="<%=users.getFullname()%>"/>
-                                  </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">Giới tính</label>
-                                    
-                                      <div class="col-sm-10">
-                                        
-                                            <%
-                                            if(users.getGender() ==null){%>
-                                            <label class="radio-inline"><input type="radio" name="sex" value="male">Nam</label>
-                                            <label class="radio-inline"><input type="radio" name="sex" value="female">Nữ</label>
-                                            <%} else { 
-                                                String gender=users.getGender();
-                                                if(gender.equals("male")){%>
-                                            
-                                            <label class="radio-inline"><input checked type="radio" name="sex" value="male">Nam</label>
-                                            <label class="radio-inline"><input type="radio" name="sex" value="female">Nữ</label>
-                                          <%} else{%>
-                                            <label class="radio-inline"><input  type="radio" name="sex" value="male">Nam</label>
-                                            <label class="radio-inline"><input checked type="radio" name="sex" value="female">Nữ</label>
-                                          <%}}%>
-                                      </div>
-                                   
-                                </div>
-                                <div class="form-group">
-                                  <label for="inputBirthday" class="col-sm-2 control-label">Ngày sinh</label>
-                                  <div class="col-sm-10">
-                                  <%if(users.getBirthday()!=null) {%>
-                                    <input name="birthday" type="date" class="form-control" id="inputBirthday" placeholder="" value="<%=users.getBirthday()%>">
-                                    <%} else { %>
-                                    <input name="birthday" type="date" class="form-control" id="inputBirthday" placeholder="" value="">
-                                    <%} %>
-                                  </div>
-                                </div>
-                                <div class="form-group">
-                                  <label for="inputNumberphone" class="col-sm-2 control-label">Số điện thoại</label>
-                                  <div class="col-sm-10">
-                                  <%if(users.getNumberPhone()!=null){ %>
-                                    <input name="numberphone" type="text" class="form-control" id="inputNumberphone" placeholder="" value="<%=users.getNumberPhone()%>">
-                                    <%}else{ %>
-                                    <input name="numberphone" type="text" class="form-control" id="inputNumberphone" placeholder="" >
-                                    <%} %>
-                                  </div>
-                                </div>
-                                <div class="form-group">
-                                  <label for="inputAddress" class="col-sm-2 control-label">Địa chỉ</label>
-                                  <div class="col-sm-10">
-                                    <input name="address" type="text" class="form-control" id="inputAddress" placeholder="" value="<%=users.getAddress()%>">
-                                  </div>
-                                </div>
-                                <div class="form-group">
-                                  <label for="inputEmail" class="col-sm-2 control-label">Email</label>
-                                  <div class="col-sm-10">
-                                    <input name="email" type="email" class="form-control" id="inputEmail" placeholder="" disabled value="<%=users.getEmail()%>">
-                                  </div>
-                                </div>
-                                <div class="form-group">
-                                  <div class="col-sm-offset-2 col-sm-10">
-                                    <input type="hidden" value="updateProfile" name="command">
-                                    <button type="submit" class="btn btn-default" >Lưu</button>
-                                  </div>
-                                </div>
-                            </form>
+                        	
+	                            <form class="form-horizontal" method="post" action="UserServlet">
+	                                <div class="form-group">
+	                                   
+	                                    <div class="col-sm-10">
+	                                        <input name="UserName" type="hidden" class="form-control" id="inputUsername" placeholder="" value="<%=users.getUserName()%>"/>
+	                                    </div>
+	                                </div>
+	                                <div class="form-group">
+	                                  <label for="inputFullname" class="col-sm-2 control-label">Họ và tên</label>
+	                                  <div class="col-sm-10">
+	                                    <input name="fullname" type="text" class="form-control" id="inputFullname" placeholder="" value="<%=users.getFullname()%>" 
+	                                    />
+	                                    
+	                                  </div>
+	                                </div>
+	                                <div class="form-group">
+	                                    <label class="col-sm-2 control-label">Giới tính</label>
+	                                    
+	                                      <div class="col-sm-10">
+	                                        
+	                                            <%
+	                                            if(users.getGender() ==null){%>
+	                                            <label class="radio-inline"><input type="radio" name="sex" value="male">Nam</label>
+	                                            <label class="radio-inline"><input type="radio" name="sex" value="female">Nữ</label>
+	                                            <%} else { 
+	                                                String gender=users.getGender();
+	                                                if(gender.equals("male")){%>
+	                                            
+	                                            <label class="radio-inline"><input checked type="radio" name="sex" value="male">Nam</label>
+	                                            <label class="radio-inline"><input type="radio" name="sex" value="female">Nữ</label>
+	                                          <%} else{%>
+	                                            <label class="radio-inline"><input  type="radio" name="sex" value="male">Nam</label>
+	                                            <label class="radio-inline"><input checked type="radio" name="sex" value="female">Nữ</label>
+	                                          <%}}%>
+	                                      </div>
+	                                   
+	                                </div>
+	                                <div class="form-group">
+	                                  <label for="inputBirthday" class="col-sm-2 control-label">Ngày sinh</label>
+	                                  <div class="col-sm-10">
+	                                  <%if(users.getBirthday()!=null) {%>
+	                                    <input name="birthday" type="date" class="form-control" id="inputBirthday" placeholder="" value="<%=users.getBirthday()%>
+	                                    ">
+	                                    <%} else { %>
+	                                    <input name="birthday" type="date" class="form-control" id="inputBirthday" placeholder="" value="">
+	                                    <%} %>
+	                                    
+	                                  </div>
+	                                </div>
+	                                <div class="form-group">
+	                                  <label for="inputNumberphone" class="col-sm-2 control-label">Số điện thoại</label>
+	                                  <div class="col-sm-10">
+	                                  <%if(users.getNumberPhone()!=null){ %>
+	                                    <input name="numberphone" type="text" class="form-control" id="inputNumberphone" placeholder="" value="<%=users.getNumberPhone()%>">
+	                                    <%}else{ %>
+	                                    <input name="numberphone" type="text" class="form-control" id="inputNumberphone" placeholder="" 
+	                                    >
+	                                    <%} %>
+	                                   
+	                                  </div>
+	                                </div>
+	                                <div class="form-group">
+	                                  <label for="inputAddress" class="col-sm-2 control-label">Địa chỉ</label>
+	                                  <div class="col-sm-10">
+	                                    <input name="address" type="text" class="form-control" id="inputAddress" placeholder="" value="<%=users.getAddress()%>"
+	                                    >
+	                                    
+	                                  </div>
+	                                </div>
+	                                <div class="form-group">
+	                                  <label for="inputEmail" class="col-sm-2 control-label">Email</label>
+	                                  <div class="col-sm-10">
+	                                    <input name="email" type="email" class="form-control" id="inputEmail" placeholder="" disabled value="<%=users.getEmail()%>">
+	                                    
+	                                  </div>
+	                                </div>
+	                                <div class="form-group">
+	                                  <div class="col-sm-offset-2 col-sm-10">
+	                                    <input type="hidden" value="updateProfile" name="command">
+	                                    <button type="submit" class="btn btn-default" onClick="alert('Chỉnh sửa thông tin cá nhân thành công')">Lưu</button>
+	                                  </div>
+	                                </div>
+	                            </form>
+                            </div>
                         </div>
 
                     </div>    <!-- end col -->
@@ -202,9 +213,17 @@
         <br><br><br><br><br><br>
         <jsp:include page="Footer.jsp"></jsp:include>
     </div>
+    <script src="assets/JS/angular.min.js" type="text/javascript"></script>
     <script src="assets/JS/jquery.min.js" type="text/javascript"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-    
+     <script>
+	        var demoApp = angular.module('demoApp', []).controller("InsertMHNDCtrl", ['$scope', function($scope) {
+	            $scope.success = false;
+	            $scope.insert = function() {
+	                $scope.success = true;
+	            }
+	        }]);
+    	</script>
 </body>
 
 </html>

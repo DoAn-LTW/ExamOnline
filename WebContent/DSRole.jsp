@@ -156,7 +156,7 @@
 							</div>
 
 							<!-- item-->
-							<a href="Profile.jsp" class="dropdown-item notify-item"> <i
+							<a href="Profile.jsp?UserName=<%=users.getUserName()%>" class="dropdown-item notify-item"> <i
 								class="zmdi zmdi-account-circle"></i> <span>Profile</span>
 							</a>
 							<!-- item-->

@@ -73,7 +73,7 @@ public class Doimatkhau extends HttpServlet {
 				if (users != null) {
 
 					session5.setAttribute("updatePass", users);
-					url = "/Login.jsp";
+					url = "/LogOut";
 					request.setAttribute("/Login.jsp", "Tạo thành công người dùng");
 				}
 			}

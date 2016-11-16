@@ -448,3 +448,10 @@ table #datatable-buttons thead>tr>th{
 #form-login{
     margin-top: 40px
 }
+.table>thead>tr>th{
+	background-color: #148548;
+    color: #fff;
+}
+#table-ch>thead>tr>th{
+	text-align:center;
+}

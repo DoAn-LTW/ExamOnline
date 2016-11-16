@@ -34,6 +34,6 @@ public class CheckEmailServlet extends HttpServlet {
           if(username.equals("")) 
               return;
           else
-            response.getWriter().write("<img src=\"assets/Images/available.png\" />");
+            response.getWriter().write("<img src=\"assets/Images/available.png\" /><span style=\"color:green;margin-left: 10px\">Bạn có thể sử dụng tên đăng nhập này</span>");
       }
     }

@@ -105,7 +105,7 @@
                             </a>
 
                             <!-- item-->
-                            <a href="Login.jsp" class="dropdown-item notify-item">
+                            <a href="LogOut" class="dropdown-item notify-item">
                                 <i class="zmdi zmdi-power"></i> <span>Logout</span>
                             </a>
 

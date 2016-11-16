@@ -88,8 +88,8 @@
         //Primary
         $('#primary-alert').click(function () {
             swal({
-                title: "Are you sure?",
-                text: "You will not be able to recover this imaginary file!",
+               
+                text: "Bạn đã tạo thành công môn học",
                 type: "info",
                 showCancelButton: true,
                 cancelButtonClass: 'btn-secondary waves-effect waves-light',

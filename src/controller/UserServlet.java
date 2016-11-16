@@ -64,35 +64,30 @@ public class UserServlet extends HttpServlet {
 			if (users != null) {
 				if (roles.equals("Admin")) {
 					HttpSession session1 = request.getSession();
-					// String role=request.getParameter("Role");
 					session1.setAttribute("userAdmin", users);
 					url = "/Admin.jsp";
 					request.setAttribute("/Admin.jsp", "Đăng nhập thành công");
 				}
 				if (roles.equals("QLNHCH")) {
 					HttpSession session1 = request.getSession();
-					// String role=request.getParameter("Role");
 					session1.setAttribute("userNHCH", users);
-					url = "/NguoiQTNHCH-ThemCH.jsp";
-					request.setAttribute("/NguoiQTNHCH-ThemCH.jsp", "Đăng nhập thành công");
+					url = "/NguoiQTNHCH.jsp";
+					request.setAttribute("/NguoiQTNHCH.jsp", "Đăng nhập thành công");
 				}
 				if (roles.equals("QLD")) {
 					HttpSession session1 = request.getSession();
-					// String role=request.getParameter("Role");
 					session1.setAttribute("userQLDE", users);
 					url = "/NguoiRaDe-QLD.jsp";
 					request.setAttribute("/NguoiRaDe-QLD.jsp", "Đăng nhập thành công");
 				}
 				if (roles.equals("QLKT")) {
 					HttpSession session1 = request.getSession();
-					// String role=request.getParameter("Role");
 					session1.setAttribute("userQLKT", users);
 					url = "/NguoiQLKT.jsp";
 					request.setAttribute("/NguoiQLKT.jsp", "Đăng nhập thành công");
 				}
 				if (roles.equals("SV")) {
 					HttpSession session1 = request.getSession();
-					// String role=request.getParameter("Role");
 					session1.setAttribute("userSV", users);
 					url = "/SinhVien.jsp";
 					request.setAttribute("/SinhVien.jsp", "Đăng nhập thành công");

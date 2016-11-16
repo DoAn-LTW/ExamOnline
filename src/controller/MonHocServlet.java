@@ -17,42 +17,29 @@ import model.MonHoc;
  */
 public class MonHocServlet extends HttpServlet {
 
+	MonhocDAO monhocDAO = new MonhocDAO();
 
-    MonhocDAO monhocDAO=new MonhocDAO();
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        
-    }
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
-   
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-       String command=request.getParameter("command");
-       String url="";
-       boolean tmp;
-       MonHoc monhoc=new MonHoc();
-       switch(command){
-           case "insertMH":
-               monhoc.setMaMH(request.getParameter("mamh"));
-               monhoc.setTenMH(request.getParameter("tenmh"));
-               monhocDAO.insertMH(monhoc);
-               HttpSession session=request.getSession();
-               if(monhoc!=null)
-               {
-                    session.setAttribute("insertMH", monhoc);
-                    url="/NguoiQTNHCH-ThemCH.jsp";
-                    request.setAttribute("/NguoiQTNHCH-ThemCH.jsp", "Tạo thành công môn học");
-               }
-               else{
-                   request.setAttribute("Error", "Error");
-                   url="/DSMonHoc.jsp";
-               }
-               break;
-       }
-        RequestDispatcher rd=getServletContext().getRequestDispatcher(url);
-       rd.forward(request, response);
-    }
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		String url = "";
+		MonHoc monhoc = new MonHoc();
+
+		monhoc.setMaMH(request.getParameter("mamh"));
+		monhoc.setTenMH(request.getParameter("tenmh"));
+		monhocDAO.insertMH(monhoc);
+		HttpSession session = request.getSession();
+		session.setAttribute("insertMH", monhoc);
+		url = "/NguoiQTNHCH.jsp";
+		request.setAttribute("/NguoiQTNHCH.jsp", "Tạo thành công môn học");
+		RequestDispatcher rd = getServletContext().getRequestDispatcher(url);
+		rd.forward(request, response);
+	}
 }
-

@@ -12,3 +12,10 @@ jQuery(document).ready(function($) {
                     $("#update-success").load("Notify-Update.jsp #CND");
                 });
             });
+ jQuery(document).ready(function($) {
+     $("#CSCH").click(function(e) {
+         var url;
+         url = "NguoiQTNHCH-ChinhSuaCH.jsp";
+         $("#Update-CSCH").load(url);
+     });
+ });

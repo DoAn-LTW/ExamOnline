@@ -52,13 +52,10 @@ public class NoiDungThiServlet extends HttpServlet {
                 if(noiDungThi!=null)
                 {
                      session.setAttribute("insertNoidung", noiDungThi);
-                     url="/NguoiQTNHCH-ThemCH.jsp";
-                     request.setAttribute("/NguoiQTNHCH-ThemCH.jsp", "Tạo thành công nội dung môn học");
+                     url="/NguoiQTNHCH.jsp";
+                     request.setAttribute("/NguoiQTNHCH.jsp", "Tạo thành công nội dung môn học");
                 }
-                else{
-                    request.setAttribute("Error", "Error");
-                    url="/NguoiQTNHCH-ThemCH.jsp";
-                }
+               
                 break;
         }
         RequestDispatcher rd=getServletContext().getRequestDispatcher(url);

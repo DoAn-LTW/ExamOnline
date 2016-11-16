@@ -53,15 +53,14 @@ public class ThemCauHoi extends HttpServlet {
 		cauhoi.setDapAnC(request.getParameter("PAC"));
 		cauhoi.setDapAnD(request.getParameter("PAD"));
 		cauhoi.setDapAn(request.getParameter("DA"));
-		cauhoi.setDiem(request.getParameter("diem"));
 		cauhoi.setMaMH(request.getParameter("maMH"));
 		cauhoi.setMaND(request.getParameter("maND"));
 		cauhoiDAO.insertCauHoi(cauhoi);
 		HttpSession session = request.getSession();
 		if (cauhoi != null) {
 			session.setAttribute("insertCauhoi", cauhoi);
-			url = "/NguoiQTNHCH-ThemCH.jsp";
-			request.setAttribute("/NguoiQTNHCH-ThemCH.jsp", "Tạo thành công người dùng");
+			url = "/NguoiQTNHCH.jsp";
+			request.setAttribute("/NguoiQTNHCH.jsp", "Tạo thành công người dùng");
 		}
 		RequestDispatcher rd = getServletContext().getRequestDispatcher(url);
 		rd.forward(request, response);
