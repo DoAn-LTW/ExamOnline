@@ -62,8 +62,7 @@
 <!-- Modernizr js -->
 <script src="assets/JS/modernizr.min.js"></script>
 <script src="assets/JS/angular.min.js" type="text/javascript"></script>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"
-	type="text/javascript"></script>
+<script src="assets/js/jquery.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(
 			function() {

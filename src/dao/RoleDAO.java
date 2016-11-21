@@ -18,13 +18,14 @@ public class RoleDAO {
     public ArrayList<Role> getListRole() throws SQLException
     {
         Connection con=DBconnect.getConnecttion();
-        String sql="select RoleID from role";
+        String sql="select * from role";
         PreparedStatement ps=con.prepareCall(sql);
         ResultSet rs=ps.executeQuery();
         ArrayList<Role> list=new ArrayList<Role>();
         while(rs.next()){
             Role role=new Role();
             role.setRoleID(rs.getString("RoleID"));
+            role.setRoleName(rs.getString("RoleName"));
             list.add(role);
         }
         return list;

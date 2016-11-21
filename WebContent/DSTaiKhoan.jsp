@@ -3,6 +3,11 @@
     Created on : Oct 14, 2016, 9:31:18 AM
     Author     : Kelvin
 --%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="com.mysql.jdbc.Statement"%>
+<%@page import="java.sql.Connection"%>
 <%@page import="javax.jws.soap.SOAPBinding.Use"%>
 <%@page import="model.Users"%>
 <%@page import="dao.UsersDAO"%>
@@ -12,9 +17,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
-<sql:setDataSource driver="com.mysql.jdbc.Driver"
-	url="jdbc:mysql://localhost:3306/examonline" user="root"
-	password="14110143" />
 <!DOCTYPE html>
 <html>
 
@@ -163,9 +165,9 @@
 					<ul>
 						<li class="text-muted menu-title"><i class="fa fa-users"
 							aria-hidden="true"></i> Quản lý tài khoản</li>
-							<li class="has_sub">
-                            <a href="InsertUsers.jsp" class="waves-effect" id="DSTK"><span style="margin-left: 20px">Thêm tài tài khoản</span> </a>
-                        </li>
+						<li class="has_sub"><a href="InsertUsers.jsp"
+							class="waves-effect" id="DSTK"><span
+								style="margin-left: 20px">Thêm tài tài khoản</span> </a></li>
 						<li class="has_sub"><a href="DSTaiKhoan.jsp"
 							class="waves-effect" id="DSTK"><span
 								style="margin-left: 20px">Danh sách tài khoản</span> </a></li>
@@ -220,46 +222,125 @@
 					<div class="row">
 						<h2 style="text-align: center">DANH SÁCH TÀI KHOẢN</h2>
 					</div>
-
 					<div class="row">
-					
-						<sql:query var="items"
-							sql="Select UserName, PASSWORD, FullName, NumberPhone, Email, RoleID  from users" />
-
+						<%
+							Connection connect = null;
+							PreparedStatement ps = null;
+							try {
+								Class.forName("com.mysql.jdbc.Driver");
+								connect = DriverManager
+										.getConnection("jdbc:mysql://localhost:3306/examonline" + "?user=root&password=14110143");
+								String sql = "select * from users";
+								ps = connect.prepareCall(sql);
+								ResultSet rs = ps.executeQuery(sql);
+						%>
 						<div class="table-responsive">
-						
 							<table class="table table-hover">
 								<thead>
-									<tr style="text-align: center">
-										<th>UserName</th>
+									<tr>
+										<th>Username</th>
 										<th>Password</th>
-										<th>Họ và Tên</th>
+										<th>Họ và tên</th>
 										<th>Số điện thoại</th>
 										<th>Email</th>
-										<th>Vai trò</th>
 										<th>Hành động</th>
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach items="${items.rowsByIndex}" var="row">
-										<tr>
-											<c:forEach items="${row}" var="col">
-												<td>${col}</td>
+									<%
+										while (rs != null && rs.next()) {
+									%>
+									<tr>
 
-											</c:forEach>
-											<td><a role="button"
-												href="#edit?UserName=${col.UserName}">Sửa</a>
-											<a role="button"
-												href="#delete?UserName=${col.UserName}">Xóa</a></td>
-										</tr>
-
-
-									</c:forEach>
+										<td><%=rs.getString("UserName")%></td>
+										<td><%=rs.getString("PASSWORD")%></td>
+										<td><%=rs.getString("FullName")%></td>
+										<td><%=rs.getString("NumberPhone")%></td>
+										<td><%=rs.getString("Email")%></td>
+										<td><a data-toggle="modal" href='#form-update-account'
+											data-target="#form-update-account"
+											data-username='<%=rs.getString("UserName")%>'
+											data-password='<%=rs.getString("PASSWORD")%>'
+											data-fullname='<%=rs.getString("FullName")%>'
+											data-numberphone='<%=rs.getString("NumberPhone")%>'
+											data-email='<%=rs.getString("Email")%>'>Edit</a> | <a
+											onclick="return confirm('Bạn có chắc chắn muốn xóa?')"
+											href="DeleteUser?UserName=<%=rs.getString("UserName")%>">Delete</a>
+										</td>
+									</tr>
+									<%
+										}
+									%>
 								</tbody>
 							</table>
-							
 						</div>
+						<%
+							} catch (Exception e) {
+								out.println(e.getMessage());
+							}
+						%>
+					</div>
+					<div class="modal fade" id="form-update-account">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal"
+										aria-hidden="true">&times;</button>
+									<h4 class="modal-title">Modifier account</h4>
+								</div>
+								<div class="modal-body">
+									<form action="update.jsp" method="POST" class="form-horizontal"
+										role="form">
+										<fieldset class="form-group">
+											<label for="input-username" class="col-sm-2">Username</label>
+											<div class="col-sm-10">
+												<input readonly type="text" name="input-username" id="input-username"
+													class="form-control input-sm" value="" required="">
+											</div>
+										</fieldset>
 
+										<fieldset class=form-group>
+											<label for="input-username" class="col-sm-2">Password</label>
+											<div class="col-sm-10">
+												<input type="text" name="input-password" id="input-password"
+													class="form-control input-sm" value="" required="">
+											</div>
+										</fieldset>
+
+										<fieldset class="form-group">
+											<label for="input-fullname" class="col-sm-2">Fullname</label>
+											<div class="col-sm-10">
+												<input type="text" name="input-fullname" id="input-fullname"
+													class="form-control input-sm" value="" required="">
+											</div>
+										</fieldset>
+										<fieldset class="form-group">
+											<label for="input-number" class="col-sm-2">Số điện thoại</label>
+											<div class="col-sm-10">
+												<input type="text" name="input-number" id="input-number"
+													class="form-control input-sm" value="" required="">
+											</div>
+										</fieldset>
+										<fieldset class="form-group">
+											<label for="input-email" class="col-sm-2">Email</label>
+											<div class="col-sm-10">
+												<input type="text" name="input-email" id="input-email"
+													class="form-control input-sm" value="" required="">
+											</div>
+										</fieldset>
+										<fieldset class="form-group">
+											<hr>
+											<div class="pull-right">
+												<button type="submit" class="btn btn-primary btn-sm">Save
+													changes</button>
+												<button type="button" class="btn btn-default btn-sm"
+													data-dismiss="modal">Close</button>
+											</div>
+										</fieldset>
+									</form>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -292,7 +373,24 @@
 		type="text/javascript"></script>
 	<script src="assets/JS/jquery.core.js"></script>
 	<script src="assets/JS/jquery.app.js"></script>
-
+	<script>
+		$('#form-update-account').on('show.bs.modal', function (event) {
+		  var a = $(event.relatedTarget) // Button that triggered the modal
+		  var Username = a.data('username') // Extract info from data-* attributes
+		  var Password = a.data('password') // Extract info from data-* attributes
+		  var Fullname = a.data('fullname')
+		  var Numberphone = a.data('numberphone') // Extract info from data-* attributes
+		  var Email = a.data('email')
+		  
+		  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+		  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+		  $('#input-username').val(Username)
+		  $('#input-password').val(Password)
+		  $('#input-fullname').val(Fullname)
+		  $('#input-number').val(Numberphone)
+		  $('#input-email').val(Email)
+		})
+	</script>
 </body>
 
 <!-- Mirrored from coderthemes.com/uplon_1.4/light/tables-datatable.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 14 Oct 2016 16:07:55 GMT -->

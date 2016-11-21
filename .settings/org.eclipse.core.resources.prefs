@@ -1,8 +1,10 @@
 eclipse.preferences.version=1
+encoding//WebContent/update.jsp=UTF-8
 encoding//src/controller/CheckEmailServlet.java=UTF-8
 encoding//src/controller/CheckMaMH.java=UTF-8
 encoding//src/controller/CheckMaND.java=UTF-8
 encoding//src/controller/CheckRole.java=UTF-8
+encoding//src/controller/DeleteUser.java=UTF-8
 encoding//src/controller/Doimatkhau.java=UTF-8
 encoding//src/controller/MonHocServlet.java=UTF-8
 encoding//src/controller/NoiDungThiServlet.java=UTF-8

@@ -55,4 +55,23 @@ public class CauHoiDAO {
         }
         return list;
 	}
+	public ArrayList<CauHoi> searchCH(String tenCH) throws SQLException{
+		Connection con=DBconnect.getConnecttion();
+		ArrayList<CauHoi> list=new ArrayList<>();
+		String sql="select * from cauhoi where NoiDung='"+tenCH+"'";
+		PreparedStatement ps=con.prepareCall(sql);
+		ResultSet rs=ps.executeQuery();
+        while(rs.next()){
+        	CauHoi cauHoi=new CauHoi();
+        	cauHoi.setMaCH(rs.getString("MaCH"));
+        	cauHoi.setNoiDung(rs.getString("NoiDung"));
+        	cauHoi.setDapAnA(rs.getString("PhuongAnA"));
+        	cauHoi.setDapAnB(rs.getString("PhuongAnB"));
+        	cauHoi.setDapAnC(rs.getString("PhuongAnC"));
+        	cauHoi.setDapAnD(rs.getString("PhuongAnD"));
+        	cauHoi.setDapAn(rs.getString("DapAn"));
+            list.add(cauHoi);
+        }
+        return list;
+	}
 }

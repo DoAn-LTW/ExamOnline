@@ -34,30 +34,29 @@ public class NoiDungThiServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String command=request.getParameter("command");
+    	response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
+       
         String url="";
        
         NoiDung noiDungThi =new NoiDung();
-        switch(command){
-            case "insertND":
-                noiDungThi.setMaND(request.getParameter("mand"));
-                noiDungThi.setTenND(request.getParameter("tennd"));
-                noiDungThi.setMaMH(request.getParameter("mamh"));
-            try {
-                noiDungThiDAO.insertNDThi(noiDungThi);
-            } catch (SQLException ex) {
-                Logger.getLogger(NoiDungThiServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
-                HttpSession session=request.getSession();
-                if(noiDungThi!=null)
-                {
-                     session.setAttribute("insertNoidung", noiDungThi);
-                     url="/NguoiQTNHCH.jsp";
-                     request.setAttribute("/NguoiQTNHCH.jsp", "Tạo thành công nội dung môn học");
-                }
-               
-                break;
+   
+        noiDungThi.setMaND(request.getParameter("mand"));
+        noiDungThi.setTenND(request.getParameter("tennd"));
+        noiDungThi.setMaMH(request.getParameter("mamh"));
+        try {
+            noiDungThiDAO.insertNDThi(noiDungThi);
+        } catch (SQLException ex) {
+            Logger.getLogger(NoiDungThiServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
+            HttpSession session=request.getSession();
+            if(noiDungThi!=null)
+            {
+                 session.setAttribute("insertNoidung", noiDungThi);
+                 url="/NguoiQTNHCH.jsp";
+                 request.setAttribute("/NguoiQTNHCH.jsp", "Tạo thành công nội dung môn học");
+            }
+      
         RequestDispatcher rd=getServletContext().getRequestDispatcher(url);
         rd.forward(request, response);
     }

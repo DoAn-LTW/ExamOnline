@@ -26,639 +26,729 @@
 
 <head>
 
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Thêm câu hỏi</title>
-    <link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="assets/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
-    <link href="assets/css/style_OT.css" rel="stylesheet" type="text/css" />
-    <link href="assets/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Thêm câu hỏi</title>
+<link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet"
+	type="text/css" />
+<link href="assets/bootstrap/css/bootstrap-theme.min.css"
+	rel="stylesheet" type="text/css" />
+<link href="assets/css/style_OT.css" rel="stylesheet" type="text/css" />
+<link href="assets/font-awesome-4.6.3/css/font-awesome.min.css"
+	rel="stylesheet" type="text/css" />
 </head>
 
 <body>
-    <% 
-    Users users=new Users(); 
-    MonHoc monHoc=new MonHoc(); 
-    NoiDung noidung=new NoiDung();
-    CauHoi cauhoi=new CauHoi();
-    MonhocDAO monhocDAO=new MonhocDAO(); 
-    NoiDungThiDAO noiDungThiDAO=new NoiDungThiDAO(); 
-    if (session.getAttribute("userNHCH") !=null) { 
-    	users=( Users) session.getAttribute( "userNHCH"); 
-    	} 
-    if (session.getAttribute("insertMH") !=null) { 
-    	monHoc=( MonHoc) session.getAttribute("insertMH"); 
-    	} 
-    if (session.getAttribute("insertNoidung") !=null) { 
-    	noidung=( NoiDung) session.getAttribute("insertNoidung"); 
-    	}
-    if (session.getAttribute("insertCauhoi") !=null) {
-    	cauhoi=( CauHoi) session.getAttribute("insertCauhoi"); 
-    	} 
-    	%>
-        <div class="wapper">
-            <jsp:include page="Header.jsp"></jsp:include>
-            <div class="main-menu">
-                <nav class="navbar navbar-inverse" data-spy="affix" role="navigation" data-offset-top="55">
-                    <div class="container-fluid">
-                        <!-- Brand and toggle get grouped for better mobile display -->
-                        <div class="navbar-header">
-                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-main" aria-expanded="false">
-                                <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
-                            </button>
-                            <a class="navbar-brand" href="OnlineTest.jsp"> <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-                            </a>
-                        </div>
+	<%
+		Users users = new Users();
+		MonHoc monHoc = new MonHoc();
+		NoiDung noidung = new NoiDung();
+		CauHoi cauhoi = new CauHoi();
+		MonhocDAO monhocDAO = new MonhocDAO();
+		NoiDungThiDAO noiDungThiDAO = new NoiDungThiDAO();
+		if (session.getAttribute("userNHCH") != null) {
+			users = (Users) session.getAttribute("userNHCH");
+		}
+		if (session.getAttribute("insertMH") != null) {
+			monHoc = (MonHoc) session.getAttribute("insertMH");
+		}
+		if (session.getAttribute("insertNoidung") != null) {
+			noidung = (NoiDung) session.getAttribute("insertNoidung");
+		}
+		if (session.getAttribute("insertCauhoi") != null) {
+			cauhoi = (CauHoi) session.getAttribute("insertCauhoi");
+		}
+	%>
+	<div class="wapper">
+		<jsp:include page="Header.jsp"></jsp:include>
+		<div class="main-menu">
+			<nav class="navbar navbar-inverse" data-spy="affix" role="navigation"
+				data-offset-top="55">
+				<div class="container-fluid">
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed"
+							data-toggle="collapse" data-target="#navbar-main"
+							aria-expanded="false">
+							<span class="sr-only">Toggle navigation</span> <span
+								class="icon-bar"></span> <span class="icon-bar"></span> <span
+								class="icon-bar"></span>
+						</button>
+						<a class="navbar-brand" href="OnlineTest.jsp"> <span
+							class="glyphicon glyphicon-home" aria-hidden="true"></span>
+						</a>
+					</div>
 
-                        <!-- Collect the nav links, forms, and other content for toggling -->
-                        <div class="collapse navbar-collapse" id="navbar-main">
-                            <ul class="nav navbar-nav">
-                                <li><a href="#">Liên hệ <span class="sr-only">(current)</span></a>
-                                </li>
-                                <li><a href="#">Hướng dẫn</a>
-                                </li>
-                                <li><a href="NguoiQTNHCH.jsp" >Quản lý câu hỏi</span></a>
-                                    
-                                </li>
-                            </ul>
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse" id="navbar-main">
+						<ul class="nav navbar-nav">
+							<li><a href="#">Liên hệ <span class="sr-only">(current)</span></a>
+							</li>
+							<li><a href="#">Hướng dẫn</a></li>
+							<li><a href="NguoiQTNHCH.jsp">Quản lý câu hỏi</span></a></li>
+						</ul>
 
-                            <ul class="nav navbar-nav navbar-right">
-                                <li>
-                                    <a href="Login.jsp" class="glyphicon glyphicon-log-out"></a>
-                                </li>
+						<ul class="nav navbar-nav navbar-right">
+							<li><a href="Login.jsp" class="glyphicon glyphicon-log-out"></a>
+							</li>
 
-                            </ul>
-                        </div>
-                        <!-- /.navbar-collapse -->
-                    </div>
-                    <!-- /.container-fluid -->
-                </nav>
-            </div>
-            <div class="main">
-                <div class="container" id="Update-CSCH">
-                    <div class="row">
-                        <div class="col-md-9 col-sm-8 col-xs-0">
-                            <div class="row">
-                                <div class="col-sm-6"></div>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-4 col-xs-9">
-                            <div class="block-user-info block-user-info-responsive logged">
-                                <ul class="clearfix">
-                                    <div class="dropdown dropdown-vta">
+						</ul>
+					</div>
+					<!-- /.navbar-collapse -->
+				</div>
+				<!-- /.container-fluid -->
+			</nav>
+		</div>
+		<div class="main">
+			<div class="container" id="Update-CSCH">
+				<div class="row">
+					<div class="col-md-9 col-sm-8 col-xs-0">
+						<div class="row">
+							<div class="col-sm-6"></div>
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-4 col-xs-9">
+						<div class="block-user-info block-user-info-responsive logged">
+							<ul class="clearfix">
+								<div class="dropdown dropdown-vta">
 
-                                        <a class="dropdown-toggle dropdown-vta-login" role="button" id="dropdownMenu1" data-toggle="dropdown">
-                                            <% if (users !=null) { %> <span class="hello">Xin chào <span
+									<a class="dropdown-toggle dropdown-vta-login" role="button"
+										id="dropdownMenu1" data-toggle="dropdown"> <%
+ 	if (users != null) {
+ %> <span class="hello">Xin chào <span
 											style="color: #ED7642; font-weight: 600"><%=users.getUserName()%></span></span>
-                                                <% } %> <span class="caret"></span>
-                                        </a>
-                                        <ul class="dropdown-menu dropdown-vta-sub-menu" aria-labelledby="dropdownMenu1">
-                                            <li><a href="Profile.jsp?UserName=<%=users.getUserName()%>">Thông
-												tin cá nhân</a>
-                                            </li>
-                                            <li><a href="Doimatkhau.jsp?UserName=<%=users.getUserName()%>">Đổi
-												mật khẩu</a>
-                                            </li>
-                                            <li><a href="LogOut">Thoát</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <ol class="breadcrumb">
-                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                            <li><a href="NguoiQTNHCH.jsp" title="">Quản trị
-								câu hỏi</a>
-                            </li>
-                            <li class="active">Thêm câu hỏi</li>
-                        </ol>
-                    </div>
-                    <div class="row">
-                        <p id="update-success"></p>
-                    </div>
-                    <div class="row">
-                        <div class="customDiv-2">
-                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                                <div class="panel panel-primary">
-                                    <div class="panel-heading" role="tab" id="headingOne">
-                                        <h4 class="panel-title">
+										<%
+											}
+										%> <span class="caret"></span>
+									</a>
+									<ul class="dropdown-menu dropdown-vta-sub-menu"
+										aria-labelledby="dropdownMenu1">
+										<li><a
+											href="Profile.jsp?UserName=<%=users.getUserName()%>">Thông
+												tin cá nhân</a></li>
+										<li><a
+											href="Doimatkhau.jsp?UserName=<%=users.getUserName()%>">Đổi
+												mật khẩu</a></li>
+										<li><a href="LogOut">Thoát</a></li>
+									</ul>
+								</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<ol class="breadcrumb">
+						<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+						<li><a href="NguoiQTNHCH.jsp" title="">Quản trị câu hỏi</a></li>
+						<li class="active">Thêm câu hỏi</li>
+					</ol>
+				</div>
+				<div class="row">
+					<p id="update-success"></p>
+				</div>
+				<div class="row">
+					<div class="customDiv-2">
+						<div class="panel-group" id="accordion" role="tablist"
+							aria-multiselectable="true">
+							<div class="panel panel-primary">
+								<div class="panel-heading" role="tab" id="headingOne">
+									<h4 class="panel-title">
 										<a role="button" data-toggle="collapse"
 											data-parent="#accordion" href="#collapseOne"
 											aria-expanded="true" aria-controls="collapseOne"> 1. Thêm
 											môn học - Nội dung</a>
 									</h4>
-                                    </div>
-                                    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                                        <div class="panel-body">
-                                            <div id="main" ng-app="demoApp" ng-controller="InsertMHNDCtrl">
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <form method="post" action="MonHocServlet" id="register-form" name="form" ng-submit="insert()" novalidate>
-                                                            <div class="form-group">
-                                                                <label for="inputMaMH">* Mã môn học</label>
-                                                                <input name="mamh" id="inputMaMH" type="text" class="form-control" placeholder="" ng-model="mamh" autocomplete="off" required> <span id="mh-result"></span>
-                                                                <!--Dấu check thể hiện việc nhập dữ liệu được nhập là hợp lệ-->
+								</div>
+								<div id="collapseOne" class="panel-collapse collapse in"
+									role="tabpanel" aria-labelledby="headingOne">
+									<div class="panel-body">
+										<div id="main" ng-app="demoApp" ng-controller="InsertMHNDCtrl">
+											<div class="row">
+												<div class="col-md-6">
+													<form method="post" action="MonHocServlet"
+														id="register-form" name="form" ng-submit="insert()"
+														novalidate>
+														<div class="form-group">
+															<label for="inputMaMH">* Mã môn học</label> <input
+																name="mamh" id="inputMaMH" type="text"
+																class="form-control" placeholder="" ng-model="mamh"
+																autocomplete="off" required> <span
+																id="mh-result"></span>
+															<!--Dấu check thể hiện việc nhập dữ liệu được nhập là hợp lệ-->
 
-                                                                <div ng-show="form.mamh.$dirty && form.mamh.$invalid" class="text-danger">
-                                                                    <i class="fa fa-times text-danger"></i> <span ng-show="form.mamh.$error.required">Bạn chưa
+															<div ng-show="form.mamh.$dirty && form.mamh.$invalid"
+																class="text-danger">
+																<i class="fa fa-times text-danger"></i> <span
+																	ng-show="form.mamh.$error.required">Bạn chưa
 																	nhập mã môn học</span>
 
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="inputTenMH">* Tên môn học</label>
-                                                                <input name="tenmh" id="inputTenMH" ng-model="tenmh" type="text" class="form-control" placeholder="" required>
-                                                                <i class="fa fa-check text-success" ng-show="form.tenmh.$dirty && form.tenmh.$valid"></i>
+															</div>
+														</div>
+														<div class="form-group">
+															<label for="inputTenMH">* Tên môn học</label> <input
+																name="tenmh" id="inputTenMH" ng-model="tenmh"
+																type="text" class="form-control" placeholder="" required>
+															<i class="fa fa-check text-success"
+																ng-show="form.tenmh.$dirty && form.tenmh.$valid"></i>
 
-                                                                <div ng-show="form.tenmh.$dirty && form.tenmh.$invalid" class="text-danger">
-                                                                    <i class="fa fa-times text-danger"></i> <span ng-show="form.tenmh.$error.required"> Bạn chưa
+															<div ng-show="form.tenmh.$dirty && form.tenmh.$invalid"
+																class="text-danger">
+																<i class="fa fa-times text-danger"></i> <span
+																	ng-show="form.tenmh.$error.required"> Bạn chưa
 																	nhập tên môn học</span>
 
-                                                                </div>
-                                                            </div>
-                                                            
-                                                            <button type="submit" class="btn btn-primary" onClick="alert('Tạo thành công môn học')" ng-disabled="!form.$dirty || (form.$dirty && form.$invalid)" style="margin-top: 10px; margin-bottom: 10px">
-                                                                Thêm</button>
-                                                                
-                                                        </form>
-                                                        <div class="card-box table-responsive">
-                                                            <sql:query var="items" sql="Select *  from monhoc" />
-                                                            <table class="table table-hover">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>Mã môn học</th>
-                                                                        <th>Tên môn học</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <c:forEach items="${items.rowsByIndex}" var="row">
-                                                                        <tr>
-                                                                            <c:forEach items="${row}" var="col">
-                                                                                <td>${col}</td>
-                                                                            </c:forEach>
-                                                                        </tr>
+															</div>
+														</div>
 
-                                                                    </c:forEach>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <form method="post" action="NoiDungThiServlet" id="register-form" name="form1" ng-submit="insert()" novalidate>
-                                                            <div class="form-group">
-                                                                <label for="inputMaND">* Mã nội dung</label>
-                                                                <input name="mand" id="inputMaND" type="text" class="form-control" placeholder="" ng-model="mand" autocomplete="off" required> <span id="nd-result"></span>
-                                                                <div ng-show="form1.mand.$dirty && form1.mand.$invalid" class="text-danger">
-                                                                    <i class="fa fa-times text-danger"></i> <span ng-show="form1.mand.$error.required">Bạn chưa
+														<button type="submit" class="btn btn-primary"
+															onClick="alert('Tạo thành công môn học')"
+															ng-disabled="!form.$dirty || (form.$dirty && form.$invalid)"
+															style="margin-top: 10px; margin-bottom: 10px">
+															Thêm</button>
+
+													</form>
+													<div class="card-box table-responsive">
+														<sql:query var="items" sql="Select *  from monhoc" />
+														<table class="table table-hover">
+															<thead>
+																<tr>
+																	<th>Mã môn học</th>
+																	<th>Tên môn học</th>
+																</tr>
+															</thead>
+															<tbody>
+																<c:forEach items="${items.rowsByIndex}" var="row">
+																	<tr>
+																		<c:forEach items="${row}" var="col">
+																			<td>${col}</td>
+																		</c:forEach>
+																	</tr>
+
+																</c:forEach>
+															</tbody>
+														</table>
+													</div>
+												</div>
+												<div class="col-md-6">
+													<form method="post" action="NoiDungThiServlet"
+														id="register-form" name="form1" ng-submit="insert()"
+														novalidate>
+														<div class="form-group">
+															<label for="inputMaND">* Mã nội dung</label> <input
+																name="mand" id="inputMaND" type="text"
+																class="form-control" placeholder="" ng-model="mand"
+																autocomplete="off" required> <span
+																id="nd-result"></span>
+															<div ng-show="form1.mand.$dirty && form1.mand.$invalid"
+																class="text-danger">
+																<i class="fa fa-times text-danger"></i> <span
+																	ng-show="form1.mand.$error.required">Bạn chưa
 																	nhập mã nội dung</span>
 
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="inputTenND">* Tên nội dung</label>
-                                                                <input name="tennd" id="inputTenND" ng-model="tennd" type="text" class="form-control" placeholder="" required>
-                                                                <i class="fa fa-check text-success" ng-show="form1.tennd.$dirty && form1.tennd.$valid"></i>
+															</div>
+														</div>
+														<div class="form-group">
+															<label for="inputTenND">* Tên nội dung</label> <input
+																name="tennd" id="inputTenND" ng-model="tennd"
+																type="text" class="form-control" placeholder="" required>
+															<i class="fa fa-check text-success"
+																ng-show="form1.tennd.$dirty && form1.tennd.$valid"></i>
 
-                                                                <div ng-show="form1.tennd.$dirty && form1.tennd.$invalid" class="text-danger">
-                                                                    <i class="fa fa-times text-danger"></i> <span ng-show="form1.tennd.$error.required"> Bạn chưa
+															<div ng-show="form1.tennd.$dirty && form1.tennd.$invalid"
+																class="text-danger">
+																<i class="fa fa-times text-danger"></i> <span
+																	ng-show="form1.tennd.$error.required"> Bạn chưa
 																	nhập tên nội dung</span>
 
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="inputMaMH">* Mã môn học</label>
-                                                                <select class="form-control input-sm" name="mamh" ng-model="manh" required>
-                                                                    <% for (MonHoc c : monhocDAO.getlistMH()) { %>
-                                                                        <option value=<%=c.getMaMH()%>>
-                                                                            <%=c.getMaMH()%>
-                                                                        </option>
-                                                                        <% } %>
-                                                                </select> <i class="fa fa-check text-success" ng-show="form.mamh.$dirty && form.manh.$valid"></i>
-                                                                <div ng-show="form.mamh.$dirty && form.manh.$invalid" class="text-danger"></div>
+															</div>
+														</div>
+														<div class="form-group">
+															<label for="inputMaMH">* Mã môn học</label> <select
+																class="form-control input-sm" name="mamh"
+																ng-model="manh" required>
+																<%
+																	for (MonHoc c : monhocDAO.getlistMH()) {
+																%>
+																<option value=<%=c.getMaMH()%>>
+																	<%=c.getMaMH()%>
+																</option>
+																<%
+																	}
+																%>
+															</select> <i class="fa fa-check text-success"
+																ng-show="form.mamh.$dirty && form.manh.$valid"></i>
+															<div ng-show="form.mamh.$dirty && form.manh.$invalid"
+																class="text-danger"></div>
 
-                                                            </div>
-                                                            <input type="hidden" value="insertND" name="command">
-                                                            <button type="submit" class="btn btn-primary" onClick="alert('Tạo thành công nội dung thi')" ng-disabled="!form1.$dirty || (form1.$dirty && form1.$invalid)" style="margin-top: 10px; margin-bottom: 10px">
-                                                                Thêm</button>
+														</div>
 
-                                                        </form>
-                                                        <div class="card-box table-responsive">
-                                                            <sql:query var="items" sql="Select *  from noidung" />
-                                                            <table class="table table-hover">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>Mã nội dung</th>
-                                                                        <th>Tên nội dung</th>
-                                                                        <th>Mã môn học</th>
+														<button type="submit" class="btn btn-primary"
+															onClick="alert('Tạo thành công nội dung thi')"
+															ng-disabled="!form1.$dirty || (form1.$dirty && form1.$invalid)"
+															style="margin-top: 10px; margin-bottom: 10px">
+															Thêm</button>
 
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <c:forEach items="${items.rowsByIndex}" var="row">
-                                                                        <tr>
-                                                                            <c:forEach items="${row}" var="col">
-                                                                                <td>${col}</td>
+													</form>
+													<div class="card-box table-responsive">
+														<sql:query var="items" sql="Select *  from noidung" />
+														<table class="table table-hover">
+															<thead>
+																<tr>
+																	<th>Mã nội dung</th>
+																	<th>Tên nội dung</th>
+																	<th>Mã môn học</th>
 
-                                                                            </c:forEach>
-                                                                        </tr>
+																</tr>
+															</thead>
+															<tbody>
+																<c:forEach items="${items.rowsByIndex}" var="row">
+																	<tr>
+																		<c:forEach items="${row}" var="col">
+																			<td>${col}</td>
 
-                                                                    </c:forEach>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel panel-primary">
-                                    <div class="panel-heading" role="tab" id="headingTwo">
-                                        <h4 class="panel-title">
+																		</c:forEach>
+																	</tr>
+
+																</c:forEach>
+															</tbody>
+														</table>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="panel panel-primary">
+								<div class="panel-heading" role="tab" id="headingTwo">
+									<h4 class="panel-title">
 										<a role="button" data-toggle="collapse"
 											data-parent="#accordion" href="#collapseTwo"
 											aria-expanded="true" aria-controls="collapseTwo"> 2. Nhập
 											câu hỏi</a>
 									</h4>
-                                    </div>
-                                    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                                        <div class="panel-body">
-                                            <form class="form-horizontal" action="ThemCauHoi" method="post">
-                                                <div class="form-group">
-                                                    <div class="col-md-6">
-                                                        <label for="inputEmail3" class="col-sm-4 control-label text-left">Mã môn học
-                                                        </label>
-                                                        <div class="col-sm-8">
-                                                            <select class="form-control input-xs" name="maMH">
-                                                                <% for (MonHoc c : monhocDAO.getlistMH()) { %>
-                                                                    <option value=<%=c.getMaMH()%>>
-                                                                        <%=c.getMaMH()%>
-                                                                    </option>
-                                                                    <% } %>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="col-md-6">
-                                                        <label for="inputEmail3" class="col-sm-4 control-label text-left">Nội dung thi
-                                                        </label>
-                                                        <div class="col-sm-8">
-                                                            <select class="form-control input-xs" name="maND">
-                                                                <% for (NoiDung c : noiDungThiDAO.getListND()) { %>
-                                                                    <option value=<%=c.getMaND()%>>
-                                                                        <%=c.getMaND()%>
-                                                                    </option>
-                                                                    <% } %>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="col-md-6">
-                                                        <div class="col-sm-4"></div>
-                                                        <div class=col-sm-8>
-                                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Thêm câu hỏi</button>
-                                                            <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-                                                                <div class="modal-dialog modal-lg" role="document">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                                <span aria-hidden="true">&times;</span>
-                                                                            </button>
-                                                                            <h4 class="modal-title" id="myModalLabel">Thêm
-																				câu hỏi</h4>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            <div class="col-md-6">
-                                                                                <div class="form-group">
-                                                                                    <label for="inputMaCH" class="col-sm-4 control-label">Mã câu hỏi</label>
-                                                                                    <div class="col-sm-8">
-                                                                                        <input type="text" name="mach" class="form-control" required="" id="inputMaCH" placeholder="">
-                                                                                        <span class="field-validation-valid text-danger" data-valmsg-for="Username" data-valmsg-replace="true"></span>
+								</div>
+								<div id="collapseTwo" class="panel-collapse collapse"
+									role="tabpanel" aria-labelledby="headingTwo">
+									<div class="panel-body">
+										<form class="form-horizontal" action="ThemCauHoi"
+											method="post">
+											<div class="form-group">
+												<div class="col-md-6">
+													<label for="inputEmail3"
+														class="col-sm-4 control-label text-left">Mã môn
+														học </label>
+													<div class="col-sm-8">
+														<select class="form-control input-xs" name="maMH">
+															<%
+																for (MonHoc c : monhocDAO.getlistMH()) {
+															%>
+															<option value=<%=c.getMaMH()%>>
+																<%=c.getMaMH()%>
+															</option>
+															<%
+																}
+															%>
+														</select>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<div class="col-md-6">
+													<label for="inputEmail3"
+														class="col-sm-4 control-label text-left">Nội dung
+														thi </label>
+													<div class="col-sm-8">
+														<select class="form-control input-xs" name="maND">
+															<%
+																for (NoiDung c : noiDungThiDAO.getListND()) {
+															%>
+															<option value=<%=c.getMaND()%>>
+																<%=c.getMaND()%>
+															</option>
+															<%
+																}
+															%>
+														</select>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<div class="col-md-6">
+													<div class="col-sm-4"></div>
+													<div class=col-sm-8>
+														<button type="button" class="btn btn-primary"
+															data-toggle="modal" data-target=".bs-example-modal-lg">Thêm
+															câu hỏi</button>
+														<div class="modal fade bs-example-modal-lg" tabindex="-1"
+															role="dialog" aria-labelledby="myLargeModalLabel">
+															<div class="modal-dialog modal-lg" role="document">
+																<div class="modal-content">
+																	<div class="modal-header">
+																		<button type="button" class="close"
+																			data-dismiss="modal" aria-label="Close">
+																			<span aria-hidden="true">&times;</span>
+																		</button>
+																		<h4 class="modal-title" id="myModalLabel">Thêm
+																			câu hỏi</h4>
+																	</div>
+																	<div class="modal-body">
 
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="form-group">
-                                                                                    <label for="inputNDCH" class="col-sm-4 control-label">Nội dung câu hỏi
-                                                                                    </label>
-                                                                                    <div class="col-sm-8">
-                                                                                        <textarea class="form-control" name="ndcauhoi" rows="3" col="10"></textarea>
-                                                                                    </div>
-                                                                                </div>
+																		<fieldset class="form-group">
+																			<label for="inputMaCH" class="col-sm-4 control-label">Mã
+																				câu hỏi</label>
+																			<div class="col-sm-8">
+																				<input type="text" name="mach" class="form-control"
+																					required="" id="inputMaCH" placeholder="">
+																				<span class="field-validation-valid text-danger"
+																					data-valmsg-for="Username"
+																					data-valmsg-replace="true"></span>
 
-                                                                            </div>
-                                                                            <div class="col-md-6">
-                                                                                <div class="form-group">
-                                                                                    <label for="inputDAA" class="col-sm-4 control-label">Phương án 1</label>
-                                                                                    <div class="col-sm-8">
-                                                                                        <textarea class="form-control" name="PAA" rows="2" col="10" id="inputDAA"></textarea>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="form-group">
-                                                                                    <label for="inputDAB" class="col-sm-4 control-label">Phương án 2</label>
-                                                                                    <div class="col-sm-8">
-                                                                                        <textarea class="form-control" name="PAB" rows="2" col="10" id="inputDAB"></textarea>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="form-group">
-                                                                                    <label for="inputDAC" class="col-sm-4 control-label">Phương án 3</label>
-                                                                                    <div class="col-sm-8">
-                                                                                        <textarea class="form-control" name="PAC" rows="2" col="10" id="inputDAC"></textarea>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="form-group">
-                                                                                    <label for="inputDAD" class="col-sm-4 control-label">Phương án 4</label>
-                                                                                    <div class="col-sm-8">
-                                                                                        <textarea class="form-control" name="PAD" rows="2" col="10" id="inputDAD"></textarea>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="form-group">
-                                                                                    <label for="inputDA" class="col-sm-4 control-label">Đáp án
-                                                                                    </label>
-                                                                                    <div class="col-sm-8">
-                                                                                        <input type="text" class="form-control" name="DA" required="" id="inputDA" placeholder="">
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-                                                                            <button type="submit" class="btn btn-primary" id="btn-add">Lưu</button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="col-md-12">
-                                                        <table class="table table-bordered">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Mã CH</th>
-                                                                    <th>Nội dung</th>
-                                                                    <th>Đáp án</th>
-                                                                    <th>Mã MH</th>
-                                                                    <th>Mã ND</th>
-                                                                </tr>
+																			</div>
+																		</fieldset>
+																		<fieldset class="form-group">
+																			<label for="inputNDCH" class="col-sm-4 control-label">Nội
+																				dung câu hỏi </label>
+																			<div class="col-sm-8">
+																				<textarea class="form-control" name="ndcauhoi"
+																					rows="3" col="10"></textarea>
+																			</div>
+																		</fieldset>
 
-                                                            </thead>
-                                                            <% 
-                                                            Connection connection=DBconnect.getConnecttion(); 
-                                                            String sql="SELECT * FROM cauhoi" ; 
-                                                           PreparedStatement ps=connection.prepareCall(sql); 
-                                                           ResultSet rs; rs=ps.executeQuery(); 
-                                                           while (rs.next()) { %>
-                                                                <tr>
-                                                                    <td>
-                                                                        <%=rs.getString( "MaCH")%>
-                                                                    </td>
-                                                                    <td>
-                                                                        <%=rs.getString( "NoiDung")%>
-                                                                    </td>
-                                                                    <td>
-                                                                        <%=rs.getString( "DapAn")%>
-                                                                    </td>
-                                                                    <td>
-                                                                        <%=rs.getString( "MaMH")%>
-                                                                    </td>
-                                                                    <td>
-                                                                        <%=rs.getString( "MaND")%>
-                                                                    </td>
-                                                                </tr>
-                                                                <%}%>
-                                                        </table>
 
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel panel-primary">
-                                    <div class="panel-heading" role="tab" id="headingThree">
-                                        <h4 class="panel-title">
+																		<fieldset class="form-group">
+																			<label for="inputDAA" class="col-sm-4 control-label">Phương
+																				án 1</label>
+																			<div class="col-sm-8">
+																				<textarea class="form-control" name="PAA" rows="2"
+																					col="10" id="inputDAA"></textarea>
+																			</div>
+																		</fieldset>
+																		<fieldset class="form-group">
+																			<label for="inputDAB" class="col-sm-4 control-label">Phương
+																				án 2</label>
+																			<div class="col-sm-8">
+																				<textarea class="form-control" name="PAB" rows="2"
+																					col="10" id="inputDAB"></textarea>
+																			</div>
+																		</fieldset>
+																		<fieldset class="form-group">
+																			<label for="inputDAC" class="col-sm-4 control-label">Phương
+																				án 3</label>
+																			<div class="col-sm-8">
+																				<textarea class="form-control" name="PAC" rows="2"
+																					col="10" id="inputDAC"></textarea>
+																			</div>
+																		</fieldset>
+																		<fieldset class="form-group">
+																			<label for="inputDAD" class="col-sm-4 control-label">Phương
+																				án 4</label>
+																			<div class="col-sm-8">
+																				<textarea class="form-control" name="PAD" rows="2"
+																					col="10" id="inputDAD"></textarea>
+																			</div>
+																		</fieldset>
+																		<fieldset class="form-group">
+																			<label for="inputDA" class="col-sm-4 control-label">Đáp
+																				án </label>
+																			<div class="col-sm-8">
+																				<input type="text" class="form-control" name="DA"
+																					required="" id="inputDA" placeholder="">
+																			</div>
+																		</fieldset>
+																	</div>
+																	<div class="modal-footer">
+																		<button type="button" class="btn btn-default"
+																			data-dismiss="modal">Đóng</button>
+																		<button type="submit" class="btn btn-primary"
+																			id="btn-add">Lưu</button>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<div class="col-md-12">
+													<table class="table table-bordered">
+														<thead>
+															<tr>
+																<th>Mã CH</th>
+																<th>Nội dung</th>
+																<th>Đáp án</th>
+																<th>Mã MH</th>
+																<th>Mã ND</th>
+															</tr>
+
+														</thead>
+														<%
+															Connection connection = DBconnect.getConnecttion();
+															String sql = "SELECT * FROM cauhoi";
+															PreparedStatement ps = connection.prepareCall(sql);
+															ResultSet rs;
+															rs = ps.executeQuery();
+															while (rs.next()) {
+														%>
+														<tr>
+															<td><%=rs.getString("MaCH")%></td>
+															<td><%=rs.getString("NoiDung")%></td>
+															<td><%=rs.getString("DapAn")%></td>
+															<td><%=rs.getString("MaMH")%></td>
+															<td><%=rs.getString("MaND")%></td>
+														</tr>
+														<%
+															}
+														%>
+													</table>
+
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+							<div class="panel panel-primary">
+								<div class="panel-heading" role="tab" id="headingThree">
+									<h4 class="panel-title">
 										<a role="button" data-toggle="collapse"
 											data-parent="#accordion" href="#collapseThree"
 											aria-expanded="true" aria-controls="collapseThree"> 3.
 											Import ngân hàng câu hỏi</a>
 									</h4>
-                                    </div>
-                                    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                                        <div class="panel-body">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <form class="form-horizontal">
-                                                        <div class="form-group">
-                                                            <label for="inputEmail3" class="col-sm-4 control-label text-left">Môn thi</label>
-                                                            <div class="col-sm-8">
-                                                                <select class="form-control input-xs" value="">
-                                                                    <option>1</option>
-                                                                    <option>2</option>
-                                                                    <option>3</option>
-                                                                    <option>4</option>
-                                                                    <option>5</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="inputEmail3" class="col-sm-4 control-label text-left">Nội dung thi
-                                                            </label>
-                                                            <div class="col-sm-8">
-                                                                <select class="form-control input-xs" value="">
-                                                                    <option>1</option>
-                                                                    <option>2</option>
-                                                                    <option>3</option>
-                                                                    <option>4</option>
-                                                                    <option>5</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <div class="col-sm-4 control-label text-left"></div>
-                                                            <div class="col-sm-8">
-                                                                <button type="button" class="btn btn-success" data-toggle="modal" data-target=".bs-example-modal-sm">Import
-                                                                </button>
-                                                                <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-                                                                    <div class="modal-dialog modal-sm" role="document">
-                                                                        <div class="modal-content">
-                                                                            <p>Chọn đường dẫn để tải tệp lên:</p>
-                                                                            <input type="file" name=""> <a href="#" class="btn btn-success" id="btn-OK" role="button">OK</a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <button type="" class="btn btn-danger" style="margin-left: 10px" id="btn-CN-import">Cập nhật
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                                <div class="col-md-6"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel panel-primary">
-                                    <div class="panel-heading" role="tab" id="headingFour">
-                                        <h4 class="panel-title">
-		                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
-		                                4. Chỉnh sửa câu hỏi</a></h4>
-                                    </div>
-                                    <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
-                                        <div class="panel-body">
-                                            <div class="row">
-                                                <form class="form-horizontal">
-                                                    <div class="form-group">
-                                                        <label for="inputDKL" class="col-sm-3 control-label text-left">Điều kiện lọc</label>
-                                                        <div class="col-sm-9">
-                                                            <input type="text" class="form-control" required="" id="inputDKL" placeholder="Nhập nội dung">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <div class="col-sm-3"></div>
-                                                        <div class="col-sm-9">
-                                                            <a class="btn btn-info" href="#" role="button">Lọc</a>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                                <table class="table table-hover">
-                                                    <tr>
-                                                        <th style="width : 130px">Mã câu hỏi</th>
-                                                        <th>Nội dung câu hỏi</th>
-                                                        <th style="width : 100px">Sửa</th>
-                                                        <th style="width : 100px">Xóa</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td><a href="">Sửa</a>
-                                                        </td>
-                                                        <td><a href="">Xóa</a>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td><a href="">Sửa</a>
-                                                        </td>
-                                                        <td><a href="">Xóa</a>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td><a href="">Sửa</a>
-                                                        </td>
-                                                        <td><a href="">Xóa</a>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <form class="form-horizontal">
-                                                            <div class="form-group">
-                                                                <label for="inputMaCH" class="col-sm-4 control-label">Mã câu hỏi</label>
-                                                                <div class="col-sm-8">
-                                                                    <input type="text" class="form-control" required="" id="inputMaCH" placeholder="">
-                                                                    <span class="field-validation-valid text-danger" data-valmsg-for="Username" data-valmsg-replace="true"></span>
+								</div>
+								<div id="collapseThree" class="panel-collapse collapse"
+									role="tabpanel" aria-labelledby="headingThree">
+									<div class="panel-body">
+										<div class="row">
+											<div class="col-md-6">
+												<form class="form-horizontal">
+													<div class="form-group">
+														<label for="inputEmail3"
+															class="col-sm-4 control-label text-left">Môn thi</label>
+														<div class="col-sm-8">
+															<select class="form-control input-xs" value="">
+																<option>1</option>
+																<option>2</option>
+																<option>3</option>
+																<option>4</option>
+																<option>5</option>
+															</select>
+														</div>
+													</div>
+													<div class="form-group">
+														<label for="inputEmail3"
+															class="col-sm-4 control-label text-left">Nội dung
+															thi </label>
+														<div class="col-sm-8">
+															<select class="form-control input-xs" value="">
+																<option>1</option>
+																<option>2</option>
+																<option>3</option>
+																<option>4</option>
+																<option>5</option>
+															</select>
+														</div>
+													</div>
+													<div class="form-group">
+														<div class="col-sm-4 control-label text-left"></div>
+														<div class="col-sm-8">
+															<button type="button" class="btn btn-success"
+																data-toggle="modal" data-target=".bs-example-modal-sm">Import
+															</button>
+															<div class="modal fade bs-example-modal-sm" tabindex="-1"
+																role="dialog" aria-labelledby="mySmallModalLabel">
+																<div class="modal-dialog modal-sm" role="document">
+																	<div class="modal-content">
+																		<p>Chọn đường dẫn để tải tệp lên:</p>
+																		<input type="file" name=""> <a href="#"
+																			class="btn btn-success" id="btn-OK" role="button">OK</a>
+																	</div>
+																</div>
+															</div>
+															<button type="" class="btn btn-danger"
+																style="margin-left: 10px" id="btn-CN-import">Cập
+																nhật</button>
+														</div>
+													</div>
+												</form>
+											</div>
+											<div class="col-md-6"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="panel panel-primary">
+								<div class="panel-heading" role="tab" id="headingFour">
+									<h4 class="panel-title">
+										<a role="button" data-toggle="collapse"
+											data-parent="#accordion" href="#collapseFour"
+											aria-expanded="true" aria-controls="collapseFour"> 4.
+											Chỉnh sửa câu hỏi</a>
+									</h4>
+								</div>
+								<div id="collapseFour" class="panel-collapse collapse"
+									role="tabpanel" aria-labelledby="headingFour">
+									<div class="panel-body">
+										<div class="row">
+											<form class="form-horizontal" method="" action="">
+												<div class="form-group">
+													<label for="inputDKL"
+														class="col-sm-3 control-label text-left">Điều kiện
+														lọc</label>
+													<div class="col-sm-9">
+														<input type="text" class="form-control" required=""
+															id="inputDKL" placeholder="Nhập nội dung" name="inputDKL">
+													</div>
+												</div>
+												<div class="form-group">
+													<div class="col-sm-3"></div>
+													<div class="col-sm-9">
+														<button class="btn btn-info" type="submit">Lọc</button>
+													</div>
+												</div>
+											</form>
+											<table class="table table-hover">
+												<tr>
+													<th style="width: 130px">Mã câu hỏi</th>
+													<th>Nội dung câu hỏi</th>
+													<th style="width: 100px">Sửa</th>
+													<th style="width: 100px">Xóa</th>
+												</tr>
+												<tr>
+													<td></td>
+													<td></td>
+													<td><a href="">Sửa</a></td>
+													<td><a href="">Xóa</a></td>
+												</tr>
+												<tr>
+													<td></td>
+													<td></td>
+													<td><a href="">Sửa</a></td>
+													<td><a href="">Xóa</a></td>
+												</tr>
+												<tr>
+													<td></td>
+													<td></td>
+													<td><a href="">Sửa</a></td>
+													<td><a href="">Xóa</a></td>
+												</tr>
+											</table>
+											<div class="row">
+												<div class="col-md-6">
+													<form class="form-horizontal">
+														<div class="form-group">
+															<label for="inputMaCH" class="col-sm-4 control-label">Mã
+																câu hỏi</label>
+															<div class="col-sm-8">
+																<input type="text" class="form-control" required=""
+																	id="inputMaCH" placeholder=""> <span
+																	class="field-validation-valid text-danger"
+																	data-valmsg-for="Username" data-valmsg-replace="true"></span>
 
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="inputNDCH" class="col-sm-4 control-label">Nội dung câu hỏi</label>
-                                                                <div class="col-sm-8">
-                                                                    <textarea class="form-control" rows="3" col="10"></textarea>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="inputDiem" class="col-sm-4 control-label">Điểm</label>
-                                                                <div class="col-sm-8">
-                                                                    <input type="text" class="form-control" required="" id="inputDiem" placeholder="">
-                                                                </div>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <form class="form-horizontal">
-                                                            <div class="form-group">
-                                                                <label for="inputDAA" class="col-sm-4 control-label">Phương án 1</label>
-                                                                <div class="col-sm-8">
-                                                                    <textarea class="form-control" rows="2" col="10" id="inputDAA"></textarea>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="inputDAB" class="col-sm-4 control-label">Phương án 2</label>
-                                                                <div class="col-sm-8">
-                                                                    <textarea class="form-control" rows="2" col="10" id="inputDAB"></textarea>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="inputDAC" class="col-sm-4 control-label">Phương án 3</label>
-                                                                <div class="col-sm-8">
-                                                                    <textarea class="form-control" rows="2" col="10" id="inputDAC"></textarea>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="inputDAD" class="col-sm-4 control-label">Phương án 4</label>
-                                                                <div class="col-sm-8">
-                                                                    <textarea class="form-control" rows="2" col="10" id="inputDAD"></textarea>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="inputDA" class="col-sm-4 control-label">Đáp án</label>
-                                                                <div class="col-sm-8">
-                                                                    <input type="text" class="form-control" required="" id="inputDA" placeholder="">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <div class="col-sm-4"></div>
-                                                                <div class="col-sm-8">
-                                                                    <a href="" class="btn btn-success" role="button">Lưu</a>
-                                                                </div>
-                                                            </div>
-                                                           
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <br>
-            <br>
-            <br>
-            <jsp:include page="Footer.jsp"></jsp:include>
-        </div>
-        <script src="assets/JS/angular.min.js" type="text/javascript"></script>
-	   <script src="assets/JQuery/jquery-3.1.1.min.js"></script>
-        <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-	    <script src="assets/JS/Check.js"></script>
-        <script type="text/javascript" src="assets/JS/QLND.js"></script>
-        <script>
-	        var demoApp = angular.module('demoApp', []).controller("InsertMHNDCtrl", ['$scope', function($scope) {
-	            $scope.success = false;
-	            $scope.insert = function() {
-	                $scope.success = true;
-	            }
-	        }]);
-    	</script>
-       <script>
-		$(function(){		   
-			$('#btn-add').click(function(){
-		       alert('Tạo thành công câu hỏi');
-		    });
+															</div>
+														</div>
+														<div class="form-group">
+															<label for="inputNDCH" class="col-sm-4 control-label">Nội
+																dung câu hỏi</label>
+															<div class="col-sm-8">
+																<textarea class="form-control" rows="3" col="10"></textarea>
+															</div>
+														</div>
+														<div class="form-group">
+															<label for="inputDiem" class="col-sm-4 control-label">Điểm</label>
+															<div class="col-sm-8">
+																<input type="text" class="form-control" required=""
+																	id="inputDiem" placeholder="">
+															</div>
+														</div>
+													</form>
+												</div>
+												<div class="col-md-6">
+													<form class="form-horizontal">
+														<div class="form-group">
+															<label for="inputDAA" class="col-sm-4 control-label">Phương
+																án 1</label>
+															<div class="col-sm-8">
+																<textarea class="form-control" rows="2" col="10"
+																	id="inputDAA"></textarea>
+															</div>
+														</div>
+														<div class="form-group">
+															<label for="inputDAB" class="col-sm-4 control-label">Phương
+																án 2</label>
+															<div class="col-sm-8">
+																<textarea class="form-control" rows="2" col="10"
+																	id="inputDAB"></textarea>
+															</div>
+														</div>
+														<div class="form-group">
+															<label for="inputDAC" class="col-sm-4 control-label">Phương
+																án 3</label>
+															<div class="col-sm-8">
+																<textarea class="form-control" rows="2" col="10"
+																	id="inputDAC"></textarea>
+															</div>
+														</div>
+														<div class="form-group">
+															<label for="inputDAD" class="col-sm-4 control-label">Phương
+																án 4</label>
+															<div class="col-sm-8">
+																<textarea class="form-control" rows="2" col="10"
+																	id="inputDAD"></textarea>
+															</div>
+														</div>
+														<div class="form-group">
+															<label for="inputDA" class="col-sm-4 control-label">Đáp
+																án</label>
+															<div class="col-sm-8">
+																<input type="text" class="form-control" required=""
+																	id="inputDA" placeholder="">
+															</div>
+														</div>
+														<div class="form-group">
+															<div class="col-sm-4"></div>
+															<div class="col-sm-8">
+																<a href="" class="btn btn-success" role="button">Lưu</a>
+															</div>
+														</div>
+
+													</form>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<br> <br> <br>
+		<jsp:include page="Footer.jsp"></jsp:include>
+	</div>
+	<script src="assets/JS/angular.min.js" type="text/javascript"></script>
+	<script src="assets/JQuery/jquery-3.1.1.min.js"></script>
+	<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="assets/JS/Check.js"></script>
+	<script type="text/javascript" src="assets/JS/QLND.js"></script>
+	<script>
+		var demoApp = angular.module('demoApp', []).controller(
+				"InsertMHNDCtrl", [ '$scope', function($scope) {
+					$scope.success = false;
+					$scope.insert = function() {
+						$scope.success = true;
+					}
+				} ]);
+	</script>
+	<script>
+		$(function() {
+			$('#btn-add').click(function() {
+				alert('Tạo thành công câu hỏi');
+			});
 		});
-</script>
-</body>
+		</body>
 
-</html>
+		</html>
+	

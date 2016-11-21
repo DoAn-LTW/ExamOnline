@@ -45,7 +45,7 @@ public class UsersDAO {
             ps.setString(2,u.getPassword());
             ps.setString(3,u.getFullname());
             ps.setString(4, u.getGender());
-            ps.setString(5, u.getBirthday());
+            ps.setDate(5, u.getBirthday());
             ps.setString(6, u.getNumberPhone());
             ps.setString(7, u.getAddress());
             ps.setString(8, u.getEmail());
@@ -127,7 +127,7 @@ public class UsersDAO {
             users.setPassword(rs.getString("PASSWORD"));
             users.setFullname(rs.getString("FullName"));
             users.setGender(rs.getString("Gender"));
-            users.setBirthday(rs.getString("Birthday"));
+            users.setBirthday(rs.getDate("Birthday"));
             users.setNumberPhone(rs.getString("NumberPhone"));
             users.setAddress(rs.getString("Address"));
             users.setEmail(rs.getString("Email"));
@@ -144,7 +144,7 @@ public class UsersDAO {
            
             ps.setString(1,u.getFullname());
             ps.setString(2, u.getGender());
-            ps.setString(3, u.getBirthday());
+            ps.setDate(3, u.getBirthday());
             ps.setString(4, u.getNumberPhone());
             ps.setString(5, u.getAddress());
             ps.setString(6, u.getUserName());
@@ -187,7 +187,20 @@ public class UsersDAO {
         }
     	return false;
     }
+    public boolean delete(String userName){
+    	Connection con=DBconnect.getConnecttion();
+    	String sql="delete from users where UserName='"+userName+"'";
+    	PreparedStatement ps;
+    	try {
+            ps=con.prepareCall(sql);
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE,null,e);
+        }
+    	return false;
+    }
     public static void main(String[] args) throws SQLException {
-        UsersDAO usersDAO=new UsersDAO();
+       
     }
 }

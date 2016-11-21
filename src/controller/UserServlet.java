@@ -3,6 +3,7 @@ package controller;
 import dao.RoleDAO;
 import dao.UsersDAO;
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -99,10 +100,11 @@ public class UserServlet extends HttpServlet {
 			}
 			break;
 		case "updateProfile":
+			String date=request.getParameter("birthday");
 			users.setUserName(request.getParameter("UserName"));
 			users.setFullname(request.getParameter("fullname"));
 			users.setGender(request.getParameter("sex"));
-			users.setBirthday(request.getParameter("birthday"));
+			users.setBirthday(Date.valueOf(date));
 			users.setNumberPhone(request.getParameter("numberphone"));
 			users.setAddress(request.getParameter("address"));
 			users.setEmail(request.getParameter("email"));

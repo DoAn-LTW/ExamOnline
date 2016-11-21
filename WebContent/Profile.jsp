@@ -161,10 +161,7 @@
 	                                  <label for="inputBirthday" class="col-sm-2 control-label">Ngày sinh</label>
 	                                  <div class="col-sm-10">
 	                                  <%if(users.getBirthday()!=null) {%>
-	                                    <input name="birthday" type="date" class="form-control" id="inputBirthday" placeholder="" value="<%=users.getBirthday()%>
-	                                    ">
-	                                    <%} else { %>
-	                                    <input name="birthday" type="date" class="form-control" id="inputBirthday" placeholder="" value="">
+	                                    <input name="birthday" type="date" class="form-control" id="inputBirthday" placeholder="" data-date="" data-date-format="dd/MM/yyyy" value="<%=users.getBirthday()%>">
 	                                    <%} %>
 	                                    
 	                                  </div>

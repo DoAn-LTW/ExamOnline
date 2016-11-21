@@ -11,7 +11,7 @@ public class Users {
     private String Password;
     private String Fullname;
     private String Gender;
-    private String Birthday;
+    private Date Birthday;
     private String NumberPhone;
     private String Address;
     private String Email;
@@ -19,7 +19,7 @@ public class Users {
     public Users() {
     }
 
-    public Users(String UserName, String Password, String Fullname, String Gender, String Birthday, String NumberPhone, String Address, String Email, String roleId) {
+    public Users(String UserName, String Password, String Fullname, String Gender, Date Birthday, String NumberPhone, String Address, String Email, String roleId) {
         this.UserName = UserName;
         this.Password = Password;
         this.Fullname = Fullname;
@@ -63,11 +63,11 @@ public class Users {
         this.Gender = Gender;
     }
 
-    public String getBirthday() {
+    public Date getBirthday() {
         return Birthday;
     }
 
-    public void setBirthday(String Birthday) {
+    public void setBirthday(Date Birthday) {
         this.Birthday = Birthday;
     }
 
