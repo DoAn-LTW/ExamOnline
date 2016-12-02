@@ -38,7 +38,7 @@ public class UsersDAO {
     public boolean insertUsers(Users u )
     {
         Connection connect=DBconnect.getConnecttion();
-        String sql="Insert into users values (?,?,?,?,?,?,?,?,?)";
+        String sql="Insert into users values (?,?,?,?,?,?,?,?,?,?)";
         try {
             PreparedStatement ps=connect.prepareCall(sql);
             ps.setString(1,u.getUserName());
@@ -49,7 +49,8 @@ public class UsersDAO {
             ps.setString(6, u.getNumberPhone());
             ps.setString(7, u.getAddress());
             ps.setString(8, u.getEmail());
-            ps.setString(9,u.getRoleId());
+            ps.setString(10,u.getRoleId());
+            ps.setString(9, u.getMaLop());
             ps.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -199,6 +200,19 @@ public class UsersDAO {
             Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE,null,e);
         }
     	return false;
+    }
+    public ArrayList<Users> getDSLop() throws SQLException{
+    	Connection con=DBconnect.getConnecttion();
+    	String sql="Select distinct MaLop from users where RoleID='SV'";
+    	PreparedStatement ps=con.prepareCall(sql);
+    	ResultSet rs=ps.executeQuery();
+    	ArrayList<Users> list=new ArrayList<>();
+    	Users users=new Users();
+    	while(rs.next()){
+    		users.setMaLop(rs.getString("MaLop"));
+    		list.add(users);
+    	}
+    	return list;
     }
     public static void main(String[] args) throws SQLException {
        

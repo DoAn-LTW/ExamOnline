@@ -28,7 +28,6 @@ public class CheckEmailServlet extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         String username=request.getParameter("username");
       if (usersDAO.check(request.getParameter("username"))) {
-    
           response.getWriter().write("<img src=\"assets/Images/not-available.png\" /><span style=\"color:red;margin-left: 10px\">Tên đăng nhập đã tồn tại</span>");
       } else 
           if(username.equals("")) 

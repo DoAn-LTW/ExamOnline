@@ -134,20 +134,20 @@
 							aria-labelledby="Preview">
 							<!-- item-->
 							<div class="dropdown-item noti-title">
-								
+
 								<h5 class="text-overflow">
 									<small>Xin chào <%=users.getUserName()%></small>
 								</h5>
-								
+
 							</div>
 
 							<!-- item-->
-							
+
 							<a href="Profile.jsp?UserName=<%=users.getUserName()%>"
 								class="dropdown-item notify-item"> <i
 								class="zmdi zmdi-account-circle"></i> <span>Profile</span>
 							</a>
-							
+
 							<!-- item-->
 							<a href="Doimatkhau.jsp" class="dropdown-item notify-item"> <i
 								class="zmdi zmdi-lock-open"></i> <span>Đổi mật khẩu</span>
@@ -232,7 +232,7 @@
 								<div class="form-group">
 									<label for="username">* Tên đăng nhập</label> <input
 										name="username" id="username" type="text" class="form-control"
-										placeholder="Tên đăng nhập" ng-model="username"
+										placeholder="" ng-model="username"
 										autocomplete="off" required> <span id="user-result"></span>
 									<!--Dấu check thể hiện việc nhập dữ liệu được nhập là hợp lệ-->
 									<div ng-show="form.username.$dirty && form.username.$invalid"
@@ -244,7 +244,7 @@
 								<div class="form-group">
 									<label for="password">* Mật khẩu</label> <input name="password"
 										id="form-input" ng-model="password" type="password"
-										class="form-control" placeholder="Mật khẩu" ng-minlength="6"
+										class="form-control" placeholder="" ng-minlength="6"
 										ng-maxlength="30" required> <i
 										class="fa fa-check text-success"
 										ng-show="form.password.$dirty && form.password.$valid"></i>
@@ -264,7 +264,7 @@
 								<div class="form-group">
 									<label for="fullname">* Tên người dùng</label> <input
 										name="fullname" id="form-input" type="text"
-										class="form-control" placeholder="Tên người dùng"
+										class="form-control" placeholder=""
 										ng-model="fullname" autocomplete="off" required> <i
 										class="fa fa-check text-success"
 										ng-show="form.fullname.$dirty && form.fullname.$valid"></i>
@@ -281,11 +281,10 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="inputemail">* Email</label> <input
-										name="email" id="form-input" type="email"
-										class="form-control" placeholder="Email"
-										ng-model="email" autocomplete="off" required> <i
-										class="fa fa-check text-success"
+									<label for="inputemail">* Email</label> <input name="email"
+										id="form-input" type="email" class="form-control"
+										placeholder="" ng-model="email" autocomplete="off"
+										required> <i class="fa fa-check text-success"
 										ng-show="form.email.$dirty && form.email.$valid"></i>
 
 									<!--Dấu check thể hiện việc nhập dữ liệu được nhập là hợp lệ-->
@@ -298,6 +297,11 @@
 										<span ng-show="form.email.$error.required">Bạn chưa
 											nhập email</span>
 									</div>
+								</div>
+								<div class="form-group">
+									<label for="inputlop">* Lớp</label> <input name="lop"
+										id="form-input" type="text" class="form-control"
+										placeholder="Nếu là sinh viên thì nhập mã lớp vào đây" autocomplete="off" required>
 								</div>
 								<div class="form-group">
 									<label for="inputRole">* Vai trò</label> <select

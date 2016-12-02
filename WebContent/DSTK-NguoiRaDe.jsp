@@ -211,7 +211,7 @@
 							<div class="card-box table-responsive">
 								<sql:query var="items"
 									sql="SELECT UserName, Password, FullName, Gender, Birthday, NumberPhone, Address, Email 
-                                FROM users where RoleID='QLDE'" />
+                                FROM users where RoleID='QLD'" />
 								<table id="datatable-buttons"
 									class="table table-striped table-bordered">
 									<thead>

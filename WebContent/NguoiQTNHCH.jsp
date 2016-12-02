@@ -35,6 +35,8 @@
 <link href="assets/css/style_OT.css" rel="stylesheet" type="text/css" />
 <link href="assets/font-awesome-4.6.3/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css" />
+<script src="assets/JQuery/jquery-3.1.1.min.js"></script>
+<script src="assets/JS/angular.min.js" type="text/javascript"></script>
 </head>
 
 <body>
@@ -166,46 +168,55 @@
 											<div class="row">
 												<div class="col-md-6">
 													<form method="post" action="MonHocServlet"
-														id="register-form" name="form" ng-submit="insert()"
-														novalidate>
+														class="form-horizontal" id="register-form" name="form"
+														ng-submit="insert()" novalidate>
 														<div class="form-group">
-															<label for="inputMaMH">* Mã môn học</label> <input
-																name="mamh" id="inputMaMH" type="text"
-																class="form-control" placeholder="" ng-model="mamh"
-																autocomplete="off" required> <span
-																id="mh-result"></span>
-															<!--Dấu check thể hiện việc nhập dữ liệu được nhập là hợp lệ-->
+															<label for="inputMaMH" class="col-sm-4 control-label">*
+																Mã môn học</label>
+															<div class="col-sm-8">
+																<input name="mamh" id="inputMaMH" type="text"
+																	class="form-control" placeholder="" ng-model="mamh"
+																	autocomplete="off" required> <span
+																	id="mh-result"></span>
+																<!--Dấu check thể hiện việc nhập dữ liệu được nhập là hợp lệ-->
 
-															<div ng-show="form.mamh.$dirty && form.mamh.$invalid"
-																class="text-danger">
-																<i class="fa fa-times text-danger"></i> <span
-																	ng-show="form.mamh.$error.required">Bạn chưa
-																	nhập mã môn học</span>
+																<div ng-show="form.mamh.$dirty && form.mamh.$invalid"
+																	class="text-danger">
+																	<i class="fa fa-times text-danger"></i> <span
+																		ng-show="form.mamh.$error.required">Bạn chưa
+																		nhập mã môn học</span>
 
+																</div>
 															</div>
 														</div>
 														<div class="form-group">
-															<label for="inputTenMH">* Tên môn học</label> <input
-																name="tenmh" id="inputTenMH" ng-model="tenmh"
-																type="text" class="form-control" placeholder="" required>
-															<i class="fa fa-check text-success"
-																ng-show="form.tenmh.$dirty && form.tenmh.$valid"></i>
+															<label for="inputTenMH" class="col-sm-4 control-label">*
+																Tên môn học</label>
+															<div class="col-sm-8">
+																<input name="tenmh" id="inputTenMH" ng-model="tenmh"
+																	type="text" class="form-control" placeholder=""
+																	required> <i class="fa fa-check text-success"
+																	ng-show="form.tenmh.$dirty && form.tenmh.$valid"></i>
 
-															<div ng-show="form.tenmh.$dirty && form.tenmh.$invalid"
-																class="text-danger">
-																<i class="fa fa-times text-danger"></i> <span
-																	ng-show="form.tenmh.$error.required"> Bạn chưa
-																	nhập tên môn học</span>
+																<div ng-show="form.tenmh.$dirty && form.tenmh.$invalid"
+																	class="text-danger">
+																	<i class="fa fa-times text-danger"></i> <span
+																		ng-show="form.tenmh.$error.required"> Bạn chưa
+																		nhập tên môn học</span>
 
+																</div>
 															</div>
 														</div>
 
-														<button type="submit" class="btn btn-primary"
-															onClick="alert('Tạo thành công môn học')"
-															ng-disabled="!form.$dirty || (form.$dirty && form.$invalid)"
-															style="margin-top: 10px; margin-bottom: 10px">
-															Thêm</button>
-
+														<div class="form-group">
+															<div class="col-sm-offset-4 col-sm-8">
+																<button type="submit" class="btn btn-primary"
+																	onClick="alert('Tạo thành công môn học')"
+																	ng-disabled="!form.$dirty || (form.$dirty && form.$invalid)"
+																	style="margin-top: 10px; margin-bottom: 10px">
+																	Thêm</button>
+															</div>
+														</div>
 													</form>
 													<div class="card-box table-responsive">
 														<sql:query var="items" sql="Select *  from monhoc" />
@@ -223,7 +234,6 @@
 																			<td>${col}</td>
 																		</c:forEach>
 																	</tr>
-
 																</c:forEach>
 															</tbody>
 														</table>
@@ -231,66 +241,80 @@
 												</div>
 												<div class="col-md-6">
 													<form method="post" action="NoiDungThiServlet"
-														id="register-form" name="form1" ng-submit="insert()"
-														novalidate>
+														class="form-horizontal" id="register-form" name="form1"
+														ng-submit="insert()" novalidate>
 														<div class="form-group">
-															<label for="inputMaND">* Mã nội dung</label> <input
-																name="mand" id="inputMaND" type="text"
-																class="form-control" placeholder="" ng-model="mand"
-																autocomplete="off" required> <span
-																id="nd-result"></span>
-															<div ng-show="form1.mand.$dirty && form1.mand.$invalid"
-																class="text-danger">
-																<i class="fa fa-times text-danger"></i> <span
-																	ng-show="form1.mand.$error.required">Bạn chưa
-																	nhập mã nội dung</span>
+															<label for="inputMaND" class="col-sm-4 control-label">*
+																Mã nội dung</label>
+															<div class="col-sm-8">
+																<input name="mand" id="inputMaND" type="text"
+																	class="form-control" placeholder="" ng-model="mand"
+																	autocomplete="off" required> <span
+																	id="nd-result"></span>
+																<div ng-show="form1.mand.$dirty && form1.mand.$invalid"
+																	class="text-danger">
+																	<i class="fa fa-times text-danger"></i> <span
+																		ng-show="form1.mand.$error.required">Bạn chưa
+																		nhập mã nội dung</span>
 
+																</div>
 															</div>
 														</div>
 														<div class="form-group">
-															<label for="inputTenND">* Tên nội dung</label> <input
-																name="tennd" id="inputTenND" ng-model="tennd"
-																type="text" class="form-control" placeholder="" required>
-															<i class="fa fa-check text-success"
-																ng-show="form1.tennd.$dirty && form1.tennd.$valid"></i>
+															<label for="inputTenND" class="col-sm-4 control-label">*
+																Tên nội dung</label>
+															<div class="col-sm-8">
+																<input name="tennd" id="inputTenND" ng-model="tennd"
+																	type="text" class="form-control" placeholder=""
+																	required> <i class="fa fa-check text-success"
+																	ng-show="form1.tennd.$dirty && form1.tennd.$valid"></i>
 
-															<div ng-show="form1.tennd.$dirty && form1.tennd.$invalid"
-																class="text-danger">
-																<i class="fa fa-times text-danger"></i> <span
-																	ng-show="form1.tennd.$error.required"> Bạn chưa
-																	nhập tên nội dung</span>
+																<div
+																	ng-show="form1.tennd.$dirty && form1.tennd.$invalid"
+																	class="text-danger">
+																	<i class="fa fa-times text-danger"></i> <span
+																		ng-show="form1.tennd.$error.required"> Bạn chưa
+																		nhập tên nội dung</span>
 
+																</div>
 															</div>
 														</div>
 														<div class="form-group">
-															<label for="inputMaMH">* Mã môn học</label> <select
-																class="form-control input-sm" name="mamh"
-																ng-model="manh" required>
-																<%
-																	for (MonHoc c : monhocDAO.getlistMH()) {
-																%>
-																<option value=<%=c.getMaMH()%>>
-																	<%=c.getMaMH()%>
-																</option>
-																<%
-																	}
-																%>
-															</select> <i class="fa fa-check text-success"
-																ng-show="form.mamh.$dirty && form.manh.$valid"></i>
-															<div ng-show="form.mamh.$dirty && form.manh.$invalid"
-																class="text-danger"></div>
+															<label for="inputMaMH" class="col-sm-4 control-label">*
+																Mã môn học</label>
+															<div class="col-sm-8">
+																<select class="form-control input-sm" name="mamh"
+																	ng-model="manh" required>
+																	<option value="">Chọn</option>
+																	<%
+																		for (MonHoc c : monhocDAO.getlistMH()) {
+																	%>
+																	<option value=<%=c.getMaMH()%>>
+																		<%=c.getMaMH()%>
+																	</option>
+																	<%
+																		}
+																	%>
+																</select> <i class="fa fa-check text-success"
+																	ng-show="form.mamh.$dirty && form.manh.$valid"></i>
+																<div ng-show="form.mamh.$dirty && form.manh.$invalid"
+																	class="text-danger"></div>
+															</div>
+
 
 														</div>
-
-														<button type="submit" class="btn btn-primary"
-															onClick="alert('Tạo thành công nội dung thi')"
-															ng-disabled="!form1.$dirty || (form1.$dirty && form1.$invalid)"
-															style="margin-top: 10px; margin-bottom: 10px">
-															Thêm</button>
-
+														<div class="form-group">
+															<div class="col-sm-offset-4 col-sm-8">
+																<button type="submit" class="btn btn-primary"
+																	onClick="alert('Tạo thành công nội dung thi')"
+																	ng-disabled="!form1.$dirty || (form1.$dirty && form1.$invalid)"
+																	style="margin-top: 10px; margin-bottom: 10px">
+																	Thêm</button>
+															</div>
+														</div>
 													</form>
 													<div class="card-box table-responsive">
-														<sql:query var="items" sql="Select *  from noidung" />
+														<sql:query var="items" sql="Select *  from noidungthi" />
 														<table class="table table-hover">
 															<thead>
 																<tr>
@@ -340,6 +364,7 @@
 														học </label>
 													<div class="col-sm-8">
 														<select class="form-control input-xs" name="maMH">
+														<option value="">Chọn</option>
 															<%
 																for (MonHoc c : monhocDAO.getlistMH()) {
 															%>
@@ -360,6 +385,7 @@
 														thi </label>
 													<div class="col-sm-8">
 														<select class="form-control input-xs" name="maND">
+														<option value="">Chọn</option>
 															<%
 																for (NoiDung c : noiDungThiDAO.getListND()) {
 															%>
@@ -728,8 +754,8 @@
 		<br> <br> <br>
 		<jsp:include page="Footer.jsp"></jsp:include>
 	</div>
-	<script src="assets/JS/angular.min.js" type="text/javascript"></script>
-	<script src="assets/JQuery/jquery-3.1.1.min.js"></script>
+
+
 	<script src="assets/bootstrap/js/bootstrap.min.js"></script>
 	<script src="assets/JS/Check.js"></script>
 	<script type="text/javascript" src="assets/JS/QLND.js"></script>
@@ -748,7 +774,7 @@
 				alert('Tạo thành công câu hỏi');
 			});
 		});
-		</body>
+	</script>
+</body>
 
-		</html>
-	
+</html>

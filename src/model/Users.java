@@ -15,93 +15,83 @@ public class Users {
     private String NumberPhone;
     private String Address;
     private String Email;
+    private String MaLop;
     private String roleId;
     public Users() {
     }
-
-    public Users(String UserName, String Password, String Fullname, String Gender, Date Birthday, String NumberPhone, String Address, String Email, String roleId) {
-        this.UserName = UserName;
-        this.Password = Password;
-        this.Fullname = Fullname;
-        this.Gender = Gender;
-        this.Birthday = Birthday;
-        this.NumberPhone = NumberPhone;
-        this.Address = Address;
-        this.Email = Email;
-        this.roleId = roleId;
-    }
-
-    public String getUserName() {
-        return UserName;
-    }
-
-    public void setUserName(String UserName) {
-        this.UserName = UserName;
-    }
-
-    public String getPassword() {
-        return Password;
-    }
-
-    public void setPassword(String Password) {
-        this.Password = Password;
-    }
-
-    public String getFullname() {
-        return Fullname;
-    }
-
-    public void setFullname(String Fullname) {
-        this.Fullname = Fullname;
-    }
-
-    public String getGender() {
-        return Gender;
-    }
-
-    public void setGender(String Gender) {
-        this.Gender = Gender;
-    }
-
-    public Date getBirthday() {
-        return Birthday;
-    }
-
-    public void setBirthday(Date Birthday) {
-        this.Birthday = Birthday;
-    }
-
-    public String getNumberPhone() {
-        return NumberPhone;
-    }
-
-    public void setNumberPhone(String NumberPhone) {
-        this.NumberPhone = NumberPhone;
-    }
-
-    public String getAddress() {
-        return Address;
-    }
-
-    public void setAddress(String Address) {
-        this.Address = Address;
-    }
-
-    public String getEmail() {
-        return Email;
-    }
-
-    public void setEmail(String Email) {
-        this.Email = Email;
-    }
-
-    public String getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(String roleId) {
-        this.roleId = roleId;
-    }
-
-    
+	public Users(String userName, String password, String fullname, String gender, Date birthday, String numberPhone,
+			String address, String email, String maLop, String roleId) {
+		super();
+		UserName = userName;
+		Password = password;
+		Fullname = fullname;
+		Gender = gender;
+		Birthday = birthday;
+		NumberPhone = numberPhone;
+		Address = address;
+		Email = email;
+		MaLop = maLop;
+		this.roleId = roleId;
+	}
+	public String getUserName() {
+		return UserName;
+	}
+	public void setUserName(String userName) {
+		UserName = userName;
+	}
+	public String getPassword() {
+		return Password;
+	}
+	public void setPassword(String password) {
+		Password = password;
+	}
+	public String getFullname() {
+		return Fullname;
+	}
+	public void setFullname(String fullname) {
+		Fullname = fullname;
+	}
+	public String getGender() {
+		return Gender;
+	}
+	public void setGender(String gender) {
+		Gender = gender;
+	}
+	public Date getBirthday() {
+		return Birthday;
+	}
+	public void setBirthday(Date birthday) {
+		Birthday = birthday;
+	}
+	public String getNumberPhone() {
+		return NumberPhone;
+	}
+	public void setNumberPhone(String numberPhone) {
+		NumberPhone = numberPhone;
+	}
+	public String getAddress() {
+		return Address;
+	}
+	public void setAddress(String address) {
+		Address = address;
+	}
+	public String getEmail() {
+		return Email;
+	}
+	public void setEmail(String email) {
+		Email = email;
+	}
+	public String getMaLop() {
+		return MaLop;
+	}
+	public void setMaLop(String maLop) {
+		MaLop = maLop;
+	}
+	public String getRoleId() {
+		return roleId;
+	}
+	public void setRoleId(String roleId) {
+		this.roleId = roleId;
+	}
+	
 }

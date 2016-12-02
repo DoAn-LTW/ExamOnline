@@ -63,8 +63,9 @@
 
 <!-- Modernizr js -->
 <script src="assets/JS/modernizr.min.js"></script>
-<script src="assets/JS/angular.min.js" type="text/javascript"></script>
+
 <script src="assets/JS/jquery.min.js"></script>
+<script src="assets/JS/angular.min.js" type="text/javascript"></script>
 
 <link
 	href="assets/material-design-iconic-font/css/material-design-iconic-font.min.css"
@@ -302,7 +303,7 @@
 										<fieldset class=form-group>
 											<label for="input-username" class="col-sm-2">Password</label>
 											<div class="col-sm-10">
-												<input type="text" name="input-password" id="input-password"
+												<input type="password" name="input-password" id="input-password"
 													class="form-control input-sm" value="" required="">
 											</div>
 										</fieldset>
@@ -314,20 +315,7 @@
 													class="form-control input-sm" value="" required="">
 											</div>
 										</fieldset>
-										<fieldset class="form-group">
-											<label for="input-number" class="col-sm-2">Số điện thoại</label>
-											<div class="col-sm-10">
-												<input type="text" name="input-number" id="input-number"
-													class="form-control input-sm" value="" required="">
-											</div>
-										</fieldset>
-										<fieldset class="form-group">
-											<label for="input-email" class="col-sm-2">Email</label>
-											<div class="col-sm-10">
-												<input type="text" name="input-email" id="input-email"
-													class="form-control input-sm" value="" required="">
-											</div>
-										</fieldset>
+										
 										<fieldset class="form-group">
 											<hr>
 											<div class="pull-right">

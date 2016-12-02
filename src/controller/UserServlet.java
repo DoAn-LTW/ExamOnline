@@ -39,7 +39,6 @@ public class UserServlet extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		request.setCharacterEncoding("utf-8");
 		String command = request.getParameter("command");
-		String url = "";
 		Users users = new Users();
 		switch (command) {
 		case "insert":
@@ -48,14 +47,13 @@ public class UserServlet extends HttpServlet {
 			users.setFullname(request.getParameter("fullname"));
 			users.setEmail(request.getParameter("email"));
 			users.setRoleId(request.getParameter("Role"));
+			users.setMaLop(request.getParameter("lop"));
 			usersDAO.insertUsers(users);
 			HttpSession session = request.getSession();
 			if (users != null) {
 				session.setAttribute("insertUsers", users);
-				url = "/DSTaiKhoan.jsp";
-				request.setAttribute("/DSTaiKhoan.jsp", "Tạo thành công người dùng");
+				response.sendRedirect("/ExamOnline/DSTaiKhoan.jsp");
 			}
-
 			break;
 		case "login":
 			users = usersDAO.login(request.getParameter("username"), request.getParameter("password"),
@@ -66,37 +64,30 @@ public class UserServlet extends HttpServlet {
 				if (roles.equals("Admin")) {
 					HttpSession session1 = request.getSession();
 					session1.setAttribute("userAdmin", users);
-					url = "/Admin.jsp";
-					request.setAttribute("/Admin.jsp", "Đăng nhập thành công");
+					response.sendRedirect("/ExamOnline/Admin.jsp");
 				}
 				if (roles.equals("QLNHCH")) {
 					HttpSession session1 = request.getSession();
 					session1.setAttribute("userNHCH", users);
-					url = "/NguoiQTNHCH.jsp";
-					request.setAttribute("/NguoiQTNHCH.jsp", "Đăng nhập thành công");
+					response.sendRedirect("/ExamOnline/NguoiQTNHCH.jsp");
 				}
 				if (roles.equals("QLD")) {
 					HttpSession session1 = request.getSession();
 					session1.setAttribute("userQLDE", users);
-					url = "/NguoiRaDe-QLD.jsp";
-					request.setAttribute("/NguoiRaDe-QLD.jsp", "Đăng nhập thành công");
+					response.sendRedirect("/ExamOnline/NguoiRaDe-QLD.jsp");
 				}
 				if (roles.equals("QLKT")) {
 					HttpSession session1 = request.getSession();
 					session1.setAttribute("userQLKT", users);
-					url = "/NguoiQLKT.jsp";
-					request.setAttribute("/NguoiQLKT.jsp", "Đăng nhập thành công");
+					response.sendRedirect("/ExamOnline/NguoiQLKT.jsp");
 				}
 				if (roles.equals("SV")) {
 					HttpSession session1 = request.getSession();
 					session1.setAttribute("userSV", users);
-					url = "/SinhVien.jsp";
-					request.setAttribute("/SinhVien.jsp", "Đăng nhập thành công");
+					response.sendRedirect("/ExamOnline/SinhVien.jsp");
 				}
 			} else {
-
-				url = "/error.jsp";
-				request.setAttribute("/error.jsp", "Đăng nhập thất bại");
+				response.sendRedirect("/ExamOnline/error.jsp");
 			}
 			break;
 		case "updateProfile":
@@ -119,14 +110,9 @@ public class UserServlet extends HttpServlet {
 			HttpSession session2 = request.getSession();
 			if (users != null) {
 				session2.setAttribute("updateProfile", users);
-				url = "/Profile.jsp?UserName=" + username;
-				request.setAttribute("/Profile.jsp?UserName=" + username, "Tạo thành công người dùng");
-
+				response.sendRedirect("/ExamOnline/Profile.jsp?UserName=" + username);
 			}
-
 			break;
 		}
-		RequestDispatcher rd = getServletContext().getRequestDispatcher(url);
-		rd.forward(request, response);
 	}
 }

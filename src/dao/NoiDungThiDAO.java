@@ -18,7 +18,7 @@ public class NoiDungThiDAO {
 
 	public boolean insertNDThi(NoiDung nd) throws SQLException {
 		Connection connect = DBconnect.getConnecttion();
-		String sql = "Insert into noidung values (?,?,?)";
+		String sql = "Insert into noidungthi values (?,?,?)";
 		try {
 			PreparedStatement ps = connect.prepareCall(sql);
 			ps.setString(1, nd.getMaND());
@@ -34,13 +34,15 @@ public class NoiDungThiDAO {
 
 	public ArrayList<NoiDung> getListND() throws SQLException {
 		Connection con = DBconnect.getConnecttion();
-		String sql = "select MaND from noidung";
+		String sql = "select * from noidungthi";
 		PreparedStatement ps = con.prepareCall(sql);
 		ResultSet rs = ps.executeQuery();
 		ArrayList<NoiDung> list = new ArrayList<>();
 		while (rs.next()) {
 			NoiDung noiDung = new NoiDung();
 			noiDung.setMaND(rs.getString("MaND"));
+			noiDung.setTenND(rs.getString("TenND"));
+			noiDung.setMaMH(rs.getString("MaMH"));
 			list.add(noiDung);
 		}
 		return list;
@@ -48,7 +50,7 @@ public class NoiDungThiDAO {
 
 	public static boolean check(String maND) {
 		Connection con = DBconnect.getConnecttion();
-		String sql = "select * from noidung where MaND='" + maND + "'";
+		String sql = "select * from noidungthi where MaND='" + maND + "'";
 		PreparedStatement ps;
 		try {
 			ps = con.prepareCall(sql);
@@ -65,7 +67,7 @@ public class NoiDungThiDAO {
 	public ArrayList<NoiDung> getListNDwithMH(String maMH) throws SQLException
 	{
 		Connection con=DBconnect.getConnecttion();
-		String sql="select * from noidung where MaMH='"+maMH+"'";
+		String sql="select * from noidungthi where MaMH='"+maMH+"'";
 		PreparedStatement ps=con.prepareCall(sql);
 		ResultSet rs = ps.executeQuery();
 		ArrayList<NoiDung> list=new ArrayList<>();

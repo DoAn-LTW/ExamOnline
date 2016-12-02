@@ -209,7 +209,7 @@
 						<div class="col-sm-12">
 							<div class="card-box table-responsive">
 								<sql:query var="items"
-									sql="SELECT UserName, Password, FullName, Gender, Birthday, NumberPhone, Address, Email 
+									sql="SELECT UserName, Password, FullName, Gender, Birthday, NumberPhone, Address, Email, MaLop 
                                FROM users where RoleID='SV'" />
 								<table id="datatable-buttons"
 									class="table table-striped table-bordered">
@@ -223,6 +223,7 @@
 											<th>Số điện thoại</th>
 											<th>Địa chỉ</th>
 											<th>Email</th>
+											<th>Lớp</th>
 										</tr>
 									</thead>
 									<tbody>

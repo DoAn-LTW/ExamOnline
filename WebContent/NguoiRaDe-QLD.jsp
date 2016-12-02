@@ -4,6 +4,10 @@
     Author     : BAO UY
 --%>
 
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.Connection"%>
 <%@page import="model.Users"%>
 <%@page import="model.MonHoc"%>
 <%@page import="model.NoiDung"%>
@@ -31,10 +35,6 @@
 	rel="stylesheet" type="text/css" />
 <link href="https://fonts.googleapis.com/css?family=Ubuntu"
 	rel="stylesheet">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-</head>
-
 <body>
 	<%
 		Users users = null;
@@ -69,19 +69,10 @@
 						<ul class="nav navbar-nav">
 							<li><a href="Contact.jsp">Liên hệ <span class="sr-only">(current)</span></a></li>
 							<li><a href="#">Hướng dẫn</a></li>
-							<li class="dropdown"><a href="#" class="dropdown-toggle"
-								data-toggle="dropdown" role="button" aria-haspopup="true"
-								aria-expanded="false">Quản lý đề thi <span class="caret"></span></a>
-								<ul class="dropdown-menu">
-									<li><a href="NguoiRaDe-QLD.jsp">Thêm đề thi</a></li>
-									<li><a href="#" id="CSCH">Sửa đề thi</a></li>
-
-								</ul></li>
+							<li><a href="NguoiRaDe-QLD.jsp">Quản lý đề thi</a></li>
 						</ul>
-
 						<ul class="nav navbar-nav navbar-right">
 							<li><a href="Login.jsp" class="glyphicon glyphicon-log-out"></a></li>
-
 						</ul>
 					</div>
 					<!-- /.navbar-collapse -->
@@ -101,32 +92,35 @@
 						<div class="block-user-info block-user-info-responsive logged">
 							<ul class="clearfix">
 								<div class="dropdown dropdown-vta">
-
-									<img alt="" /> <a class="dropdown-toggle dropdown-vta-login"
-										role="button" id="dropdownMenu1" data-toggle="dropdown"> <%
+									<a class="dropdown-toggle dropdown-vta-login" role="button"
+										id="dropdownMenu1" data-toggle="dropdown"> <%
  	if (users != null) {
- %> <span class="hello">Xin chào <%=users.getUserName()%></span> <span
-										class="caret"></span> <%
+ %> <span class="hello">Xin chào <span
+											style="color: #ED7642; font-weight: 600"> <%=users.getUserName()%></span>
+											<span class="caret"></span> <%
  	}
- %>
-									</a>
+ %></a>
 									<ul class="dropdown-menu dropdown-vta-sub-menu"
 										aria-labelledby="dropdownMenu1">
-										<li><a href="Profile.jsp">Thông tin cá nhân</a></li>
+										<li><a
+											href="Profile.jsp?UserName=<%=users.getUserName()%>">Thông
+												tin cá nhân</a></li>
 
-										<li><a href="Doimatkhau.jsp">Đổi mật khẩu</a></li>
+										<li><a
+											href="Doimatkhau.jsp?UserName=<%=users.getUserName()%>">Đổi
+												mật khẩu</a></li>
 										<li><a href="Login.jsp">Thoát</a></li>
 									</ul>
 								</div>
-								</li>
 							</ul>
 						</div>
 					</div>
 				</div>
 				<div class="row">
 					<ol class="breadcrumb">
-						<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-						<li><a href="#">Quản lý đề thi</a></li>
+						<span class="glyphicon glyphicon-home" aria-hidden="true"
+							style="color: #000 !important"></span>
+						<li><a href="OnlineTest.jsp">Trang chủ</a></li>
 						<li class="active">Quản lý đề</li>
 					</ol>
 				</div>
@@ -148,15 +142,16 @@
 								role="tabpanel" aria-labelledby="headingOne">
 								<div class="panel-body">
 									<div class="col-md-6">
-										<div id="main" ng-app="demoApp" ng-controller="InsertMHNDCtrl">
-											<form class="form-horizontal" name="form" ng-submit="login()"
+										<div id="form-taodethi" ng-app="demoApp"
+											ng-controller="InsertMHNDCtrl">
+											<form method="post" action="TaoDeThi" id="login-taodethi"
+												class="form-horizontal" name="form" ng-submit="login()"
 												novalidate>
-
 												<div class="form-group">
 													<label for="inputMD" class="col-sm-4 control-label">Mã
 														đề: </label>
 													<div class="col-xs-8">
-														<input name="inputMD" type="text" class="form-control"
+														<input name="made" type="text" class="form-control"
 															placeholder="" ng-model="made" autocomplete="off"
 															required> <i class="fa fa-check text-success"
 															ng-show="form.made.$dirty && form.made.$valid"></i>
@@ -173,12 +168,33 @@
 
 													</div>
 												</div>
+												<div class="form-group">
+													<label for="inputMD" class="col-sm-4 control-label">Tên
+														đề: </label>
+													<div class="col-xs-8">
+														<input name="tende" type="text" class="form-control"
+															placeholder="" ng-model="tende" autocomplete="off"
+															required> <i class="fa fa-check text-success"
+															ng-show="form.tende.$dirty && form.tende.$valid"></i>
+	
+														<!--Dấu check thể hiệviệc nhập dữ liệu được nhập là hợp lệ-->
 
+														<div ng-show="form.tende.$dirty && form.tende.$invalid"
+															class="text-danger">
+															<i class="fa fa-times text-danger"></i>
+
+															<!--Nếu dữ liệu không hợp lệ-->
+															<span ng-show="form.tende.$error.required"></span>
+														</div>
+
+													</div>
+												</div>
 												<div class="form-group">
 													<label for="mon" class="col-sm-4 control-label">Môn
 														thi: </label>
 													<div class="col-sm-8">
 														<select class="form-control" name="mamh">
+														<option value="">Chọn</option>
 															<%
 																for (MonHoc c : mhDAO.getlistMH()) {
 															%>
@@ -188,76 +204,58 @@
 															<%
 																}
 															%>
-														</select>
+														</select> <i class="fa fa-check text-success"
+															ng-show="form.mamh.$dirty && form.mamh.$valid"></i>
+														<div ng-show="form.mamh.$dirty && form.mamh.$invalid"
+															class="text-danger"></div>
+
 													</div>
 												</div>
 
 												<div class="form-group">
-													<button type="submit" class="btn btn-primary" data-toggle="modal"
-														data-target=".bs-example-modal-sm">Chọn nội dung</button>
 
-													<div class="modal fade bs-example-modal-sm" tabindex="-1"
-														role="dialog" aria-labelledby="mySmallModalLabel"
-														aria-hidden="true">
-														<div class="modal-dialog modal-sm">
-															<div class="modal-content">
-																<label for="noidung" class="col-sm-4 control-label">Nội
-																	dung: </label>
-																<div class="col-sm-8">
-																	<select class="form-control" id="noidung" name="mand">
-																		<%
-																		String maMh=request.getParameter("mamh");
-																			for (NoiDung nd : ndtDAO.getListNDwithMH(maMh)) {
-																		%>
-																		<option value=<%=nd.getMaND()%>>
-																			<%=nd.getMaND()%>
-																		</option>
-																		<%
-																			}
-																		%>
-																	</select>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-												<div class="form-group">
-													<label for="tglb" for="mon" class="col-sm-4 control-label">Thời
-														gian làm bài: </label>
+													<label for="noidung"
+														class="col-sm-4 control-label required">Nội dung:
+													</label>
 													<div class="col-sm-8">
-														<input type="text" id="tglb" class="form-control"
-															name="tg" placeholder="Thời gian làm bài" ng-model="tg"
-															required> <span style="color: red"
-															ng-show="myForm.tg.$dirty && myForm.tg.$invalid">
-															<span ng-show="myForm.tg.$error.required"></span>
-														</span>
+														<select class="form-control" id="noidung" name="mand">
+														<option value="">Chọn</option>
+															<%
+																for (NoiDung nd : ndtDAO.getListND()) {
+															%>
+															<option value=<%=nd.getMaND()%>>
+																<%=nd.getMaND()%>
+															</option>
+															<%
+																}
+															%>
+														</select> <i class="fa fa-check text-success"
+															ng-show="form.mand.$dirty && form.mand.$valid"></i>
+														<div ng-show="form.mand.$dirty && form.mand.$invalid"
+															class="text-danger"></div>
 													</div>
 												</div>
+
 												<div class="form-group">
 													<label for="soch" class="col-sm-4 control-label">Số
 														câu hỏi lấy: </label>
 													<div class="col-sm-8">
-														<input class="form-control" type="number" id="soch"
-															min="1" max="30" name="socauhoi"
-															placeholder="Số câu hỏi sẽ lấy" ng-model="socauhoi"
-															required> <span style="color: red"
-															ng-show="myForm.socauhoi.$dirty && myForm.socauhoi.$invalid">
-															<span ng-show="myForm.socauhoi.$error.required"></span>
+														<input class="form-control" type="text" id="soch" min="1"
+															max="30" name="socauhoi" placeholder="Số câu hỏi sẽ lấy"
+															ng-model="socauhoi" required> <span
+															style="color: red"
+															ng-show="form.socauhoi.$dirty && form.socauhoi.$invalid">
+															<span ng-show="form.socauhoi.$error.required"></span>
 														</span>
 													</div>
 												</div>
+
 												<div class="form-group">
 													<div class="col-sm-4"></div>
 													<div class="col-sm-8">
 														<button type="submit" class="btn btn-danger" id="btn-CN"
-															ng-disabled="myForm.tendethi.$dirty && myForm.tendethi.$invalid
-		                                                       || myForm.made.$dirty && myForm.made.$invalid
-		                                                       || myForm.mon.$dirty && myForm.mon.$invalid
-		                                                       || myForm.tg.$dirty && myForm.tg.$invalid
-		                                                       || myForm.socauhoi.$dirty && myForm.socauhoi.$invalid
-		                                                       || myForm.tg.$dirty && myForm.tg.$invalid">
-															Thêm
-														</button>
+															ng-disabled="!form.$dirty || (form.$dirty && form.$invalid)">
+															Thêm</button>
 													</div>
 												</div>
 											</form>
@@ -278,55 +276,54 @@
 							<div id="collapseTwo" class="panel-collapse collapse"
 								role="tabpanel" aria-labelledby="headingTwo">
 								<div class="panel-body">
+
 									<div class="row">
-										<div class="col-md-4"></div>
-										<div class="col-md-3">
-											<label for="">Lọc nhóm đề thi: </label> <select>
-												<option>Đề 1</option>
-												<option>Đề 2</option>
-												<option>Đề 3</option>
-												<option>Đề 4</option>
-											</select>
+										<%
+											Connection con = null;
+											PreparedStatement ps = null;
+											try {
+												Class.forName("com.mysql.jdbc.Driver");
+												con = DriverManager
+														.getConnection("jdbc:mysql://localhost:3306/examonline" + "?user=root&password=14110143");
+												String sql = "SELECT a.MaMH,MaDe,SLCH, TenMH from "
+														+ "(select MaMH,MaDe,COUNT(dt.MaCH) as SLCH from ctdethi dt inner join cauhoi ch on dt.MaCH=ch.MaCH GROUP BY MaDe) as a "
+														+ "inner JOIN monhoc mh on a.MaMH=mh.MaMH";
+												ps = con.prepareCall(sql);
+												ResultSet rs = ps.executeQuery(sql);
+										%>
+										<div class="table-responsive">
+											<table class="table table-hover">
+												<thead>
+													<tr>
+														<th>Mã đề</th>
+														<th>Môn</th>
+														<th>Số câu hỏi</th>
+														<th>Hành động</th>
+													</tr>
+												</thead>
+												<tbody>
+													<%
+														while (rs != null && rs.next()) {
+													%>
+													<tr>
+														<td><%=rs.getString("MaDe")%></td>
+														<td><%=rs.getString("TenMH")%></td>
+														<td><%=rs.getInt("SLCH")%></td>
+														<td><a href="XoaDeThi?maDe=<%=rs.getString("MaDe")%>"
+															onclick="return confirm('Bạn có chắc chắn muốn xóa?')">Xóa</a></td>
+													</tr>
+													<%
+														}
+													%>
+												</tbody>
+											</table>
+
 										</div>
-										<div class="col-md-3">
-											<button type="submit" class="btn btn-danger">Lọc</button>
-										</div>
-										<div class="col-md-2"></div>
-									</div>
-									<div class="row">
-										<table class="table table-bordered">
-											<thead>
-												<tr>
-													<th>Mã đề</th>
-													<th>Môn</th>
-													<th>Thời gian</th>
-													<th>Người ra đề</th>
-													<th>Xem chi tiết</th>
-													<th>Sửa</th>
-													<th>Xóa</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-												</tr>
-												<tr>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-												</tr>
-											</tbody>
-										</table>
+										<%
+											} catch (Exception e) {
+												out.println(e.getMessage());
+											}
+										%>
 									</div>
 								</div>
 							</div>
@@ -360,6 +357,11 @@
 		function myFunction() {
 			var x = document.getElementById("mhSelect").value;
 			document.getElementById("demo").innerHTML = x;
+		}
+	</script>
+	<script>
+		function myFunction() {
+			document.getElementById("demo").innerHTML = "Xóa thành công đề thi";
 		}
 	</script>
 </body>

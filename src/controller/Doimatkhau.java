@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
@@ -51,7 +52,6 @@ public class Doimatkhau extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		request.setCharacterEncoding("utf-8");
 
-		String url = "";
 		Users users = new Users();
 		String newpass = request.getParameter("newpass");
 		String currentpass = request.getParameter("currentpass");
@@ -69,21 +69,42 @@ public class Doimatkhau extends HttpServlet {
 				users.setUserName(request.getParameter("username"));
 				users.setPassword(request.getParameter("newpass"));
 				usersDAO.updatePass(users);
-				HttpSession session5 = request.getSession();
 				if (users != null) {
-
-					session5.setAttribute("updatePass", users);
-					url = "/LogOut";
-					request.setAttribute("/Login.jsp", "Tạo thành công người dùng");
+					response.sendRedirect("/ExamOnline/Login.jsp");
 				}
+			}
+			else{
+				try (PrintWriter out = response.getWriter()) {
+                    /* TODO output your page here. You may use following sample code. */
+                    out.println("<html>");
+                    out.println("<head>");
+                    out.println("<title>Thông báo</title>");
+                    out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"assets/bootstrap/css/bootstrap.min.css\">");
+                    out.println("</head>");
+                    out.println("<body>");
+                    out.println("<div class=\"alert alert-danger alert-dismissible\" role=\"alert\" style=\"text-align: center\"><strong>Thông báo! </strong"
+                            + ">Xác nhận mật khẩu không đúng, vui lòng nhấn <a href=\"Doimatkhau.jsp?UserName="+username+"\">vào đây</a> để tiếp tục hoặc <a href=\"OnlineTest.jsp\">Trang chủ</a> để quay về trang chủ</div>");
+                    out.println("</body>");
+                    out.println("</html>");
+                }
 			}
 		}
 		else
 		{
-			url="/Doimatkhau.jsp";
-			System.out.println("Mật khẩu hiện tại không đúng");
+			try (PrintWriter out = response.getWriter()) {
+                /* TODO output your page here. You may use following sample code. */
+                out.println("<html>");
+                out.println("<head>");
+                out.println("<title>Thông báo</title>");
+                out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"assets/bootstrap/css/bootstrap.min.css\">");
+                out.println("</head>");
+                out.println("<body>");
+                out.println("<div class=\"alert alert-warning alert-dismissible\" role=\"alert\" style=\"text-align: center\"><strong>Thông báo! </strong"
+                        + ">Mật khẩu không đúng, vui lòng nhấn <a href=\"Doimatkhau.jsp?UserName="+username+"\">vào đây</a> và tiếp tục hoặc <a href=\"OnlineTest.jsp\">Trang chủ</a> để quay về trang chủ</div>");
+                out.println("</body>");
+                out.println("</html>");
+            }
 		}
-		RequestDispatcher rd = getServletContext().getRequestDispatcher(url);
-		rd.forward(request, response);
+	
 	}
 }

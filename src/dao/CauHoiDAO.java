@@ -74,4 +74,24 @@ public class CauHoiDAO {
         }
         return list;
 	}
+	//random cau hoi
+	public ArrayList<CauHoi> randomCH(String maMH,String maND, String SL) throws SQLException{
+		Connection con=DBconnect.getConnecttion();
+		ArrayList<CauHoi> list=new ArrayList<>();
+		String sql="select MaCH from cauhoi where MaMH='"+maMH+"' and MaND='"+maND+"' ORDER BY RAND() LIMIT "+SL+"";
+		PreparedStatement ps=con.prepareCall(sql);
+		ResultSet rs=ps.executeQuery();
+        while(rs.next()){
+        	CauHoi cauHoi=new CauHoi();
+        	cauHoi.setMaCH(rs.getString("MaCH"));
+            list.add(cauHoi);
+        }
+        return list;
+		
+	}
+	 public static void main(String[] args) throws SQLException {
+	        CauHoiDAO cauHoiDAO=new CauHoiDAO();
+	        for(CauHoi ch:cauHoiDAO.randomCH("LTW","Servlet","5"))
+	        	System.out.println(ch.getMaCH());       
+	    }
 }
