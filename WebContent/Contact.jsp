@@ -58,7 +58,7 @@
                 <div class="row">
                     <ol class="breadcrumb">
                         <li ><span id="btn-home" class="glyphicon glyphicon-home" aria-hidden="true"></span>
-                            <a href="OnlineTest.jsp">Trang chủ</a>
+                            <a href="index.jsp">Trang chủ</a>
                         </li>
                         <li class="active">Liên hệ</li>
                     </ol>

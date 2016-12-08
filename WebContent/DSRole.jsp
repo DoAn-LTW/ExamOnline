@@ -4,6 +4,11 @@
     Author     : Kelvin
 --%>
 
+<%@page import="connect.DBconnect"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.Connection"%>
 <%@page import="javax.jws.soap.SOAPBinding.Use"%>
 <%@page import="model.Users"%>
 <%@page import="dao.UsersDAO"%>
@@ -12,57 +17,25 @@
 <%@ page language="java" contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
-<sql:setDataSource driver="com.mysql.jdbc.Driver"
-	url="jdbc:mysql://localhost:3306/examonline" user="root"
-	password="14110143" />
 <!DOCTYPE html>
 <html>
 
 <!-- Mirrored from coderthemes.com/uplon_1.4/light/tables-datatable.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 14 Oct 2016 16:07:41 GMT -->
 
 <head>
-<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- App title -->
 <title>Admin - Danh sách tài khoản</title>
 
-<!-- DataTables -->
-<link href="assets/plugins/datatables/dataTables.bootstrap4.min.css"
-	rel="stylesheet" type="text/css" />
-<link href="assets/plugins/datatables/buttons.bootstrap4.min.css"
-	rel="stylesheet" type="text/css" />
 <!-- Responsive datatable examples -->
 <link href="assets/plugins/datatables/responsive.bootstrap4.min.css"
 	rel="stylesheet" type="text/css" />
-<link href="assets/plugins/bootstrap-sweetalert/sweet-alert.css"
-	rel="stylesheet" type="text/css" />
-<!-- Switchery css -->
-<link href="assets/plugins/switchery/switchery.min.css" rel="stylesheet" />
-
 <!-- App CSS -->
 <link href="assets/css/style.css" rel="stylesheet" type="text/css" />
-<script>
-	(function(i, s, o, g, r, a, m) {
-		i['GoogleAnalyticsObject'] = r;
-		i[r] = i[r] || function() {
-			(i[r].q = i[r].q || []).push(arguments)
-		}, i[r].l = 1 * new Date();
-		a = s.createElement(o), m = s.getElementsByTagName(o)[0];
-		a.async = 1;
-		a.src = g;
-		m.parentNode.insertBefore(a, m)
-	})(window, document, 'script',
-			'../../../www.google-analytics.com/analytics.js', 'ga');
 
-	ga('create', 'UA-79190402-1', 'auto');
-	ga('send', 'pageview');
-</script>
-
-<!-- Modernizr js -->
-<script src="assets/JS/modernizr.min.js"></script>
 <script src="assets/JS/angular.min.js" type="text/javascript"></script>
-<script src="assets/js/jquery.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(
 			function() {
@@ -72,7 +45,7 @@
 					var role_id = $(this).val();
 					x_timer = setTimeout(function() {
 						check_roleid_ajax(role_id);
-					}, 100);
+					}, 1000);
 				});
 
 				function check_roleid_ajax(roleid) {
@@ -86,8 +59,7 @@
 				}
 			});
 </script>
-<link
-	href="assets/material-design-iconic-font/css/material-design-iconic-font.min.css"
+<link href="assets/font-awesome-4.6.3/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css" />
 
 </head>
@@ -155,7 +127,8 @@
 							</div>
 
 							<!-- item-->
-							<a href="Profile.jsp?UserName=<%=users.getUserName()%>" class="dropdown-item notify-item"> <i
+							<a href="Profile.jsp?UserName=<%=users.getUserName()%>"
+								class="dropdown-item notify-item"> <i
 								class="zmdi zmdi-account-circle"></i> <span>Profile</span>
 							</a>
 							<!-- item-->
@@ -181,14 +154,11 @@
 					<ul>
 						<li class="text-muted menu-title"><i class="fa fa-users"
 							aria-hidden="true"></i> Quản lý tài khoản</li>
-						<li class="has_sub"><a href="InsertUsers.jsp"
-							class="waves-effect" id="DSTK"><span
-								style="margin-left: 20px">Thêm tài tài khoản</span> </a></li>
 						<li class="has_sub"><a href="DSTaiKhoan.jsp"
-							class="waves-effect" id="DSTK"><span
-								style="margin-left: 20px">Danh sách tài khoản</span> </a></li>
+							class="waves-effect" id="DSTK"><i class="fa fa-user" aria-hidden="true"></i><span
+								style="margin-left: 20px"> Danh sách tài khoản</span> </a></li>
 						<li class="has_sub"><a href="javascript:void(0);"
-							class="waves-effect"><span style="margin-left: 20px">Chi
+							class="waves-effect"><i class="fa fa-info" aria-hidden="true"></i> <span style="margin-left: 20px">Chi
 									tiết </span> <span class="menu-arrow"></span></a>
 							<ul class="list-unstyled">
 								<li><a href="DSTK-NQTNHCauHoi.jsp" id="DSTK-QTNHCH">Người
@@ -199,7 +169,7 @@
 										quản trị kỳ thi</a></li>
 								<li><a href="DSTKSinhVien.jsp" id="DSTK-SV">Sinh viên</a></li>
 							</ul></li>
-						<li class="has_sub"><a href="DSRole.jsp" class="waves-effect"><span
+						<li class="has_sub"><a href="DSRole.jsp" class="waves-effect"><i class="fa fa-tachometer" aria-hidden="true"></i><span
 								style="margin-left: 20px"> Vai trò </span></a></li>
 
 					</ul>
@@ -207,7 +177,6 @@
 				</div>
 				<!-- Sidebar -->
 				<div class="clearfix"></div>
-
 			</div>
 		</div>
 		<!-- Left Sidebar-->
@@ -224,7 +193,7 @@
 									HCMUTE <small>EXAM</small>
 								</h4>
 								<ol class="breadcrumb ">
-									<li><a href="OnlineTest.jsp">Trang chủ</a></li>
+									<li><a href="index.jsp">Trang chủ</a></li>
 									<li><a href="Admin.jsp">Admin</a></li>
 									<li class="active">Danh sách tài khoản</li>
 								</ol>
@@ -277,29 +246,90 @@
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-sm-12">
-							<div class="card-box table-responsive">
-								<sql:query var="items" sql="Select RoleID, RoleName from role" />
-								<table id="datatable-buttons"
-									class="table table-striped table-bordered">
-									<thead>
-										<tr>
-											<th>Mã vai trò</th>
-											<th>Tên vai trò</th>
-										</tr>
-									</thead>
-									<tbody>
-										<c:forEach items="${items.rowsByIndex}" var="row">
-											<tr>
-												<c:forEach items="${row}" var="col">
-													<td>${col}</td>
+						<%
+							Connection connect = null;
+							PreparedStatement ps = null;
+							try {
+								connect=DBconnect.getConnecttion();
+								String sql = "select * from role";
+								ps = connect.prepareCall(sql);
+								ResultSet rs = ps.executeQuery(sql);
+						%>
+						<div class="table-responsive">
+							<table class="table table-hover">
+								<thead>
+									<tr>
+										<th>Mã vai trò</th>
+										<th>Tên vai trò</th>
+										<th>Hành động</th>
+									</tr>
+								</thead>
+								<tbody>
+									<%
+										while (rs != null && rs.next()) {
+									%>
+									<tr>
 
-												</c:forEach>
-											</tr>
+										<td><%=rs.getString("RoleID")%></td>
+										<td><%=rs.getString("RoleName")%></td>
+										<td><a data-toggle="modal" href='#form-update-role'
+											data-target="#form-update-role"
+											data-roleid='<%=rs.getString("RoleID")%>'
+											data-rolename='<%=rs.getString("RoleName")%>'>Edit</a> || <a
+											onclick="return confirm('Bạn có chắc chắn muốn xóa?')"
+											href="DeleteUser?command=deleteRole&RoleID=<%=rs.getString("RoleID")%>">Delete</a>
+										</td>
+									</tr>
+									<%
+										}
+									%>
+								</tbody>
+							</table>
+						</div>
+						<%
+							} catch (Exception e) {
+								out.println(e.getMessage());
+							}
+						%>
+					</div>
+					<div class="modal fade" id="form-update-role">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal"
+										aria-hidden="true">&times;</button>
+									<h4 class="modal-title">Modifier account</h4>
+								</div>
+								<div class="modal-body">
+									<form action="Update" method="POST" class="form-horizontal"
+										role="form">
+										<fieldset class="form-group">
+											<label for="input-username" class="col-sm-2">Mã vai trò</label>
+											<div class="col-sm-10">
+												<input readonly type="text" name="roleid" id="input-roleid"
+													class="form-control input-sm" value="" required="">
+											</div>
+										</fieldset>
 
-										</c:forEach>
-									</tbody>
-								</table>
+										<fieldset class=form-group>
+											<label for="input-username" class="col-sm-2">Tên vai trò</label>
+											<div class="col-sm-10">
+												<input type="text" name="rolename" id="input-rolename"
+													class="form-control input-sm" value="" required="">
+											</div>
+										</fieldset>
+										<fieldset class="form-group">
+											<hr>
+											<div class="pull-right">
+											<input type="hidden" value="updateRole" name="command">
+												<button type="submit" class="btn btn-primary btn-sm">Save
+													changes</button>
+												<button type="button" class="btn btn-default btn-sm"
+													data-dismiss="modal">Close</button>
+											</div>
+										</fieldset>
+									</form>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -318,53 +348,10 @@
 	<script src="assets/JS/tether.min.js"></script>
 	<!-- Tether for Bootstrap -->
 	<script src="assets/JS/bootstrap.min.js"></script>
-	<script src="assets/JS/detect.js"></script>
-	<script src="assets/JS/fastclick.js"></script>
-	<script src="assets/JS/jquery.blockUI.js"></script>
-	<script src="assets/JS/waves.js"></script>
-	<script src="assets/JS/jquery.nicescroll.js"></script>
-	<script src="assets/JS/jquery.scrollTo.min.js"></script>
-	<script src="assets/JS/jquery.slimscroll.js"></script>
-	<script src="assets/plugins/switchery/switchery.min.js"></script>
-
-	<!-- Sweet Alert js -->
-	<script src="assets/plugins/bootstrap-sweetalert/sweet-alert.min.js"
-		type="text/javascript"></script>
-	<script src="assets/pages/jquery.sweet-alert.init.js"
-		type="text/javascript"></script>
-	<!-- Required datatable js -->
-	<script src="assets/plugins/datatables/jquery.dataTables.min.js"></script>
-	<script src="assets/plugins/datatables/dataTables.bootstrap4.min.js"></script>
-	<!-- Buttons examples -->
-	<script src="assets/plugins/datatables/dataTables.buttons.min.js"></script>
-	<script src="assets/plugins/datatables/buttons.bootstrap4.min.js"></script>
-	<script src="assets/plugins/datatables/jszip.min.js"></script>
-	<script src="assets/plugins/datatables/pdfmake.min.js"></script>
-	<script src="assets/plugins/datatables/vfs_fonts.js"></script>
-	<script src="assets/plugins/datatables/buttons.html5.min.js"></script>
-	<script src="assets/plugins/datatables/buttons.print.min.js"></script>
-	<script src="assets/plugins/datatables/buttons.colVis.min.js"></script>
-	<!-- Responsive examples -->
-	<script src="assets/plugins/datatables/dataTables.responsive.min.js"></script>
-	<script src="assets/plugins/datatables/responsive.bootstrap4.min.js"></script>
-
+	
 	<script src="assets/JS/jquery.core.js"></script>
 	<script src="assets/JS/jquery.app.js"></script>
-	<script type="text/javascript">
-		$(document).ready(
-				function() {
-					$('#datatable').DataTable();
-
-					//Buttons examples
-					var table = $('#datatable-buttons').DataTable({
-						lengthChange : false,
-						buttons : [ 'copy', 'excel', 'pdf', 'colvis' ]
-					});
-
-					table.buttons().container().appendTo(
-							'#datatable-buttons_wrapper .col-md-6:eq(0)');
-				});
-	</script>
+	
 	<script>
 		var demoApp = angular.module('demoApp', []).controller(
 				"InsertRoleCtrl", [ '$scope', function($scope) {
@@ -373,6 +360,19 @@
 						$scope.success = true;
 					}
 				} ]);
+	</script>
+	<script>
+		$('#form-update-role').on('show.bs.modal', function (event) {
+		  var a = $(event.relatedTarget) // Button that triggered the modal
+		  var roleid = a.data('roleid') // Extract info from data-* attributes
+		  var rolename = a.data('rolename') // Extract info from data-* attributes
+		
+		  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+		  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+		  $('#input-roleid').val(roleid)
+		  $('#input-rolename').val(rolename)
+	
+		})
 	</script>
 </body>
 

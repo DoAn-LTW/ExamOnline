@@ -34,6 +34,27 @@ public class UsersDAO {
         }
         return list;
     }
+    public ArrayList<Users> getListUserswithRole(String RoleID) throws SQLException
+    {
+        Connection connect=DBconnect.getConnecttion();
+        String sql="Select *  from users where RoleID='"+RoleID+"'";
+        PreparedStatement ps=connect.prepareCall(sql);
+        ResultSet rs=ps.executeQuery();
+        ArrayList<Users> list=new ArrayList<>();
+        while(rs.next()){
+            Users users=new Users();
+            users.setUserName(rs.getString("UserName"));
+            users.setPassword(rs.getString("PASSWORD"));
+            users.setFullname(rs.getString("FullName"));
+            users.setGender(rs.getString("Gender"));
+            users.setBirthday(rs.getDate("Birthday"));
+            users.setNumberPhone(rs.getString("NumberPhone"));
+            users.setAddress(rs.getString("Address"));
+            users.setRoleId(rs.getString("RoleID"));
+            list.add(users);
+        }
+        return list;
+    }
     // them nguoi dùng
     public boolean insertUsers(Users u )
     {
@@ -100,13 +121,17 @@ public class UsersDAO {
             String sql = "select * from users where UserName='" + username + "' and PASSWORD='" + password + "' and RoleID='"+roleid+"'";
             PreparedStatement ps;
             try {
-                    ps = (PreparedStatement) con.prepareStatement(sql);
+                    ps = con.prepareStatement(sql);
                     ResultSet rs = ps.executeQuery();
                     if (rs.next()) {
                         Users users=new Users();
                         users.setUserName(rs.getString("UserName"));
-                        users.setPassword(rs.getString("PASSWORD"));
-                        users.setRoleId(rs.getString("RoleID"));
+                        users.setFullname(rs.getString("FullName"));
+                        users.setGender(rs.getString("Gender"));
+                        users.setBirthday(rs.getDate("Birthday"));
+                        users.setNumberPhone(rs.getString("NumberPhone"));
+                        users.setAddress(rs.getString("Address"));
+                        users.setEmail(rs.getString("Email"));
                             con.close();
                             return users;
                     }
@@ -132,19 +157,38 @@ public class UsersDAO {
             users.setNumberPhone(rs.getString("NumberPhone"));
             users.setAddress(rs.getString("Address"));
             users.setEmail(rs.getString("Email"));
+            users.setMaLop(rs.getString("MaLop"));
         }
         return users;
     }
     // Update thông tin users
-    public boolean updateUsers(Users u) throws SQLException
+    public boolean updateUsers1(Users u) throws SQLException
+    {
+        Connection con=DBconnect.getConnecttion();
+        String sql="Update users set PASSWORD=?, FullName=?, NumberPhone=?, Address=?, Email=? where UserName=?";
+        try {
+            PreparedStatement ps=con.prepareCall(sql);
+            ps.setString(1, u.getPassword());
+            ps.setString(2,u.getFullname());
+            ps.setString(3, u.getNumberPhone());
+            ps.setString(4, u.getAddress());
+            ps.setString(5, u.getEmail());
+            ps.setString(6, u.getUserName());
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+             Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE,null,e);
+        }
+        return false;
+    }
+    public boolean updateUsers2(Users u) throws SQLException
     {
         Connection con=DBconnect.getConnecttion();
         String sql="Update users set FullName=?, Gender=?, Birthday=?, NumberPhone=?, Address=? where UserName=?";
         try {
             PreparedStatement ps=con.prepareCall(sql);
-           
-            ps.setString(1,u.getFullname());
-            ps.setString(2, u.getGender());
+            ps.setString(1, u.getFullname());
+            ps.setString(2,u.getGender());
             ps.setDate(3, u.getBirthday());
             ps.setString(4, u.getNumberPhone());
             ps.setString(5, u.getAddress());
@@ -207,13 +251,15 @@ public class UsersDAO {
     	PreparedStatement ps=con.prepareCall(sql);
     	ResultSet rs=ps.executeQuery();
     	ArrayList<Users> list=new ArrayList<>();
-    	Users users=new Users();
+    	
     	while(rs.next()){
+    		Users users=new Users();
     		users.setMaLop(rs.getString("MaLop"));
     		list.add(users);
     	}
     	return list;
     }
+  
     public static void main(String[] args) throws SQLException {
        
     }

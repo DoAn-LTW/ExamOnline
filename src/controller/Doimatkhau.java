@@ -83,7 +83,7 @@ public class Doimatkhau extends HttpServlet {
                     out.println("</head>");
                     out.println("<body>");
                     out.println("<div class=\"alert alert-danger alert-dismissible\" role=\"alert\" style=\"text-align: center\"><strong>Thông báo! </strong"
-                            + ">Xác nhận mật khẩu không đúng, vui lòng nhấn <a href=\"Doimatkhau.jsp?UserName="+username+"\">vào đây</a> để tiếp tục hoặc <a href=\"OnlineTest.jsp\">Trang chủ</a> để quay về trang chủ</div>");
+                            + ">Xác nhận mật khẩu không đúng, vui lòng nhấn <a href=\"Doimatkhau.jsp?UserName="+username+"\">vào đây</a> để tiếp tục hoặc <a href=\"index.jsp\">Trang chủ</a> để quay về trang chủ</div>");
                     out.println("</body>");
                     out.println("</html>");
                 }
@@ -100,7 +100,7 @@ public class Doimatkhau extends HttpServlet {
                 out.println("</head>");
                 out.println("<body>");
                 out.println("<div class=\"alert alert-warning alert-dismissible\" role=\"alert\" style=\"text-align: center\"><strong>Thông báo! </strong"
-                        + ">Mật khẩu không đúng, vui lòng nhấn <a href=\"Doimatkhau.jsp?UserName="+username+"\">vào đây</a> và tiếp tục hoặc <a href=\"OnlineTest.jsp\">Trang chủ</a> để quay về trang chủ</div>");
+                        + ">Mật khẩu không đúng, vui lòng nhấn <a href=\"Doimatkhau.jsp?UserName="+username+"\">vào đây</a> và tiếp tục hoặc <a href=\"index.jsp\">Trang chủ</a> để quay về trang chủ</div>");
                 out.println("</body>");
                 out.println("</html>");
             }

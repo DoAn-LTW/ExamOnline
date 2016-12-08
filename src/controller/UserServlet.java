@@ -46,6 +46,7 @@ public class UserServlet extends HttpServlet {
 			users.setPassword(request.getParameter("password"));
 			users.setFullname(request.getParameter("fullname"));
 			users.setEmail(request.getParameter("email"));
+			users.setNumberPhone(request.getParameter("numberphone"));
 			users.setRoleId(request.getParameter("Role"));
 			users.setMaLop(request.getParameter("lop"));
 			usersDAO.insertUsers(users);
@@ -98,10 +99,8 @@ public class UserServlet extends HttpServlet {
 			users.setBirthday(Date.valueOf(date));
 			users.setNumberPhone(request.getParameter("numberphone"));
 			users.setAddress(request.getParameter("address"));
-			users.setEmail(request.getParameter("email"));
-
 			try {
-				usersDAO.updateUsers(users);
+				usersDAO.updateUsers2(users);
 			} catch (SQLException ex) {
 				Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
 			}

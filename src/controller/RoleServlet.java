@@ -16,41 +16,33 @@ import model.Role;
  */
 public class RoleServlet extends HttpServlet {
 
-    RoleDAO roleDAO=new RoleDAO();
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        
-    }
+	RoleDAO roleDAO = new RoleDAO();
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("utf-8");
-        String command=request.getParameter("command");
-       String url="";
-       Role role=new Role();
-       switch(command){
-           case("insertRole"):
-                   role.setRoleID(request.getParameter("roleid"));
-                   role.setRoleName(request.getParameter("rolename"));
-                   roleDAO.insertRole(role);
-                   HttpSession session=request.getSession();
-                    if(role!=null)
-                    {
-                         session.setAttribute("insertRole", role);
-                         url="/DSRole.jsp";
-                         request.setAttribute("/DSRole.jsp", "Tạo thành công vai trò");
-                    }
-                    else{
-                        url="/Admin.jsp";
-                        request.setAttribute("/Admin.jsp", "Tạo thành công thất bại");
-                    }
-                        break;
-       }
-       RequestDispatcher rd=getServletContext().getRequestDispatcher(url);
-       rd.forward(request, response);
-    }
-       
- }
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		response.setContentType("text/html;charset=UTF-8");
+		request.setCharacterEncoding("utf-8");
+		String command = request.getParameter("command");
+		Role role = new Role();
+		switch (command) {
+		case ("insertRole"):
+			role.setRoleID(request.getParameter("roleid"));
+			role.setRoleName(request.getParameter("rolename"));
+			roleDAO.insertRole(role);
+			if (role != null)
+				response.sendRedirect("/ExamOnline/DSRole.jsp");
+			else
+				response.sendRedirect("/ExamOnline/Admin.jsp");
+			break;
+		}
+
+	}
+
+}

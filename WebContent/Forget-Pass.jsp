@@ -68,7 +68,7 @@
             <div class="m-t-20">
                 <div class="text-xs-center">
                     <p class="text-white">Return to<a href="Login.jsp" class="text-white m-l-5"><b>Sign In</b></a> 
-                        and <a href="OnlineTest.jsp" class="text-white m-l-5"><b>Home</b></a></p>
+                        and <a href="index.jsp" class="text-white m-l-5"><b>Home</b></a></p>
                 </div>
             </div>
 

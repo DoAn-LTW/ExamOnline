@@ -54,7 +54,7 @@
 								class="icon-bar"></span> <span class="icon-bar"></span> <span
 								class="icon-bar"></span>
 						</button>
-						<a class="navbar-brand" href="OnlineTest.jsp"
+						<a class="navbar-brand" href="index.jsp"
 							data-toggle="tooltip" data-placement="top" title="Trang chủ">
 							<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
 						</a>

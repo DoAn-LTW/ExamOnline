@@ -62,6 +62,34 @@ public class MonhocDAO {
          }
          return false;
     }
+    public boolean update(MonHoc mh){
+    	Connection connect=DBconnect.getConnecttion();
+        String sql="update monhoc set TenMH=? where MaMH=?";
+        PreparedStatement ps;
+        try {
+            ps=connect.prepareCall(sql);
+            ps.setString(1, mh.getTenMH());
+            ps.setString(2, mh.getMaMH());
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            Logger.getLogger(MonhocDAO.class.getName()).log(Level.SEVERE,null,e);
+        }
+        return false;
+    }
+    public boolean delete(String maMH){
+		Connection connect=DBconnect.getConnecttion();
+        String sql="delete from monhoc where MaMH='"+maMH+"'";
+        PreparedStatement ps;
+        try {
+            ps=connect.prepareCall(sql);
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            Logger.getLogger(MonhocDAO.class.getName()).log(Level.SEVERE,null,e);
+        }
+        return false;
+	}
     public static void main(String[] args) {
         
     }

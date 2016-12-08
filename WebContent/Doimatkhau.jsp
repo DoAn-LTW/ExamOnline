@@ -4,7 +4,7 @@
     <%@ page import="dao.UsersDAO" %>
 <!-- Mirrored from coderthemes.com/uplon_1.4/light/pages-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 14 Oct 2016 16:08:11 GMT -->
 <head>
-        <meta charset="utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc.">
         <meta name="author" content="Coderthemes">
@@ -98,7 +98,7 @@
             <div class="m-t-20">
                 <div class="text-xs-center">
                     <p class="text-white">Return to<a href="Login.jsp" class="text-white m-l-5"><b>Sign In</b></a> 
-                        or <a href="OnlineTest.jsp" class="text-white m-l-5"><b>Home</b></a></p>
+                        or <a href="index.jsp" class="text-white m-l-5"><b>Home</b></a></p>
                 </div>
             </div>
         </div>

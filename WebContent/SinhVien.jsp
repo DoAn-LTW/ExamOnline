@@ -4,6 +4,14 @@
     Author     : BAO UY
 --%>
 
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.sql.Date"%>
+<%@page import="java.sql.Time"%>
+<%@page import="dao.KyThiDAO"%>
+<%@page import="model.KyThi"%>
+<%@page import="model.DeThi"%>
+<%@page import="dao.DeThiDAO"%>
 <%@page import="model.Users"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -35,6 +43,8 @@
 		if (session.getAttribute("userSV") != null) {
 			users = (Users) session.getAttribute("userSV");
 		}
+		DeThiDAO deThiDAO = new DeThiDAO();
+		KyThiDAO kyThiDAO=new KyThiDAO();
 	%>
 	<div class="wapper">
 		<jsp:include page="Header.jsp"></jsp:include>
@@ -51,7 +61,7 @@
 								class="icon-bar"></span> <span class="icon-bar"></span> <span
 								class="icon-bar"></span>
 						</button>
-						<a class="navbar-brand" href="OnlineTest.jsp"> <span
+						<a class="navbar-brand" href="index.jsp"> <span
 							class="glyphicon glyphicon-home" aria-hidden="true"></span></a>
 					</div>
 
@@ -85,11 +95,12 @@
 							<ul class="clearfix">
 								<div class="dropdown dropdown-vta">
 									<a class="dropdown-toggle dropdown-vta-login" role="button"
-									id="dropdownMenu1" data-toggle="dropdown"> 
-									<%if (users != null) {%> 
-									<span class="hello">Xin chào <span
-										style="color: #ED7642; font-weight: 600"><%=users.getUserName()%></span></span>
-									<span class="caret"></span></a>
+										id="dropdownMenu1" data-toggle="dropdown"> <%
+ 	if (users != null) {
+ %>
+										<span class="hello">Xin chào <span
+											style="color: #ED7642; font-weight: 600"><%=users.getFullname()%></span></span>
+										<span class="caret"></span></a>
 									<ul class="dropdown-menu dropdown-vta-sub-menu"
 										aria-labelledby="dropdownMenu1">
 
@@ -110,15 +121,22 @@
 						</div>
 					</div>
 				</div>
-				
+				<div class="row">
+					<h3 id="DSDT">Danh sách các đề thi</h3>
+				</div>
 				<div class="row">
 					<div class="customDiv-5">
 						<div class="list-group">
-							<a href="SinhVien_ThiWeb.jsp" class="list-group-item">Bài thi
-								giữa kì lập trình web</a> <a href="Bài thi giữa kì cơ sở dữ liệu"
-								class="list-group-item">Bài thi giữa kì cơ sở dữ liệu</a> <a
-								href="Bài thi giữa kì công nghệ phần mềm"
-								class="list-group-item">Bài thi giữa kì công nghệ phần mềm</a>
+						
+							<%
+								for (DeThi dt : deThiDAO.getDSDTuser(users.getUserName())) {
+
+							%>
+							
+							<a href="Thi.jsp?UserName=<%=users.getUserName()%>&maDe=<%=dt.getMaDe()%>&pages=1&sthi=0" class="list-group-item"><%=dt.getTenDe()%></a>
+							<%
+								}
+							%>
 
 						</div>
 					</div>

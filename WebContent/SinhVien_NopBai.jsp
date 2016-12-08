@@ -4,146 +4,195 @@
     Author     : BAO UY
 --%>
 
+<%@page import="dao.DeThiDAO"%>
+<%@page import="model.DeThi"%>
+<%@page import="dao.CauHoiDAO"%>
+<%@page import="dao.ThiDAO"%>
+<%@page import="model.Users"%>
+<%@page import="dao.UsersDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 
 <head>
-    <title>Kết quả bài làm</title>
-    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="assets/css/style_OT.css" rel="stylesheet" type="text/css" />
-    <!-- Latest compiled and minified CSS -->
-    <!-- Optional theme -->
-    <link href="assets/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
-    <!-- Latest compiled and minified JavaScript -->
-    <link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="assets/material-design-iconic-font/css/material-design-iconic-font.min.css" rel="stylesheet" type="text/css" />
-    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+<title>Kết quả bài làm</title>
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="assets/css/style_OT.css" rel="stylesheet" type="text/css" />
+<!-- Latest compiled and minified CSS -->
+<!-- Optional theme -->
+<link href="assets/bootstrap/css/bootstrap-theme.min.css"
+	rel="stylesheet" type="text/css" />
+<!-- Latest compiled and minified JavaScript -->
+<link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet"
+	type="text/css" />
+<link
+	href="assets/material-design-iconic-font/css/material-design-iconic-font.min.css"
+	rel="stylesheet" type="text/css" />
+<link href="https://fonts.googleapis.com/css?family=Ubuntu"
+	rel="stylesheet">
 </head>
 
 <body>
-    <div class="wapper">
-        <jsp:include page="Header.jsp"></jsp:include>
-        <div class="main-menu">
-            <div class="navbar navbar-inverse" id="topnav" data-spy="affix" role="navigation" data-offset-top="67">
-                <div class="container-fluid">
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav">
-                            <li class="active"><a href="OnlineTest.html"><span class="glyphicon glyphicon-home" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Trang chủ"></span><span class="sr-only">(current)</span></a>
-                            </li>
-                            <li><a href="Contact.html" data-toggle="tooltip" data-placement="bottom" title="Liên hệ">LIÊN HỆ</a>
-                            </li>
-                            <li><a href="#" data-toggle="tooltip" data-placement="bottom" title="Hướng dẫn">HƯỚNG DẪN</a>
-                            </li>
-                        </ul>
-                        <form class="navbar-form navbar-left">
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Search">
-                            </div>
-                            <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" data-toggle="tooltip" data-placement="right" title="Tìm kiếm"></span>
-                            </button>
-                        </form>
-                        <ul class="nav navbar-nav navbar-right">
-                            <li><a href="Login.html"><span class="glyphicon glyphicon-log-in" aria-hidden="true" style="margin-right: 10px"></span>ĐĂNG NHẬP</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- /.navbar-collapse -->
-                </div>
-                <!-- /.container-fluid -->
-            </div>
-        </div>
-        <div class="main">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-10">
-                        <p class="hello">Xin chào</p>
+	<%
+		UsersDAO usersDAO = new UsersDAO();
+		ThiDAO thiDAO = new ThiDAO();
+		CauHoiDAO cauHoiDAO = new CauHoiDAO();
+		DeThiDAO deThiDAO = new DeThiDAO();
+		Users users = new Users();
 
-                    </div>
-                    <div class="col-md-2">
-                        <div class="dropdown">
-                            <a id="dLabel" href="#" data-toggle="dropdown">
-                            Tên sinh viên
-                            <span class="caret"></span></a>
-                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                <li><a href="Profile.jsp" title="">Sửa thông tin cá nhân</a>
-                                </li>
-                                <li><a href="Doimatkhau.jsp" title="">Đổi mật khẩu</a>
-                                </li>
-                                <li><a href="Login.jsp" title="">Đăng xuất</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="panel-group" id="accordion">
-                            <div class="panel panel-primary">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                                 Kết quả
-                                 </a>
-                                 </h4>
-                                </div>
+		String made = request.getParameter("made");
+		String username = request.getParameter("username");
+		users = usersDAO.getUsers(username);
+		DeThi dt = deThiDAO.CTDeThi(made);
+	%>
+	<div class="wapper">
+		<jsp:include page="Header.jsp"></jsp:include>
+		<div class="main-menu">
+			<nav class="navbar navbar-inverse" data-spy="affix" role="navigation"
+				data-offset-top="67">
+				<div class="container-fluid">
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed"
+							data-toggle="collapse" data-target="#navbar-main"
+							aria-expanded="false">
+							<span class="sr-only">Toggle navigation</span> <span
+								class="icon-bar"></span> <span class="icon-bar"></span> <span
+								class="icon-bar"></span>
+						</button>
+						<a class="navbar-brand" href="index.jsp"
+							data-toggle="tooltip" data-placement="top" title="Trang chủ">
+							<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+						</a>
+					</div>
 
-                                <div id="collapseOne" class="panel-collapse collapse in">
-                                    <div class="panel-body">
-                                        <p>Mã số sinh viên: 14110999</p>
-                                        <p>Nhóm đề: Thi giữa kì lập trình </p>
-                                        <p>Họ và tên: Trần Văn A</p>
-                                        <p>Số câu đúng: 5</p>
-                                        <p>Lớp: 141101C</p>
-                                        <p>Đề thi: GTLTW-Đề 1</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel panel-primary">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapsetwo">
-                            Chi tiết bài làm
-                        </a></h4>
-                                </div>
-                                <div id="collapsetwo" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <div>
-                                            <h5>Phần 1: ....(5đ)</h5>
-                                            <p>
-                                                Câu 1: .....?
-                                                <br>
-                                                <input type="radio" name="sex" value="A">A
-                                                <br>
-                                                <b><i><input checked="checked" type="radio" name="sex1" value="B">B</i></b>
-                                                <br>
-                                                <input type="radio" name="sex" value="C">C
-                                                <br>
-                                                <input type="radio" name="sex" value="D">D
-                                                <br> ....................................
-                                                <br> Câu 10: .....?
-                                                <br>
-                                                <input type="radio" name="sex" value="A">A
-                                                <br>
-                                                <input type="radio" name="sex" value="B">B
-                                                <br>
-                                                <input type="radio" name="sex" value="C">C
-                                                <br>
-                                                <b><i><input checked="checked" type="radio" name="sex" value="D">D</i></b>
-                                                <br>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                </div>
-            </div>
-        </div>
-        <br><br><br><br><br><br><br>
-        <jsp:include page="Footer.jsp"></jsp:include>
-    </div>
-    <script src="assets/JS/jquery.min.js" type="text/javascript"></script>
-    <script src="assets/JS/bootstrap.min.js" type="text/javascript"></script>
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse" id="navbar-main">
+						<ul class="nav navbar-nav">
+							<li data-toggle="tooltip" data-placement="top" title="Liên hệ"><a
+								href="Contact.jsp">Liên hệ <span class="sr-only">(current)</span></a></li>
+							<li data-toggle="tooltip" data-placement="top" title="Hướng dẫn"><a
+								href="#">Hướng dẫn</a></li>
+						</ul>
+						<ul class="nav navbar-nav navbar-right">
+							<li><a href="Login.jsp" class="glyphicon glyphicon-log-out"></a></li>
+						</ul>
+					</div>
+					<!-- /.navbar-collapse -->
+				</div>
+				<!-- /.container-fluid -->
+			</nav>
+		</div>
+		<div class="main">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-9 col-sm-8 col-xs-0">
+						<div class="row">
+							<div class="col-sm-6"></div>
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-5 col-xs-9">
+						<div class="block-user-info block-user-info-responsive logged">
+							<ul class="clearfix">
+								<div class="dropdown dropdown-vta">
+
+									<img alt="" /> <a class="dropdown-toggle dropdown-vta-login"
+										role="button" id="dropdownMenu1" data-toggle="dropdown"> <%
+ 	if (users != null) {
+ %> <span class="hello">Xin chào <span
+											style="color: #ED7642; font-weight: 600"><%=users.getFullname()%></span></span>
+										<span class="caret"></span></a>
+									<ul class="dropdown-menu dropdown-vta-sub-menu"
+										aria-labelledby="dropdownMenu1">
+
+										<li><a
+											href="Profile.jsp?UserName=<%=users.getUserName()%>">Thông
+												tin cá nhân</a></li>
+
+										<li><a
+											href="Doimatkhau.jsp?UserName=<%=users.getUserName()%>">Đổi
+												mật khẩu</a></li>
+										<%
+											}
+										%>
+										<li><a href="LogOut">Thoát</a></li>
+									</ul>
+								</div>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Kết quả bài làm</h3>
+						</div>
+						<div class="panel-body">
+							<form method="post" action="KetThucBaiThi">
+								<div class="row" id="detail-mark">
+									<%
+										float count = 0;
+										float diem = 0;
+										int dung = 0;
+
+										count = cauHoiDAO.countCHByMaDe(made);
+										dung = thiDAO.countRight(username, made);
+
+										diem = (10 / count) * dung;
+									%>
+									<div class="col-md-2"></div>
+									<div class="col-md-4">
+										<p>
+											- Mã số sinh viên: <span><%=users.getUserName()%></span>
+										</p>
+										<p>
+											- Họ và tên: <span><%=users.getFullname()%></span>
+										</p>
+										<p>
+											- Lớp: <span><%=users.getMaLop()%></span>
+										</p>
+									</div>
+									<div class="col-md-2"></div>
+									<div class="col-md-4">
+										<p>
+											- Đề thi: <span style="font-size: 18px"><%=dt.getTenDe()%></span>
+										</p>
+										<p>
+
+											- Số câu đúng: <span style="text-decoration: underline;"><%=dung%></span>
+										</p>
+
+										<p>
+											* Điểm: <span style="text-decoration: underline;"><%=diem%></span>
+										</p>
+										<input type="hidden" value="<%=diem %>" name="diem">
+										<input type="hidden" value="<%=dt.getMaDe()%>" name="made">
+										<input type="hidden" value="<%=users.getUserName()%>" name="username">
+										<button type="submit" class="btn btn-primary">Lưu</button>
+									</div>
+
+								</div>
+								
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<jsp:include page="Footer.jsp"></jsp:include>
+	</div>
+	<script src="assets/JS/jquery.min.js" type="text/javascript"></script>
+	<script src="assets/JS/bootstrap.min.js" type="text/javascript"></script>
 </body>
 
 </html>

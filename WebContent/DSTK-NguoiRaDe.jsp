@@ -8,21 +8,23 @@
 
 <%@page import="model.Users"%>
 <%@page import="dao.UsersDAO"%>
+<%@page import="connect.DBconnect"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="com.mysql.jdbc.Statement"%>
+<%@page import="java.sql.Connection"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
-<sql:setDataSource driver="com.mysql.jdbc.Driver"
-	url="jdbc:mysql://localhost:3306/examonline" user="root"
-	password="14110143" />
-
 <!DOCTYPE html>
 <html>
 
 <!-- Mirrored from coderthemes.com/uplon_1.4/light/tables-datatable.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 14 Oct 2016 16:07:41 GMT -->
 
 <head>
-<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
@@ -47,24 +49,6 @@
 
 <!-- App CSS -->
 <link href="assets/css/style.css" rel="stylesheet" type="text/css" />
-<script>
-	(function(i, s, o, g, r, a, m) {
-		i['GoogleAnalyticsObject'] = r;
-		i[r] = i[r] || function() {
-			(i[r].q = i[r].q || []).push(arguments)
-		}, i[r].l = 1 * new Date();
-		a = s.createElement(o), m = s.getElementsByTagName(o)[0];
-		a.async = 1;
-		a.src = g;
-		m.parentNode.insertBefore(a, m)
-	})(window, document, 'script',
-			'../../../www.google-analytics.com/analytics.js', 'ga');
-
-	ga('create', 'UA-79190402-1', 'auto');
-	ga('send', 'pageview');
-</script>
-<!-- Modernizr js -->
-<script src="assets/JS/modernizr.min.js"></script>
 <link
 	href="assets/material-design-iconic-font/css/material-design-iconic-font.min.css"
 	rel="stylesheet" type="text/css" />
@@ -156,14 +140,11 @@
 					<ul>
 						<li class="text-muted menu-title"><i class="fa fa-users"
 							aria-hidden="true"></i> Quản lý tài khoản</li>
-						<li class="has_sub"><a href="InsertUsers.jsp"
-							class="waves-effect" id="DSTK"><span
-								style="margin-left: 20px">Thêm tài tài khoản</span> </a></li>
 						<li class="has_sub"><a href="DSTaiKhoan.jsp"
-							class="waves-effect" id="DSTK"><span
-								style="margin-left: 20px">Danh sách tài khoản</span> </a></li>
+							class="waves-effect" id="DSTK"><i class="fa fa-user" aria-hidden="true"></i><span
+								style="margin-left: 20px"> Danh sách tài khoản</span> </a></li>
 						<li class="has_sub"><a href="javascript:void(0);"
-							class="waves-effect"><span style="margin-left: 20px">Chi
+							class="waves-effect"><i class="fa fa-info" aria-hidden="true"></i> <span style="margin-left: 20px">Chi
 									tiết </span> <span class="menu-arrow"></span></a>
 							<ul class="list-unstyled">
 								<li><a href="DSTK-NQTNHCauHoi.jsp" id="DSTK-QTNHCH">Người
@@ -174,8 +155,9 @@
 										quản trị kỳ thi</a></li>
 								<li><a href="DSTKSinhVien.jsp" id="DSTK-SV">Sinh viên</a></li>
 							</ul></li>
-						<li class="has_sub"><a href="DSRole.jsp" class="waves-effect"><span
+						<li class="has_sub"><a href="DSRole.jsp" class="waves-effect"><i class="fa fa-tachometer" aria-hidden="true"></i><span
 								style="margin-left: 20px"> Vai trò </span></a></li>
+
 					</ul>
 					<div class="clearfix"></div>
 				</div>
@@ -198,7 +180,7 @@
 									HCMUTE <small>EXAM</small>
 								</h4>
 								<ol class="breadcrumb ">
-									<li><a href="OnlineTest.jsp">Trang chủ</a></li>
+									<li><a href="index.jsp">Trang chủ</a></li>
 									<li><a href="Admin.jsp">Admin</a></li>
 									<li class="active">Danh sách tài khoản</li>
 								</ol>
@@ -208,12 +190,9 @@
 					</div>
 					<div class="row">
 						<div class="col-sm-12">
-							<div class="card-box table-responsive">
-								<sql:query var="items"
-									sql="SELECT UserName, Password, FullName, Gender, Birthday, NumberPhone, Address, Email 
-                                FROM users where RoleID='QLD'" />
-								<table id="datatable-buttons"
-									class="table table-striped table-bordered">
+						
+						<div class="card-box table-responsive">
+								<table class="table table-hover">
 									<thead>
 										<tr>
 											<th>Username</th>
@@ -227,22 +206,31 @@
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach items="${items.rowsByIndex}" var="row">
-											<tr>
-												<c:forEach items="${row}" var="col">
-													<td>${col}</td>
-
-												</c:forEach>
+									<%
+									String roleid="QLD";
+										for(Users u : usersDAO.getListUserswithRole(roleid)){
+									%>
+									
+									<tr>
+										<td><%=u.getUserName() %></td>
+										<td><%=u.getPassword() %></td>
+										<td><%=u.getFullname() %></td>
+										<td><%=u.getGender() %></td>
+										<td><%=u.getBirthday() %></td>
+										<td><%=u.getNumberPhone() %></td>
+										<td><%=u.getAddress() %></td>
+										<td><%=u.getEmail() %></td>
 											</tr>
-										</c:forEach>
+									<%} %>
 									</tbody>
+									
 								</table>
 							</div>
-						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+			</div>
+			</div>
 		<footer class="footer text-right"> 2016 © HCMUTE </footer>
 	</div>
 	<!-- content -->

@@ -4,6 +4,7 @@
     Author     : Kelvin
 --%>
 
+<%@page import="connect.DBconnect"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.PreparedStatement"%>
@@ -60,7 +61,7 @@
 								class="icon-bar"></span> <span class="icon-bar"></span> <span
 								class="icon-bar"></span>
 						</button>
-						<a class="navbar-brand" href="OnlineTest.jsp"> <span
+						<a class="navbar-brand" href="index.jsp"> <span
 							class="glyphicon glyphicon-home" aria-hidden="true"></span></a>
 					</div>
 
@@ -99,7 +100,7 @@
 										role="button" id="dropdownMenu1" data-toggle="dropdown"> <%
  	if (users != null) {
  %> <span class="hello">Xin chào <span
-											style="color: #ED7642; font-weight: 600"><%=users.getUserName()%></span></span>
+											style="color: #ED7642; font-weight: 600"><%=users.getFullname()%></span></span>
 										<span class="caret"></span></a>
 									<ul class="dropdown-menu dropdown-vta-sub-menu"
 										aria-labelledby="dropdownMenu1">
@@ -160,7 +161,7 @@
 																	for (DeThi dt : deThiDAO.getDSDeThi()) {
 																%>
 																<option value="<%=dt.getMaDe()%>">
-																	<%=dt.getTenDe()%>
+																	<%=dt.getMaDe()%>
 																</option>
 																<%
 																	}
@@ -242,9 +243,8 @@
 												Connection con = null;
 												PreparedStatement ps = null;
 												try {
-													Class.forName("com.mysql.jdbc.Driver");
-													con = DriverManager
-															.getConnection("jdbc:mysql://localhost:3306/examonline" + "?user=root&password=14110143");
+													
+													con = DBconnect.getConnecttion();
 													String sql = "select dt.MaDe,dt.TenDe,kt.MaLop,kt.NgayThi,kt.ThoiGian,kt.PhongThi "
 															+ "from kythi kt INNER JOIN dethi dt on kt.MaDe=dt.MaDe";
 													ps = con.prepareCall(sql);

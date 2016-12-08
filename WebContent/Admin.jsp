@@ -9,7 +9,7 @@
 <!-- Mirrored from coderthemes.com/uplon_1.4/light/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 14 Oct 2016 16:03:45 GMT -->
 
 <head>
-    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin</title>
 
@@ -118,32 +118,27 @@
                 <!--- Sidemenu -->
                 <div id="sidebar-menu">
                     <ul>
-                        <li class="text-muted menu-title"><i class="fa fa-users" aria-hidden="true"></i> Quản lý tài khoản</li>
-                        <li class="has_sub">
-                            <a href="InsertUsers.jsp" class="waves-effect" id="DSTK"><span style="margin-left: 20px">Thêm tài tài khoản</span> </a>
-                        </li>
-                        <li class="has_sub">
-                            <a href="DSTaiKhoan.jsp" class="waves-effect" id="DSTK"><span style="margin-left: 20px">Danh sách tài khoản</span> </a>
-                        </li>
-                        <li class="has_sub">
-                            <a href="javascript:void(0);" class="waves-effect"><span style="margin-left: 20px">Chi tiết </span> <span class="menu-arrow"></span></a>
-                            <ul class="list-unstyled">
-                                <li><a href="DSTK-NQTNHCauHoi.jsp">Người quản trị ngân hàng câu hỏi</a>
-                                </li>
-                                <li><a href="DSTK-NguoiRaDe.jsp" id="DSTK-NRD">Người ra đề</a>
-                                </li>
-                                <li><a href="DSTKNQTKyThi.jsp" id="DSTK-NQTKT">Người quản trị kỳ thi</a>
-                                </li>
-                                <li><a href="DSTKSinhVien.jsp" id="DSTK-SV">Sinh viên</a>
-                                </li>
-                            </ul>
-                        </li>
-                       
-                        <li class="has_sub">
-                           <a href="DSRole.jsp" class="waves-effect"><span style="margin-left: 20px"> Vai trò </span></a>
-                        </li>
-                        
-                    </ul>
+						<li class="text-muted menu-title"><i class="fa fa-users"
+							aria-hidden="true"></i> Quản lý tài khoản</li>
+						<li class="has_sub"><a href="DSTaiKhoan.jsp"
+							class="waves-effect" id="DSTK"><i class="fa fa-user" aria-hidden="true"></i><span
+								style="margin-left: 20px"> Danh sách tài khoản</span> </a></li>
+						<li class="has_sub"><a href="javascript:void(0);"
+							class="waves-effect"><i class="fa fa-info" aria-hidden="true"></i> <span style="margin-left: 20px">Chi
+									tiết </span> <span class="menu-arrow"></span></a>
+							<ul class="list-unstyled">
+								<li><a href="DSTK-NQTNHCauHoi.jsp" id="DSTK-QTNHCH">Người
+										quản trị ngân hàng câu hỏi</a></li>
+								<li><a href="DSTK-NguoiRaDe.jsp" id="DSTK-NRD">Người ra
+										đề</a></li>
+								<li><a href="DSTKNQTKyThi.jsp" id="DSTK-NQTKT">Người
+										quản trị kỳ thi</a></li>
+								<li><a href="DSTKSinhVien.jsp" id="DSTK-SV">Sinh viên</a></li>
+							</ul></li>
+						<li class="has_sub"><a href="DSRole.jsp" class="waves-effect"><i class="fa fa-tachometer" aria-hidden="true"></i><span
+								style="margin-left: 20px"> Vai trò </span></a></li>
+
+					</ul>
                     <div class="clearfix"></div>
                 </div>
                 <!-- Sidebar -->
@@ -165,7 +160,7 @@
                                 <h4 class="page-title">HCMUTE <small>EXAM</small></h4>
                                 <ol class="breadcrumb p-0">
                                     <li>
-                                        <a href="OnlineTest.jsp">Trang chủ</a>
+                                        <a href="index.jsp">Trang chủ</a>
                                     </li>
                                     <li class="active">
                                         Admin

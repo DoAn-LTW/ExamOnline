@@ -3,6 +3,7 @@
     Created on : Oct 14, 2016, 9:31:18 AM
     Author     : Kelvin
 --%>
+<%@page import="connect.DBconnect"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.DriverManager"%>
@@ -23,7 +24,7 @@
 <!-- Mirrored from coderthemes.com/uplon_1.4/light/tables-datatable.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 14 Oct 2016 16:07:41 GMT -->
 
 <head>
-<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- App title -->
@@ -101,12 +102,7 @@
 							<i class="zmdi zmdi-menu"></i>
 						</button>
 					</li>
-					<li class="nav-item hidden-mobile">
-						<form role="search" class="app-search">
-							<input type="text" placeholder="Search..." class="form-control">
-							<a href="#"><i class="zmdi zmdi-search"></i></a>
-						</form>
-					</li>
+				
 				</ul>
 				<ul class="nav navbar-nav pull-right">
 
@@ -166,14 +162,11 @@
 					<ul>
 						<li class="text-muted menu-title"><i class="fa fa-users"
 							aria-hidden="true"></i> Quản lý tài khoản</li>
-						<li class="has_sub"><a href="InsertUsers.jsp"
-							class="waves-effect" id="DSTK"><span
-								style="margin-left: 20px">Thêm tài tài khoản</span> </a></li>
 						<li class="has_sub"><a href="DSTaiKhoan.jsp"
-							class="waves-effect" id="DSTK"><span
-								style="margin-left: 20px">Danh sách tài khoản</span> </a></li>
+							class="waves-effect" id="DSTK"><i class="fa fa-user" aria-hidden="true"></i><span
+								style="margin-left: 20px"> Danh sách tài khoản</span> </a></li>
 						<li class="has_sub"><a href="javascript:void(0);"
-							class="waves-effect"><span style="margin-left: 20px">Chi
+							class="waves-effect"><i class="fa fa-info" aria-hidden="true"></i> <span style="margin-left: 20px">Chi
 									tiết </span> <span class="menu-arrow"></span></a>
 							<ul class="list-unstyled">
 								<li><a href="DSTK-NQTNHCauHoi.jsp" id="DSTK-QTNHCH">Người
@@ -184,7 +177,7 @@
 										quản trị kỳ thi</a></li>
 								<li><a href="DSTKSinhVien.jsp" id="DSTK-SV">Sinh viên</a></li>
 							</ul></li>
-						<li class="has_sub"><a href="DSRole.jsp" class="waves-effect"><span
+						<li class="has_sub"><a href="DSRole.jsp" class="waves-effect"><i class="fa fa-tachometer" aria-hidden="true"></i><span
 								style="margin-left: 20px"> Vai trò </span></a></li>
 
 					</ul>
@@ -209,7 +202,7 @@
 									HCMUTE <small>EXAM</small>
 								</h4>
 								<ol class="breadcrumb ">
-									<li><a href="OnlineTest.jsp">Trang chủ</a></li>
+									<li><a href="index.jsp">Trang chủ</a></li>
 									<li><a href="Admin.jsp">Admin</a></li>
 									<li class="active">Danh sách tài khoản</li>
 								</ol>
@@ -218,7 +211,8 @@
 						</div>
 					</div>
 					<div class="row">
-						<a href="InsertUsers.jsp" title="">Thêm tài khoản</a>
+						<a data-toggle="modal" href='#form-insert-account'
+							data-target="#form-insert-account">Thêm tài khoản</a>
 					</div>
 					<div class="row">
 						<h2 style="text-align: center">DANH SÁCH TÀI KHOẢN</h2>
@@ -228,9 +222,7 @@
 							Connection connect = null;
 							PreparedStatement ps = null;
 							try {
-								Class.forName("com.mysql.jdbc.Driver");
-								connect = DriverManager
-										.getConnection("jdbc:mysql://localhost:3306/examonline" + "?user=root&password=14110143");
+								connect=DBconnect.getConnecttion();
 								String sql = "select * from users";
 								ps = connect.prepareCall(sql);
 								ResultSet rs = ps.executeQuery(sql);
@@ -266,7 +258,7 @@
 											data-numberphone='<%=rs.getString("NumberPhone")%>'
 											data-email='<%=rs.getString("Email")%>'>Edit</a> | <a
 											onclick="return confirm('Bạn có chắc chắn muốn xóa?')"
-											href="DeleteUser?UserName=<%=rs.getString("UserName")%>">Delete</a>
+											href="DeleteUser?command=deleteUser&UserName=<%=rs.getString("UserName")%>">Delete</a>
 										</td>
 									</tr>
 									<%
@@ -287,38 +279,143 @@
 								<div class="modal-header">
 									<button type="button" class="close" data-dismiss="modal"
 										aria-hidden="true">&times;</button>
-									<h4 class="modal-title">Modifier account</h4>
+									<h4 class="modal-title">Chỉnh sửa tài khoản</h4>
 								</div>
 								<div class="modal-body">
-									<form action="update.jsp" method="POST" class="form-horizontal"
+									<form action="Update" method="POST" class="form-horizontal"
 										role="form">
 										<fieldset class="form-group">
-											<label for="input-username" class="col-sm-2">Username</label>
-											<div class="col-sm-10">
-												<input readonly type="text" name="input-username" id="input-username"
+											<label for="input-username" class="col-sm-3">Username</label>
+											<div class="col-sm-9">
+												<input readonly type="text" name="username"
+													id="input-username" class="form-control input-sm" value=""
+													required="">
+											</div>
+										</fieldset>
+
+										<fieldset class=form-group>
+											<label for="input-username" class="col-sm-3">Password</label>
+											<div class="col-sm-9">
+												<input type="password" name="password" id="input-password"
+													class="form-control input-sm" value="" required="">
+											</div>
+										</fieldset>
+
+										<fieldset class="form-group">
+											<label for="input-fullname" class="col-sm-3">Fullname</label>
+											<div class="col-sm-9">
+												<input type="text" name="fullname" id="input-fullname"
+													class="form-control input-sm" value="" required="">
+											</div>
+										</fieldset>
+										<fieldset class="form-group">
+											<label for="input-fullname" class="col-sm-3">Số điện
+												thoại</label>
+											<div class="col-sm-9">
+												<input type="text" name="numberphone" id="input-number"
+													class="form-control input-sm" value="" required="">
+											</div>
+										</fieldset>
+										<fieldset class="form-group">
+											<label for="input-fullname" class="col-sm-3">Email</label>
+											<div class="col-sm-9">
+												<input type="text" name="email" id="input-email"
+													class="form-control input-sm" value="" required="">
+											</div>
+										</fieldset>
+										<fieldset class="form-group">
+											<hr>
+											<div class="pull-right">
+												<input type="hidden" value="updateTK" name="command">
+												<button type="submit" class="btn btn-primary btn-sm">Save
+													changes</button>
+												<button type="button" class="btn btn-default btn-sm"
+													data-dismiss="modal">Close</button>
+											</div>
+										</fieldset>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal fade" id="form-insert-account">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal"
+										aria-hidden="true">&times;</button>
+									<h4 class="modal-title">Thêm tài khoản</h4>
+								</div>
+								<div class="modal-body">
+									<form action="UserServlet" method="POST" class="form-horizontal"
+										role="form">
+										<fieldset class="form-group">
+											<label for="input-username" class="col-sm-3">Username</label>
+											<div class="col-sm-9">
+												<input type="text" name="username" id="input-username"
 													class="form-control input-sm" value="" required="">
 											</div>
 										</fieldset>
 
 										<fieldset class=form-group>
-											<label for="input-username" class="col-sm-2">Password</label>
-											<div class="col-sm-10">
-												<input type="password" name="input-password" id="input-password"
+											<label for="input-username" class="col-sm-3">Password</label>
+											<div class="col-sm-9">
+												<input type="password" name="password" id="input-password"
 													class="form-control input-sm" value="" required="">
 											</div>
 										</fieldset>
 
 										<fieldset class="form-group">
-											<label for="input-fullname" class="col-sm-2">Fullname</label>
-											<div class="col-sm-10">
-												<input type="text" name="input-fullname" id="input-fullname"
+											<label for="input-fullname" class="col-sm-3">Fullname</label>
+											<div class="col-sm-9">
+												<input type="text" name="fullname" id="input-fullname"
 													class="form-control input-sm" value="" required="">
 											</div>
 										</fieldset>
-										
+										<fieldset class="form-group">
+											<label for="input-fullname" class="col-sm-3">Số điện
+												thoại</label>
+											<div class="col-sm-9">
+												<input type="text" name="numberphone" id="input-number"
+													class="form-control input-sm" value="" required="">
+											</div>
+										</fieldset>
+										<fieldset class="form-group">
+											<label for="input-fullname" class="col-sm-3">Email</label>
+											<div class="col-sm-9">
+												<input type="text" name="email" id="input-email"
+													class="form-control input-sm" value="" required="">
+											</div>
+										</fieldset>
+										<fieldset class="form-group">
+											<label for="input-fullname" class="col-sm-3">Lớp</label>
+											<div class="col-sm-9">
+												<input type="text" name="lop" id="input-lop"
+													class="form-control input-sm" value="" required="" 
+													placeholder="Nếu là sinh viên thì điền lớp vào đây">
+											</div>
+										</fieldset>
+										<fieldset class="form-group">
+											<label for="inputRole" class="col-sm-3">Vai trò</label>
+											<div class="col-sm-9">
+											 <select
+												class="form-control" name="Role" id="form-input" required>
+												<%
+													for (Role c : roleDAO.getListRole()) {
+												%>
+												<option value=<%=c.getRoleID()%>>
+													<%=c.getRoleID()%>
+												</option>
+												<%
+													}
+												%>
+											</select>
+										</div>
+										</fieldset>
 										<fieldset class="form-group">
 											<hr>
 											<div class="pull-right">
+												<input type="hidden" value="insert" name="command">
 												<button type="submit" class="btn btn-primary btn-sm">Save
 													changes</button>
 												<button type="button" class="btn btn-default btn-sm"
@@ -362,21 +459,21 @@
 	<script src="assets/JS/jquery.core.js"></script>
 	<script src="assets/JS/jquery.app.js"></script>
 	<script>
-		$('#form-update-account').on('show.bs.modal', function (event) {
-		  var a = $(event.relatedTarget) // Button that triggered the modal
-		  var Username = a.data('username') // Extract info from data-* attributes
-		  var Password = a.data('password') // Extract info from data-* attributes
-		  var Fullname = a.data('fullname')
-		  var Numberphone = a.data('numberphone') // Extract info from data-* attributes
-		  var Email = a.data('email')
-		  
-		  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-		  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-		  $('#input-username').val(Username)
-		  $('#input-password').val(Password)
-		  $('#input-fullname').val(Fullname)
-		  $('#input-number').val(Numberphone)
-		  $('#input-email').val(Email)
+		$('#form-update-account').on('show.bs.modal', function(event) {
+			var a = $(event.relatedTarget) // Button that triggered the modal
+			var Username = a.data('username') // Extract info from data-* attributes
+			var Password = a.data('password') // Extract info from data-* attributes
+			var Fullname = a.data('fullname')
+			var Numberphone = a.data('numberphone') // Extract info from data-* attributes
+			var Email = a.data('email')
+
+			// If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+			// Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+			$('#input-username').val(Username)
+			$('#input-password').val(Password)
+			$('#input-fullname').val(Fullname)
+			$('#input-number').val(Numberphone)
+			$('#input-email').val(Email)
 		})
 	</script>
 </body>

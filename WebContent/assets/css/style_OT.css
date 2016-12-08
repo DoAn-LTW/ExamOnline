@@ -100,10 +100,7 @@ and open the template in the editor.
 .nav .navbar-nav >li{
     padding: 3.5px
 }
-.col-md-12 a{color: #337ab7;
-    text-decoration: none;
-    font-size: 22px;
-    margin-left: 13px;}
+
 .glyphicon-home{
 	color: #fff;
 	margin-left: 20px;
@@ -452,6 +449,21 @@ table #datatable-buttons thead>tr>th{
 	background-color: #148548;
     color: #fff;
 }
-#table-ch>thead>tr>th{
-	text-align:center;
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
+	text-align: center;
+}
+.info-test {
+	border: 3px dotted #706667;
+    padding: 10px 10px;
+    background-color: #E3DADA;
+}
+.next-pre{
+	float: right
+}
+.panel-title{
+	font-size: 20px !important;
+	    text-align: center;
+}
+#detail-mark p span{
+	font-size: 18px !important;
 }

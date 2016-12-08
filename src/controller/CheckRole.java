@@ -27,7 +27,7 @@ public class CheckRole extends HttpServlet {
        response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
         String roleid=request.getParameter("roleid");
-      if (roleDAO.check(request.getParameter("roleid"))) {
+      if (roleDAO.check(roleid)) {
     
           response.getWriter().write("<img src=\"assets/Images/not-available.png\" /><span style=\"color:red;margin-left: 10px\">vai trò đã tồn tại</span>");
       } else 

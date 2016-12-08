@@ -24,7 +24,7 @@
          <div class="header">
             <div class="row">
                 <div class="col-md-6">
-                    <a id="hcmute-logo" href="OnlineTest.jsp" title=""><span>hcmute</span></a>
+                    <a id="hcmute-logo" href="index.jsp" title=""><span>hcmute</span></a>
                 </div>
                 <div class="col-md-6">
                     <span id="title-head">THE ONLINE EXAM OF HCMUTE</span>

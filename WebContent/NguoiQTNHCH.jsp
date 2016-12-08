@@ -15,11 +15,6 @@
 <%@page import="model.Users"%>
 <%@page import="model.CauHoi"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
-<sql:setDataSource driver="com.mysql.jdbc.Driver"
-	url="jdbc:mysql://localhost:3306/examonline" user="root"
-	password="14110143" />
 
 <!DOCTYPE html>
 <html>
@@ -75,7 +70,7 @@
 								class="icon-bar"></span> <span class="icon-bar"></span> <span
 								class="icon-bar"></span>
 						</button>
-						<a class="navbar-brand" href="OnlineTest.jsp"> <span
+						<a class="navbar-brand" href="index.jsp"> <span
 							class="glyphicon glyphicon-home" aria-hidden="true"></span>
 						</a>
 					</div>
@@ -117,7 +112,7 @@
 										id="dropdownMenu1" data-toggle="dropdown"> <%
  	if (users != null) {
  %> <span class="hello">Xin chào <span
-											style="color: #ED7642; font-weight: 600"><%=users.getUserName()%></span></span>
+											style="color: #ED7642; font-weight: 600"><%=users.getFullname()%></span></span>
 										<%
 											}
 										%> <span class="caret"></span>
@@ -144,9 +139,6 @@
 						<li><a href="NguoiQTNHCH.jsp" title="">Quản trị câu hỏi</a></li>
 						<li class="active">Thêm câu hỏi</li>
 					</ol>
-				</div>
-				<div class="row">
-					<p id="update-success"></p>
 				</div>
 				<div class="row">
 					<div class="customDiv-2">
@@ -207,7 +199,6 @@
 																</div>
 															</div>
 														</div>
-
 														<div class="form-group">
 															<div class="col-sm-offset-4 col-sm-8">
 																<button type="submit" class="btn btn-primary"
@@ -218,26 +209,37 @@
 															</div>
 														</div>
 													</form>
-													<div class="card-box table-responsive">
-														<sql:query var="items" sql="Select *  from monhoc" />
-														<table class="table table-hover">
-															<thead>
-																<tr>
-																	<th>Mã môn học</th>
-																	<th>Tên môn học</th>
-																</tr>
-															</thead>
-															<tbody>
-																<c:forEach items="${items.rowsByIndex}" var="row">
-																	<tr>
-																		<c:forEach items="${row}" var="col">
-																			<td>${col}</td>
-																		</c:forEach>
-																	</tr>
-																</c:forEach>
-															</tbody>
-														</table>
-													</div>
+													<table class="table table-bordered">
+														<thead>
+															<tr>
+																<th>Mã MH</th>
+																<th>Tên MH</th>
+																<th>Hành động</th>
+															</tr>
+
+														</thead>
+														<%
+															Connection connection = DBconnect.getConnecttion();
+															String sql = "SELECT * FROM monhoc";
+															PreparedStatement ps = connection.prepareCall(sql);
+															ResultSet rs;
+															rs = ps.executeQuery();
+															while (rs.next()) {
+														%>
+														<tr>
+															<td><%=rs.getString("MaMH")%></td>
+															<td><%=rs.getString("TenMH")%></td>
+															<td><a data-toggle="modal" href='#form-update-mh'
+																data-target="#form-update-mh"
+																data-mamh='<%=rs.getString("MaMH")%>'
+																data-tenmh='<%=rs.getString("TenMH")%>'>Edit</a> || <a
+																onclick="return confirm('Bạn có chắc chắn muốn xóa?')"
+																href="DeleteUser?command=deleteMH&MaMH=<%=rs.getString("MaMH")%>">Delete</a></td>
+														</tr>
+														<%
+															}
+														%>
+													</table>
 												</div>
 												<div class="col-md-6">
 													<form method="post" action="NoiDungThiServlet"
@@ -313,30 +315,40 @@
 															</div>
 														</div>
 													</form>
-													<div class="card-box table-responsive">
-														<sql:query var="items" sql="Select *  from noidungthi" />
-														<table class="table table-hover">
-															<thead>
-																<tr>
-																	<th>Mã nội dung</th>
-																	<th>Tên nội dung</th>
-																	<th>Mã môn học</th>
+													<table class="table table-bordered">
+														<thead>
+															<tr>
+																<th>Mã ND</th>
+																<th>Tên ND</th>
+																<th>Mã MH</th>
+																<th>Hành động</th>
+															</tr>
 
-																</tr>
-															</thead>
-															<tbody>
-																<c:forEach items="${items.rowsByIndex}" var="row">
-																	<tr>
-																		<c:forEach items="${row}" var="col">
-																			<td>${col}</td>
-
-																		</c:forEach>
-																	</tr>
-
-																</c:forEach>
-															</tbody>
-														</table>
-													</div>
+														</thead>
+														<%
+															Connection connection1 = DBconnect.getConnecttion();
+															String sql1 = "SELECT * FROM noidungthi";
+															PreparedStatement ps1 = connection.prepareCall(sql1);
+															ResultSet rs1;
+															rs1 = ps1.executeQuery();
+															while (rs1.next()) {
+														%>
+														<tr>
+															<td><%=rs1.getString("MaND")%></td>
+															<td><%=rs1.getString("TenND")%></td>
+															<td><%=rs1.getString("MaMH")%></td>
+															<td><a data-toggle="modal" href='#form-update-nd'
+																data-target="#form-update-nd"
+																data-mand='<%=rs1.getString("MaND")%>'
+																data-tennd='<%=rs1.getString("TenND")%>'
+																data-mamh='<%=rs1.getString("MaMH")%>'>Edit</a> || <a
+																onclick="return confirm('Bạn có chắc chắn muốn xóa?')"
+																href="DeleteUser?command=deleteND&MaND=<%=rs1.getString("MaND")%>">Delete</a></td>
+														</tr>
+														<%
+															}
+														%>
+													</table>
 												</div>
 											</div>
 										</div>
@@ -364,7 +376,7 @@
 														học </label>
 													<div class="col-sm-8">
 														<select class="form-control input-xs" name="maMH">
-														<option value="">Chọn</option>
+															<option value="">Chọn</option>
 															<%
 																for (MonHoc c : monhocDAO.getlistMH()) {
 															%>
@@ -385,7 +397,7 @@
 														thi </label>
 													<div class="col-sm-8">
 														<select class="form-control input-xs" name="maND">
-														<option value="">Chọn</option>
+															<option value="">Chọn</option>
 															<%
 																for (NoiDung c : noiDungThiDAO.getListND()) {
 															%>
@@ -503,31 +515,40 @@
 																<th>Mã CH</th>
 																<th>Nội dung</th>
 																<th>Đáp án</th>
-																<th>Mã MH</th>
-																<th>Mã ND</th>
+																<th>Hành động</th>
 															</tr>
 
 														</thead>
 														<%
-															Connection connection = DBconnect.getConnecttion();
-															String sql = "SELECT * FROM cauhoi";
-															PreparedStatement ps = connection.prepareCall(sql);
-															ResultSet rs;
-															rs = ps.executeQuery();
-															while (rs.next()) {
+															Connection connection2 = DBconnect.getConnecttion();
+															String sql2 = "SELECT * FROM cauhoi";
+															PreparedStatement ps2 = connection2.prepareCall(sql2);
+															ResultSet rs2;
+															rs2 = ps2.executeQuery();
+															while (rs2.next()) {
 														%>
 														<tr>
-															<td><%=rs.getString("MaCH")%></td>
-															<td><%=rs.getString("NoiDung")%></td>
-															<td><%=rs.getString("DapAn")%></td>
-															<td><%=rs.getString("MaMH")%></td>
-															<td><%=rs.getString("MaND")%></td>
+															<td><%=rs2.getString("MaCH")%></td>
+															<td><%=rs2.getString("NoiDung")%></td>
+															<td><%=rs2.getString("DapAn")%></td>
+															<td><a data-toggle="modal" href='#form-update-ch'
+																data-target="#form-update-ch"
+																data-mach='<%=rs2.getString("MaCH")%>'
+																data-nd='<%=rs2.getString("NoiDung")%>'
+																data-paa='<%=rs2.getString("PhuongAnA")%>'
+																data-pab='<%=rs2.getString("PhuongAnB")%>'
+																data-pac='<%=rs2.getString("PhuongAnC")%>'
+																data-pad='<%=rs2.getString("PhuongAnD")%>'
+																data-da='<%=rs2.getString("DapAn")%>'
+																data-mamh='<%=rs2.getString("MaMH")%>'
+																data-mand='<%=rs2.getString("MaND")%>'>Edit</a> || <a
+																onclick="return confirm('Bạn có chắc chắn muốn xóa?')"
+																href="DeleteUser?command=deleteCH&MaCH=<%=rs2.getString("MaCH")%>">Delete</a></td>
 														</tr>
 														<%
 															}
 														%>
 													</table>
-
 												</div>
 											</div>
 										</form>
@@ -604,145 +625,203 @@
 									</div>
 								</div>
 							</div>
-							<div class="panel panel-primary">
-								<div class="panel-heading" role="tab" id="headingFour">
-									<h4 class="panel-title">
-										<a role="button" data-toggle="collapse"
-											data-parent="#accordion" href="#collapseFour"
-											aria-expanded="true" aria-controls="collapseFour"> 4.
-											Chỉnh sửa câu hỏi</a>
-									</h4>
-								</div>
-								<div id="collapseFour" class="panel-collapse collapse"
-									role="tabpanel" aria-labelledby="headingFour">
-									<div class="panel-body">
-										<div class="row">
-											<form class="form-horizontal" method="" action="">
-												<div class="form-group">
-													<label for="inputDKL"
-														class="col-sm-3 control-label text-left">Điều kiện
-														lọc</label>
-													<div class="col-sm-9">
-														<input type="text" class="form-control" required=""
-															id="inputDKL" placeholder="Nhập nội dung" name="inputDKL">
-													</div>
-												</div>
-												<div class="form-group">
-													<div class="col-sm-3"></div>
-													<div class="col-sm-9">
-														<button class="btn btn-info" type="submit">Lọc</button>
-													</div>
-												</div>
-											</form>
-											<table class="table table-hover">
-												<tr>
-													<th style="width: 130px">Mã câu hỏi</th>
-													<th>Nội dung câu hỏi</th>
-													<th style="width: 100px">Sửa</th>
-													<th style="width: 100px">Xóa</th>
-												</tr>
-												<tr>
-													<td></td>
-													<td></td>
-													<td><a href="">Sửa</a></td>
-													<td><a href="">Xóa</a></td>
-												</tr>
-												<tr>
-													<td></td>
-													<td></td>
-													<td><a href="">Sửa</a></td>
-													<td><a href="">Xóa</a></td>
-												</tr>
-												<tr>
-													<td></td>
-													<td></td>
-													<td><a href="">Sửa</a></td>
-													<td><a href="">Xóa</a></td>
-												</tr>
-											</table>
+						</div>
+						<div class="modal fade bs-example-modal-lg" id="form-update-ch">
+							<div class="modal-dialog modal-lg">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"
+											aria-hidden="true">&times;</button>
+										<h4 class="modal-title">Chỉnh sửa câu hỏi</h4>
+									</div>
+									<div class="modal-body">
+										<form action="UpdateServlet" method="POST"
+											class="form-horizontal" role="form">
 											<div class="row">
 												<div class="col-md-6">
-													<form class="form-horizontal">
-														<div class="form-group">
-															<label for="inputMaCH" class="col-sm-4 control-label">Mã
-																câu hỏi</label>
-															<div class="col-sm-8">
-																<input type="text" class="form-control" required=""
-																	id="inputMaCH" placeholder=""> <span
-																	class="field-validation-valid text-danger"
-																	data-valmsg-for="Username" data-valmsg-replace="true"></span>
+													<fieldset class="form-group">
+														<label for="input-username" class="col-sm-4">Mã
+															câu hỏi</label>
+														<div class="col-sm-8">
+															<input readonly type="text" name="mach" id="input-mach"
+																class="form-control input-sm" value="" required="">
+														</div>
+													</fieldset>
+													<fieldset class=form-group>
+														<label for="input-username" class="col-sm-4">Nội
+															dung</label>
+														<div class="col-sm-8">
+															<textarea name="nd" id="input-nd"
+																class="form-control input-sm" required=""></textarea>
+														</div>
+													</fieldset>
+													<fieldset class="form-group">
+														<label for="input-fullname" class="col-sm-4">Mã
+															môn học</label>
+														<div class="col-sm-8">
+															<input readonly type="text" name="mamh" id="input-mamh"
+																class="form-control input-sm" value="" required="">
+														</div>
+													</fieldset>
+													<fieldset class="form-group">
+														<label for="input-fullname" class="col-sm-4">Mã
+															nội dung</label>
+														<div class="col-sm-8">
+															<input readonly type="text" name="mand" id="input-mand"
+																class="form-control input-sm" value="" required="">
+														</div>
+													</fieldset>
 
-															</div>
-														</div>
-														<div class="form-group">
-															<label for="inputNDCH" class="col-sm-4 control-label">Nội
-																dung câu hỏi</label>
-															<div class="col-sm-8">
-																<textarea class="form-control" rows="3" col="10"></textarea>
-															</div>
-														</div>
-														<div class="form-group">
-															<label for="inputDiem" class="col-sm-4 control-label">Điểm</label>
-															<div class="col-sm-8">
-																<input type="text" class="form-control" required=""
-																	id="inputDiem" placeholder="">
-															</div>
-														</div>
-													</form>
 												</div>
 												<div class="col-md-6">
-													<form class="form-horizontal">
-														<div class="form-group">
-															<label for="inputDAA" class="col-sm-4 control-label">Phương
-																án 1</label>
-															<div class="col-sm-8">
-																<textarea class="form-control" rows="2" col="10"
-																	id="inputDAA"></textarea>
-															</div>
+													<fieldset class="form-group">
+														<label for="input-fullname" class="col-sm-4">Phương
+															án A</label>
+														<div class="col-sm-8">
+															<textarea name="paa" id="input-paa"
+																class="form-control input-sm" required=""></textarea>
 														</div>
-														<div class="form-group">
-															<label for="inputDAB" class="col-sm-4 control-label">Phương
-																án 2</label>
-															<div class="col-sm-8">
-																<textarea class="form-control" rows="2" col="10"
-																	id="inputDAB"></textarea>
-															</div>
+													</fieldset>
+													<fieldset class="form-group">
+														<label for="input-fullname" class="col-sm-4">Phương
+															án B</label>
+														<div class="col-sm-8">
+															<textarea name="pab" id="input-pab"
+																class="form-control input-sm" required=""></textarea>
 														</div>
-														<div class="form-group">
-															<label for="inputDAC" class="col-sm-4 control-label">Phương
-																án 3</label>
-															<div class="col-sm-8">
-																<textarea class="form-control" rows="2" col="10"
-																	id="inputDAC"></textarea>
-															</div>
+													</fieldset>
+													<fieldset class="form-group">
+														<label for="input-fullname" class="col-sm-4">Phương
+															án C</label>
+														<div class="col-sm-8">
+															<textarea name="pac" id="input-pac"
+																class="form-control input-sm" required=""></textarea>
 														</div>
-														<div class="form-group">
-															<label for="inputDAD" class="col-sm-4 control-label">Phương
-																án 4</label>
-															<div class="col-sm-8">
-																<textarea class="form-control" rows="2" col="10"
-																	id="inputDAD"></textarea>
-															</div>
+													</fieldset>
+													<fieldset class="form-group">
+														<label for="input-fullname" class="col-sm-4">Phương
+															án D</label>
+														<div class="col-sm-8">
+															<textarea name="pad" id="input-pad"
+																class="form-control input-sm" required=""></textarea>
 														</div>
-														<div class="form-group">
-															<label for="inputDA" class="col-sm-4 control-label">Đáp
-																án</label>
-															<div class="col-sm-8">
-																<input type="text" class="form-control" required=""
-																	id="inputDA" placeholder="">
-															</div>
+													</fieldset>
+													<fieldset class="form-group">
+														<label for="input-fullname" class="col-sm-4">Đáp
+															án</label>
+														<div class="col-sm-8">
+															<input type="text" name="da" id="input-da"
+																class="form-control input-sm" value="" required="">
 														</div>
-														<div class="form-group">
-															<div class="col-sm-4"></div>
-															<div class="col-sm-8">
-																<a href="" class="btn btn-success" role="button">Lưu</a>
-															</div>
-														</div>
+													</fieldset>
 
-													</form>
 												</div>
 											</div>
-										</div>
+											<fieldset class="form-group">
+												<hr>
+												<div class="pull-right">
+													<input type="hidden" value="updateTK" name="command">
+													<button type="submit" class="btn btn-primary btn-sm"
+														style="margin-right: 20px">Lưu</button>
+													<button type="button" class="btn btn-default btn-sm"
+														data-dismiss="modal" style="margin-right: 30px">Đóng</button>
+												</div>
+											</fieldset>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal fade" id="form-update-mh">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"
+											aria-hidden="true">&times;</button>
+										<h4 class="modal-title">Chỉnh sửa môn học</h4>
+									</div>
+									<div class="modal-body">
+										<form action="Update" method="POST" class="form-horizontal"
+											role="form">
+											<fieldset class="form-group">
+												<label for="input-username" class="col-sm-3">Mã môn
+													học</label>
+												<div class="col-sm-9">
+													<input readonly type="text" name="mamh" id="input-mamh1"
+														class="form-control input-sm" value="" required="">
+												</div>
+											</fieldset>
+
+											<fieldset class=form-group>
+												<label for="input-username" class="col-sm-3">Tên môn
+													học</label>
+												<div class="col-sm-9">
+													<input type="text" name="tenmh" id="input-tenmh"
+														class="form-control input-sm" value="" required="">
+												</div>
+											</fieldset>
+											<fieldset class="form-group">
+												<hr>
+												<div class="pull-right">
+													<input type="hidden" value="updateMH" name="command">
+													<button type="submit" class="btn btn-primary btn-sm"
+														style="margin-right: 20px">Lưu</button>
+													<button type="button" class="btn btn-default btn-sm"
+														data-dismiss="modal" style="margin-right: 30px">Đóng</button>
+												</div>
+											</fieldset>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal fade" id="form-update-nd">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"
+											aria-hidden="true">&times;</button>
+										<h4 class="modal-title">Chỉnh sửa nội dung</h4>
+									</div>
+									<div class="modal-body">
+										<form action="Update" method="POST" class="form-horizontal"
+											role="form">
+											<fieldset class="form-group">
+												<label for="input-username" class="col-sm-3">Mã nội
+													dung</label>
+												<div class="col-sm-9">
+													<input readonly type="text" name="mand" id="input-mand1"
+														class="form-control input-sm" value="" required="">
+												</div>
+											</fieldset>
+
+											<fieldset class=form-group>
+												<label for="input-username" class="col-sm-3">Tên nội
+													dung</label>
+												<div class="col-sm-9">
+													<input type="text" name="tennd" id="input-tennd"
+														class="form-control input-sm" value="" required="">
+												</div>
+											</fieldset>
+											<fieldset class=form-group>
+												<label for="input-username" class="col-sm-3">Mã môn
+													học</label>
+												<div class="col-sm-9">
+													<input readonly type="text" name="mamh" id="input-mamh2"
+														class="form-control input-sm" value="" required="">
+												</div>
+											</fieldset>
+											<fieldset class="form-group">
+												<hr>
+												<div class="pull-right">
+													<input type="hidden" value="updateND" name="command">
+													<button type="submit" class="btn btn-primary btn-sm"
+														style="margin-right: 20px">Lưu</button>
+													<button type="button" class="btn btn-default btn-sm"
+														data-dismiss="modal" style="margin-right: 30px">Đóng</button>
+												</div>
+											</fieldset>
+										</form>
 									</div>
 								</div>
 							</div>
@@ -774,6 +853,57 @@
 				alert('Tạo thành công câu hỏi');
 			});
 		});
+	</script>
+	<script>
+		$('#form-update-ch').on('show.bs.modal', function(event) {
+			var a = $(event.relatedTarget) // Button that triggered the modal
+			var mach = a.data('mach') // Extract info from data-* attributes
+			var nd = a.data('nd') // Extract info from data-* attributes
+			var daa = a.data('paa')
+			var dab = a.data('pab')
+			var dac = a.data('pac')
+			var dad = a.data('pad')
+			var da = a.data('da')
+			var mamh = a.data('mamh') // Extract info from data-* attributes
+			var mand = a.data('mand')
+
+			// If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+			// Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+			$('#input-mach').val(mach)
+			$('#input-nd').val(nd)
+			$('#input-paa').val(daa)
+			$('#input-pab').val(dab)
+			$('#input-pac').val(dac)
+			$('#input-pad').val(dad)
+			$('#input-da').val(da)
+			$('#input-mamh').val(mamh)
+			$('#input-mand').val(mand)
+		})
+	</script>
+	<script>
+		$('#form-update-mh').on('show.bs.modal', function(event) {
+			var a = $(event.relatedTarget) // Button that triggered the modal
+			var mamh = a.data('mamh') // Extract info from data-* attributes
+			var tenmh = a.data('tenmh') // Extract info from data-* attributes
+
+			// If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+			// Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+			$('#input-mamh1').val(mamh)
+			$('#input-tenmh').val(tenmh)
+		})
+	</script>
+	<script>
+		$('#form-update-nd').on('show.bs.modal', function(event) {
+			var a = $(event.relatedTarget) // Button that triggered the modal
+			var mand = a.data('mand') // Extract info from data-* attributes
+			var tennd = a.data('tennd') // Extract info from data-* attributes
+			var mamh = a.data('mamh')
+			// If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+			// Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+			$('#input-mand1').val(mand)
+			$('#input-tennd').val(tennd)
+			$('#input-mamh2').val(mamh)
+		})
 	</script>
 </body>
 

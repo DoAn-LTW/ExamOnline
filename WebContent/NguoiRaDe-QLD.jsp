@@ -4,6 +4,7 @@
     Author     : BAO UY
 --%>
 
+<%@page import="connect.DBconnect"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.PreparedStatement"%>
@@ -29,12 +30,8 @@
 <!-- Latest compiled and minified JavaScript -->
 <link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet"
 	type="text/css" />
-<script src="assets/JQuery/jquery-3.1.1.min.js" type="text/javascript"></script>
-<link
-	href="assets/material-design-iconic-font/css/material-design-iconic-font.min.css"
-	rel="stylesheet" type="text/css" />
-<link href="https://fonts.googleapis.com/css?family=Ubuntu"
-	rel="stylesheet">
+<script src="assets/JQuery/jquery-3.1.1.min.js"></script>
+<script src="assets/JS/angular.min.js" type="text/javascript"></script>
 <body>
 	<%
 		Users users = null;
@@ -60,7 +57,7 @@
 								class="icon-bar"></span> <span class="icon-bar"></span> <span
 								class="icon-bar"></span>
 						</button>
-						<a class="navbar-brand" href="OnlineTest.jsp"> <span
+						<a class="navbar-brand" href="index.jsp"> <span
 							class="glyphicon glyphicon-home" aria-hidden="true"></span></a>
 					</div>
 
@@ -96,7 +93,7 @@
 										id="dropdownMenu1" data-toggle="dropdown"> <%
  	if (users != null) {
  %> <span class="hello">Xin chào <span
-											style="color: #ED7642; font-weight: 600"> <%=users.getUserName()%></span>
+											style="color: #ED7642; font-weight: 600"> <%=users.getFullname()%></span>
 											<span class="caret"></span> <%
  	}
  %></a>
@@ -120,7 +117,7 @@
 					<ol class="breadcrumb">
 						<span class="glyphicon glyphicon-home" aria-hidden="true"
 							style="color: #000 !important"></span>
-						<li><a href="OnlineTest.jsp">Trang chủ</a></li>
+						<li><a href="index.jsp">Trang chủ</a></li>
 						<li class="active">Quản lý đề</li>
 					</ol>
 				</div>
@@ -176,7 +173,7 @@
 															placeholder="" ng-model="tende" autocomplete="off"
 															required> <i class="fa fa-check text-success"
 															ng-show="form.tende.$dirty && form.tende.$valid"></i>
-	
+
 														<!--Dấu check thể hiệviệc nhập dữ liệu được nhập là hợp lệ-->
 
 														<div ng-show="form.tende.$dirty && form.tende.$invalid"
@@ -190,11 +187,33 @@
 													</div>
 												</div>
 												<div class="form-group">
+													<label for="inputMD" class="col-sm-4 control-label">Thời
+														gian làm bài: </label>
+													<div class="col-xs-8">
+														<input name="thoigian" type="text" class="form-control"
+															placeholder="" ng-model="thoigian" autocomplete="off"
+															required> <i class="fa fa-check text-success"
+															ng-show="form.thoigian.$dirty && form.thoigian.$valid"></i>
+
+														<!--Dấu check thể hiệviệc nhập dữ liệu được nhập là hợp lệ-->
+
+														<div
+															ng-show="form.thoigian.$dirty && form.thoigian.$invalid"
+															class="text-danger">
+															<i class="fa fa-times text-danger"></i>
+
+															<!--Nếu dữ liệu không hợp lệ-->
+															<span ng-show="form.thoigian.$error.required"></span>
+														</div>
+
+													</div>
+												</div>
+												<div class="form-group">
 													<label for="mon" class="col-sm-4 control-label">Môn
 														thi: </label>
 													<div class="col-sm-8">
 														<select class="form-control" name="mamh">
-														<option value="">Chọn</option>
+															<option value="">Chọn</option>
 															<%
 																for (MonHoc c : mhDAO.getlistMH()) {
 															%>
@@ -219,7 +238,7 @@
 													</label>
 													<div class="col-sm-8">
 														<select class="form-control" id="noidung" name="mand">
-														<option value="">Chọn</option>
+															<option value="">Chọn</option>
 															<%
 																for (NoiDung nd : ndtDAO.getListND()) {
 															%>
@@ -282,48 +301,102 @@
 											Connection con = null;
 											PreparedStatement ps = null;
 											try {
-												Class.forName("com.mysql.jdbc.Driver");
-												con = DriverManager
-														.getConnection("jdbc:mysql://localhost:3306/examonline" + "?user=root&password=14110143");
-												String sql = "SELECT a.MaMH,MaDe,SLCH, TenMH from "
-														+ "(select MaMH,MaDe,COUNT(dt.MaCH) as SLCH from ctdethi dt inner join cauhoi ch on dt.MaCH=ch.MaCH GROUP BY MaDe) as a "
-														+ "inner JOIN monhoc mh on a.MaMH=mh.MaMH";
+												con = DBconnect.getConnecttion();
+												String sql = "select b.MaMH,b.MaDe,b.SLCH,b.TenMH,dethi.TenDe,dethi.ThoiGian "
+														+ "from (SELECT a.MaMH,MaDe,SLCH, TenMH from (select MaMH,MaDe,COUNT(dt.MaCH) as SLCH "
+														+ "from ctdethi dt inner join cauhoi ch on dt.MaCH=ch.MaCH GROUP BY MaDe) as a "
+														+ "inner JOIN monhoc mh on a.MaMH=mh.MaMH) as b INNER JOIN dethi on b.MaDe=dethi.MaDe";
 												ps = con.prepareCall(sql);
 												ResultSet rs = ps.executeQuery(sql);
 										%>
-										<div class="table-responsive">
-											<table class="table table-hover">
-												<thead>
-													<tr>
-														<th>Mã đề</th>
-														<th>Môn</th>
-														<th>Số câu hỏi</th>
-														<th>Hành động</th>
-													</tr>
-												</thead>
-												<tbody>
-													<%
-														while (rs != null && rs.next()) {
-													%>
-													<tr>
-														<td><%=rs.getString("MaDe")%></td>
-														<td><%=rs.getString("TenMH")%></td>
-														<td><%=rs.getInt("SLCH")%></td>
-														<td><a href="XoaDeThi?maDe=<%=rs.getString("MaDe")%>"
-															onclick="return confirm('Bạn có chắc chắn muốn xóa?')">Xóa</a></td>
-													</tr>
-													<%
-														}
-													%>
-												</tbody>
-											</table>
 
-										</div>
+										<table class="table table-bordered">
+											<thead>
+												<tr>
+													<th>Mã đề</th>
+													<th>Môn</th>
+													<th>Số câu hỏi</th>
+													<th>Hành động</th>
+												</tr>
+											</thead>
+											<tbody>
+												<%
+													while (rs != null && rs.next()) {
+												%>
+												<tr>
+													<td><%=rs.getString("MaDe")%></td>
+													<td><%=rs.getString("TenMH")%></td>
+													<td><%=rs.getInt("SLCH")%></td>
+													<td><a data-toggle="modal" href='#form-update-dethi'
+														data-target="#form-update-dethi"
+														data-made='<%=rs.getString("MaDe")%>'
+														data-tende='<%=rs.getString("TenDe")%>'
+														data-thoigian='<%=rs.getString("ThoiGian")%>'>Edit</a> ||
+														<a href="XoaDeThi?maDe=<%=rs.getString("MaDe")%>"
+														onclick="return confirm('Bạn có chắc chắn muốn xóa?')">Delete</a></td>
+												</tr>
+												<%
+													}
+												%>
+											</tbody>
+										</table>
+
 										<%
 											} catch (Exception e) {
 												out.println(e.getMessage());
 											}
 										%>
+									</div>
+									<div class="modal fade" id="form-update-dethi">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal"
+														aria-hidden="true">&times;</button>
+													<h4 class="modal-title">Chỉnh sửa đề</h4>
+												</div>
+												<div class="modal-body">
+													<form action="Update" method="POST" class="form-horizontal"
+														role="form">
+														<fieldset class="form-group">
+															<label for="input-username" class="col-sm-3">Mã
+																đề</label>
+															<div class="col-sm-9">
+																<input readonly type="text" name="made" id="input-made"
+																	class="form-control input-sm" value="" required="">
+															</div>
+														</fieldset>
+
+														<fieldset class=form-group>
+															<label for="input-username" class="col-sm-3">Tên
+																đề</label>
+															<div class="col-sm-9">
+																<input type="text" name="tende" id="input-tende"
+																	class="form-control input-sm" value="" required="">
+															</div>
+														</fieldset>
+														<fieldset class=form-group>
+															<label for="input-username" class="col-sm-3">Thời
+																gian</label>
+															<div class="col-sm-9">
+																<input type="text" name="thoigian" id="input-thoigian"
+																	class="form-control input-sm" value="" required="">
+															</div>
+														</fieldset>
+														<fieldset class="form-group">
+															<hr>
+															<div class="pull-right">
+																<input type="hidden" value="updateDE" name="command">
+																<button type="submit" class="btn btn-primary btn-sm"
+																	style="margin-right: 20px">Lưu</button>
+																<button type="button" class="btn btn-default btn-sm"
+																	data-dismiss="modal" style="margin-right: 30px">Đóng</button>
+															</div>
+														</fieldset>
+													</form>
+												</div>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -341,8 +414,7 @@
 			</p>
 		</button>
 	</div>
-	<script src="assets/JS/angular.min.js" type="text/javascript"></script>
-	<script src="assets/JQuery/jquery-3.1.1.min.js"></script>
+
 	<script src="assets/bootstrap/js/bootstrap.min.js"></script>
 	<script>
 		var demoApp = angular.module('demoApp', []).controller(
@@ -355,14 +427,21 @@
 	</script>
 	<script>
 		function myFunction() {
-			var x = document.getElementById("mhSelect").value;
-			document.getElementById("demo").innerHTML = x;
+			document.getElementById("demo").innerHTML = "Xóa thành công đề thi";
 		}
 	</script>
 	<script>
-		function myFunction() {
-			document.getElementById("demo").innerHTML = "Xóa thành công đề thi";
-		}
+		$('#form-update-dethi').on('show.bs.modal', function(event) {
+			var a = $(event.relatedTarget) // Button that triggered the modal
+			var mamh = a.data('made') // Extract info from data-* attributes
+			var tenmh = a.data('tende') // Extract info from data-* attributes
+			var thoigian = a.data('thoigian')
+			// If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+			// Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+			$('#input-made').val(made)
+			$('#input-tende').val(tende)
+			$('#input-thoigian').val(thoigian)
+		})
 	</script>
 </body>
 </html>

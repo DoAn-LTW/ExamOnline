@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import model.MonHoc;
 import model.NoiDung;
 
 /**
@@ -78,6 +80,35 @@ public class NoiDungThiDAO {
 			list.add(n);
 		}
 		return list;
+	}
+	public boolean update(NoiDung nd){
+    	Connection connect=DBconnect.getConnecttion();
+        String sql="update noidungthi set TenND=?, MaMH=? where MaND=?";
+        PreparedStatement ps;
+        try {
+            ps=connect.prepareCall(sql);
+            ps.setString(1, nd.getTenND());
+            ps.setString(2, nd.getMaMH());
+            ps.setString(3, nd.getMaND());
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            Logger.getLogger(MonhocDAO.class.getName()).log(Level.SEVERE,null,e);
+        }
+        return false;
+    }
+	public boolean delete(String maND){
+		Connection connect=DBconnect.getConnecttion();
+        String sql="delete from noidungthi where MaND='"+maND+"'";
+        PreparedStatement ps;
+        try {
+            ps=connect.prepareCall(sql);
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            Logger.getLogger(NoiDungThiDAO.class.getName()).log(Level.SEVERE,null,e);
+        }
+        return false;
 	}
 	public static void main(String[] args) {
 

@@ -30,7 +30,6 @@ public class MonHocServlet extends HttpServlet {
 			throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
-		String url = "";
 		MonHoc monhoc = new MonHoc();
 
 		monhoc.setMaMH(request.getParameter("mamh"));
@@ -38,9 +37,7 @@ public class MonHocServlet extends HttpServlet {
 		monhocDAO.insertMH(monhoc);
 		HttpSession session = request.getSession();
 		session.setAttribute("insertMH", monhoc);
-		url = "/NguoiQTNHCH.jsp";
 		request.setAttribute("/NguoiQTNHCH.jsp", "Tạo thành công môn học");
-		RequestDispatcher rd = getServletContext().getRequestDispatcher(url);
-		rd.forward(request, response);
+
 	}
 }
