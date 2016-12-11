@@ -19,6 +19,7 @@
         <link href="assets/material-design-iconic-font/css/material-design-iconic-font.css" rel="stylesheet" type="text/css"/>
         <link href="https://fonts.googleapis.com/css?family=Lobster|Pacifico" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+        <link href="assets/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 </head>
 
 <body>
@@ -60,20 +61,16 @@
                             <h2 id="welcome">Welcome to online exam of HCMUTE</h2>
                         </div>
                         <div class="row">
-                            <p style="font-size: 17px;color: white">Exam Professor is a web-based tool that allows you to build, embed, and manage your 
-                                    own exams, tests or quizzes (or drill and practice) quickly and easily. 
-                                    From professors setting up their final exam to small businesses training employees, 
-                                    Exam Professor is a breeze to use</p>
+                            <p style="font-size: 17px;color: white">Exam Online is the site that intended 
+                            to help create the test becomes quick and easy. With this site, very convenient for add questions
+                            , the exam and manage tests for lecture and students can do their tests quickly</p>
                         </div>
                         <div class="row">
-                            <a role="button" href="Login.jsp"><img src="assets/Images/btn-signup.png" alt=""/></a>
+                            <a role="button" class="back-to-down"><img src="assets/Images/funnell-button-get-started.png" alt="" style="margin-left: -14px;height: 65px;"/></a>
                         </div>
                     </div>
                     <div class="col-md-offset-4 col-sm-offset-3 col-xs-offset-2" style="margin-top: 493px">
-                        <button class="back-to-down">
-                            <p><i class="zmdi zmdi-chevron-down"></i>
-                            </p>
-                        </button>
+                        
                     </div>
                 </div>
             </div>
@@ -87,14 +84,17 @@
                     <div class="row">
                         <div class="col-md-6" style="margin-top: 40px;">
                             <ul>
-                                <li><span>Kiểm tra được toàn diện kiến thức của sinh viên.</span>
+                                <li><i class="fa fa-bolt" aria-hidden="true"></i> Kiểm tra được toàn diện kiến thức của sinh viên.
                                 </li>
-                                <li><span>Sinh viên không thể nào học tủ được mà phải học toàn bộ trên cơ sở 
-                                 hiểu rõ và vận dụng.</span>
+                                <li><i class="fa fa-bolt" aria-hidden="true"></i> 
+                                Sinh viên không thể nào học tủ được mà phải học toàn bộ trên cơ sở 
+                                 hiểu rõ và vận dụng.
                                 </li>
-                                <li><span>Dạy cho sinh viên biết cách vận dụng và linh hoạt trong tính toán.</span>
+                                <li><i class="fa fa-bolt" aria-hidden="true"></i> 
+                                Dạy cho sinh viên biết cách vận dụng và linh hoạt trong tính toán.
                                 </li>
-                                <li><span>Thời gian làm không dài cộng với nhiều câu hỏi có thể biết đc độ nhạy bén của sinh viên.</span>
+                                <li><i class="fa fa-bolt" aria-hidden="true"></i> 
+                                Thời gian làm không dài cộng với nhiều câu hỏi có thể biết đc độ nhạy bén của sinh viên.
                                 </li>
                             </ul>
                         </div>

@@ -26,14 +26,6 @@
 <!-- App title -->
 <title>Admin - Danh sách tài khoản</title>
 
-<!-- DataTables -->
-<link href="assets/plugins/datatables/dataTables.bootstrap4.min.css"
-	rel="stylesheet" type="text/css" />
-<link href="assets/plugins/datatables/buttons.bootstrap4.min.css"
-	rel="stylesheet" type="text/css" />
-<!-- Responsive datatable examples -->
-<link href="assets/plugins/datatables/responsive.bootstrap4.min.css"
-	rel="stylesheet" type="text/css" />
 <link href="assets/plugins/bootstrap-sweetalert/sweet-alert.css"
 	rel="stylesheet" type="text/css" />
 <!-- Switchery css -->
@@ -41,22 +33,7 @@
 
 <!-- App CSS -->
 <link href="assets/css/style.css" rel="stylesheet" type="text/css" />
-<script>
-	(function(i, s, o, g, r, a, m) {
-		i['GoogleAnalyticsObject'] = r;
-		i[r] = i[r] || function() {
-			(i[r].q = i[r].q || []).push(arguments)
-		}, i[r].l = 1 * new Date();
-		a = s.createElement(o), m = s.getElementsByTagName(o)[0];
-		a.async = 1;
-		a.src = g;
-		m.parentNode.insertBefore(a, m)
-	})(window, document, 'script',
-			'../../../www.google-analytics.com/analytics.js', 'ga');
 
-	ga('create', 'UA-79190402-1', 'auto');
-	ga('send', 'pageview');
-</script>
 <!-- Modernizr js -->
 <script src="assets/JS/modernizr.min.js"></script>
 <link
@@ -69,9 +46,12 @@
 		UsersDAO usersDAO = new UsersDAO();
 
 		Users users = null;
-		if (session.getAttribute("userAdmin") != null) {
-			users = (Users) session.getAttribute("userAdmin");
+		if (session.getAttribute("userAdmin") == null) {
+			response.sendRedirect("/ExamOnline/Login.jsp");
+			
 		}
+		else{
+			users = (Users) session.getAttribute("userAdmin");
 	%>
 	<!-- Begin page -->
 	<div id="wrapper">
@@ -167,6 +147,9 @@
 							</ul></li>
 						<li class="has_sub"><a href="DSRole.jsp" class="waves-effect"><i class="fa fa-tachometer" aria-hidden="true"></i><span
 								style="margin-left: 20px"> Vai trò </span></a></li>
+								<li class="text-muted menu-title"><i class="fa fa-adn" aria-hidden="true"></i> Quản lý điểm</li>
+								<li class="has_sub"><a href="DSDiem.jsp" class="waves-effect"><i class="fa fa-tachometer" aria-hidden="true"></i><span
+								style="margin-left: 20px"> Điểm </span></a></li>
 
 					</ul>
 					<div class="clearfix"></div>
@@ -299,6 +282,7 @@
 							'#datatable-buttons_wrapper .col-md-6:eq(0)');
 				});
 	</script>
+	<%} %>
 </body>
 
 <!-- Mirrored from coderthemes.com/uplon_1.4/light/tables-datatable.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 14 Oct 2016 16:07:55 GMT -->

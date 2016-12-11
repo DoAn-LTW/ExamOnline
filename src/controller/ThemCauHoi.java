@@ -19,33 +19,37 @@ import model.CauHoi;
 @WebServlet("/ThemCauHoi")
 public class ThemCauHoi extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-	CauHoiDAO cauhoiDAO=new CauHoiDAO();
-    public ThemCauHoi() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	CauHoiDAO cauhoiDAO = new CauHoiDAO();
+
+	public ThemCauHoi() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.setContentType("text/html;charset=UTF-8");
 		request.setCharacterEncoding("utf-8");
-		String url="";
-		CauHoi cauhoi=new CauHoi();
+		CauHoi cauhoi = new CauHoi();
 		cauhoi.setMaCH(request.getParameter("mach"));
 		cauhoi.setNoiDung(request.getParameter("ndcauhoi"));
 		cauhoi.setDapAnA(request.getParameter("PAA"));
@@ -56,13 +60,6 @@ public class ThemCauHoi extends HttpServlet {
 		cauhoi.setMaMH(request.getParameter("maMH"));
 		cauhoi.setMaND(request.getParameter("maND"));
 		cauhoiDAO.insertCauHoi(cauhoi);
-		HttpSession session = request.getSession();
-		if (cauhoi != null) {
-			session.setAttribute("insertCauhoi", cauhoi);
-			url = "/NguoiQTNHCH.jsp";
-			request.setAttribute("/NguoiQTNHCH.jsp", "Tạo thành công người dùng");
-		}
-		RequestDispatcher rd = getServletContext().getRequestDispatcher(url);
-		rd.forward(request, response);
+		response.sendRedirect("/ExamOnline/NguoiQTNHCH.jsp");
 	}
 }

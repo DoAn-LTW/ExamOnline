@@ -28,20 +28,78 @@
 <link href="assets/css/style_OT.css" rel="stylesheet" type="text/css" />
 <link href="assets/font-awesome-4.6.3/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css" />
+<script src="assets/JQuery/jquery-3.1.1.min.js" type="text/javascript"></script>
+<script src="assets/JS/bootstrap.min.js"></script>
+<script>
+	var h = null; // Giờ
+	var m; // Phút
+	var s; // Giây
+	var phut;
+	var timeout = null; // Timeout
+	function start() {
+		/*BƯỚC 1: LẤY GIÁ TRỊ BAN ĐẦU*/
+		if (h == null) {
+			h = 0;
+			m = document.getElementById("m_val").value;
+			s = document.getElementById("s_val").value;
+		}
+		timeout = setTimeout(function() {
+			s--;
+			start();
+			/*BƯỚC 1: CHUYỂN ĐỔI DỮ LIỆU*/
+			// Nếu số giây = -1 tức là đã chạy ngược hết số giây, lúc này:
+		}, 1000);
+		//  - giảm số phút xuống 1 đơn vị
+		//  - thiết lập số giây lại 59
+		if (s === -1) {
+			m -= 1;
+			s = 59;
+		}
 
+		// Nếu số phút = -1 tức là đã chạy ngược hết số phút, lúc này:
+		//  - giảm số giờ xuống 1 đơn vị
+		//  - thiết lập số phút lại 59
+		if (m === -1) {
+			h -= 1;
+			m = 59;
+		}
+
+		// Nếu số giờ = -1 tức là đã hết giờ, lúc này:
+		//  - Dừng chương trình
+		if (h == -1) {
+			clearTimeout(timeout);
+			$('#nopbai').click(function(){
+			});
+			return false;
+		}
+		var a = $("s1").val(s.toString());
+		/*BƯỚC 1: HIỂN THỊ ĐỒNG HỒ*/
+		document.getElementById("h").innerHTML = h.toString();
+		document.getElementById("m").innerHTML = m.toString();
+		document.getElementById("m1").value = m.toString();
+		document.getElementById("s").innerHTML = s.toString();
+		document.getElementById("s1").value = s.toString();
+		/*BƯỚC 1: GIẢM PHÚT XUỐNG 1 GIÂY VÀ GỌI LẠI SAU 1 GIÂY */
+	}
+	function stop() {
+		clearTimeout(timeout);
+	}
+</script>
 </head>
 
 <body onload="start()">
 	<%
 		UsersDAO usersDAO = new UsersDAO();
 		Users users = new Users();
-		if (session.getAttribute("userSV") != null) {
-			users = (Users) session.getAttribute("userSV");
-		}
+
 		String made = "";
-		String sthi = "";
+		int sthi = 0;
+		int mthi = 0;
 		if (request.getParameter("sthi") != null) {
-			sthi = request.getParameter("sthi");
+			sthi = Integer.parseInt(request.getParameter("sthi"));
+		}
+		if (request.getParameter("mthi") != null) {
+			mthi = Integer.parseInt(request.getParameter("mthi"));
 		}
 		int pages = 0, firstResult = 0, maxResult = 0, total = 0, count = 0;
 		DeThi deThi = new DeThi();
@@ -56,6 +114,7 @@
 		if (request.getParameter("maDe") != null) {
 			made = request.getParameter("maDe");
 			deThi = deThiDAO.CTDeThi(made);
+
 		}
 		if (request.getParameter("pages") != null) {
 			pages = Integer.parseInt(request.getParameter("pages"));
@@ -71,6 +130,10 @@
 			count = firstResult + 1;
 		}
 		ArrayList<CauHoi> listCH = cauHoiDAO.getListCHWithMaDe(made, firstResult, maxResult);
+		if (session.getAttribute("userSV") == null) {
+			response.sendRedirect("/ExamOnline/Login.jsp");
+		} else {
+			users = (Users) session.getAttribute("userSV");
 	%>
 	<div class="wapper">
 		<jsp:include page="Header.jsp"></jsp:include>
@@ -146,9 +209,9 @@
 				</div>
 				<div class="row">
 					<%
-						if (listCH.size() > 0) {
-							ctThi=ctThiDAO.getWithID(users.getUserName(), made);
-							if ( ctThi.getUsername()== null) {
+						ctThi = ctThiDAO.getWithID(users.getUserName(), made);
+							if (ctThi.getUsername() == null) {
+								if (listCH.size() > 0) {
 					%>
 					<div class="col-md-4">
 						<div class="info-test">
@@ -163,7 +226,10 @@
 								Số lượng câu hỏi: <span style="text-decoration: underline;"><%=ctDeThiDAO.SLCH(made)%></span>
 							</h4>
 							<input value="<%=deThi.getThoiGian()%>" type="hidden"
-								id="thoigian"> <strong
+								id="thoigian"> <input type="hidden" value=<%=sthi%>
+								id="s_val"> <input type="hidden" value="<%=mthi%>"
+								id="m_val"> <input type="hidden"
+								value="<%=deThi.getThoiGian()%>" name=""> <strong
 								style="margin-left: 30px; font-size: 20px"><span id="h">00</span>
 								: <span id="m">00</span>: <span id="s">00</span> </strong>
 						</div>
@@ -177,12 +243,12 @@
 							<span style="font-size: 17px">Câu <%=count%>: <%=ch.getNoiDung()%></span>
 							<%
 								String da = "";
-											Thi t = new Thi();
-											t = thiDAO.getWithMaCH(ch.getMaCH(), users.getUserName());
+												Thi t = new Thi();
+												t = thiDAO.getWithMaCH(ch.getMaCH(), users.getUserName());
 
-											if (t != null) {
-												da = t.getDAuser();
-												if (da == null) {
+												if (t != null) {
+													da = t.getDAuser();
+													if (da == null) {
 							%>
 							<div class="form-group">
 								<div class="col-sm-offset-1 col-sm-10">
@@ -362,7 +428,7 @@
 							</div>
 							<%
 								}
-											} else {
+												} else {
 							%>
 							<div class="form-group">
 								<div class="col-sm-offset-1 col-sm-10">
@@ -412,33 +478,31 @@
 									<%
 										} else {
 									%>
-									<a class="btn btn-primary" type="button"
+									<input class="btn btn-primary" type="submit"
 										style="margin-top: 10px"
-										href="Thi.jsp?UserName=<%=users.getUserName()%>&maDe=<%=made%>&pages=<%=(pages - 1)%>&sthi=<%=sthi%>">Previous</a>
+										value="Previous" name="command">
 									<%
 										}
 									%>
-									<input type="text" value="<%=sthi%>" id="s_val"> <input
-										type="text" value="<%=deThi.getThoiGian()%>" id="m_val"><input
-										type="hidden" name="pages" value="<%=pages%>"> <input
+									<input type="hidden" name="pages" value="<%=pages%>"> <input
 										type="hidden" name="mach" value="<%=ch.getMaCH()%>"> <input
 										type="hidden" name="made"
 										value="<%=request.getParameter("maDe")%>"> <input
 										type="hidden" name="username" value="<%=users.getUserName()%>">
-									<input type="text" id="s1" value="<%=sthi%>" name="sthi">
-
-									<input class="btn btn-primary" type="submit" value="Next">
+									<input type="hidden" id="s1" value="<%=sthi%>" name="sthi">
+									<input type="hidden" id="m1" value="<%=mthi%>" name="mthi">
+									<input class="btn btn-primary" type="submit" value="Next" name="command">
 									<%
 										}
 									%>
 								</div>
 							</div>
 						</form>
-						<form method="POST" action="SinhVien_NopBai.jsp">
+						<form method="POST" action="Nopbai">
 							<input type="hidden" name="made"
 								value="<%=request.getParameter("maDe")%>"> <input
 								type="hidden" name="username" value="<%=users.getUserName()%>">
-							<button class="btn btn-danger" type="submit"
+							<button class="btn btn-danger" type="submit" id="nopbai"
 								onclick="return confirm('Bạn có chắc chắn muốn nộp bài ?')">Nộp
 								bài</button>
 						</form>
@@ -447,16 +511,19 @@
 						} else {
 					%>
 					<h3 style="text-align: center">
-						<strong>Xin lỗi</strong>, Bạn đã làm bài thi này rồi, vui lòng chọn bài thi khác
+						<strong>Xin lỗi</strong>, hiện tại chưa tới giờ làm bài thi trắc
+						nghiệm, vui lòng quay lại sau.
 					</h3>
 					<img src="assets/Images/404.png"
 						style="margin: auto; display: block;">
+
 					<%
-						}}else{
+						}
+							} else {
 					%>
 					<h3 style="text-align: center">
-						<strong>Xin lỗi</strong>, hiện tại chưa tới giờ làm bài thi trắc
-						nghiệm, vui lòng quay lại sau. 
+						<strong>Xin lỗi</strong>, Bạn đã làm bài thi này rồi, vui lòng
+						chọn bài thi khác
 					</h3>
 					<img src="assets/Images/404.png"
 						style="margin: auto; display: block;">
@@ -470,65 +537,10 @@
 		<br> <br> <br> <br> <br>
 		<jsp:include page="Footer.jsp"></jsp:include>
 	</div>
-
-	<script src="assets/JQuery/jquery-3.1.1.min.js" type="text/javascript"></script>
-	<script src="assets/JS/bootstrap.min.js"></script>
-	<script>
-		var h; // Giờ
-		var m = null; // Phút
-		var s; // Giây
-		var timeout = null; // Timeout
-		function start() {
-			/*BƯỚC 1: LẤY GIÁ TRỊ BAN ĐẦU*/
-			if (m === null) {
-
-				h = 0;
-				m = parseInt(document.getElementById('m_val').value);
-				s = parseInt(document.getElementById('s_val').value);
-			}
-			timeout = setTimeout(function() {
-				s--;
-				start();
-				/*BƯỚC 1: CHUYỂN ĐỔI DỮ LIỆU*/
-				// Nếu số giây = -1 tức là đã chạy ngược hết số giây, lúc này:
-			}, 1000);
-			//  - giảm số phút xuống 1 đơn vị
-			//  - thiết lập số giây lại 59
-			if (s === -1) {
-				m -= 1;
-				s = 59;
-			}
-
-			// Nếu số phút = -1 tức là đã chạy ngược hết số phút, lúc này:
-			//  - giảm số giờ xuống 1 đơn vị
-			//  - thiết lập số phút lại 59
-			if (m === -1) {
-				h -= 1;
-				m = 59;
-			}
-
-			// Nếu số giờ = -1 tức là đã hết giờ, lúc này:
-			//  - Dừng chương trình
-			if (h == -1) {
-				clearTimeout(timeout);
-
-				return false;
-			}
-
-			/*BƯỚC 1: HIỂN THỊ ĐỒNG HỒ*/
-			document.getElementById('h').innerText = h.toString();
-			document.getElementById('m').innerText = m.toString();
-			document.getElementById('s').innerText = s.toString();
-
-			document.getElementById('s1').innerText = s.toString();
-			/*BƯỚC 1: GIẢM PHÚT XUỐNG 1 GIÂY VÀ GỌI LẠI SAU 1 GIÂY */
-
+	<%
 		}
+	%>
 
-		function stop() {
-			clearTimeout(timeout);
-		}
-	</script>
 </body>
 
 </html>

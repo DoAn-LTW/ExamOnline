@@ -3,6 +3,7 @@ package controller;
 import dao.RoleDAO;
 import dao.UsersDAO;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -88,7 +89,18 @@ public class UserServlet extends HttpServlet {
 					response.sendRedirect("/ExamOnline/SinhVien.jsp");
 				}
 			} else {
-				response.sendRedirect("/ExamOnline/error.jsp");
+				PrintWriter out = response.getWriter();
+                out.println("<html>");
+                out.println("<head>");
+                out.println("<title>Thông báo</title>");
+                out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"assets/bootstrap/css/bootstrap.min.css\">");
+                out.println("</head>");
+                out.println("<body>");
+                out.println("<div class=\"alert alert-danger alert-dismissible\" role=\"alert\" style=\"text-align: center\">"
+                		+ "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>"
+                        + "<strong>Thông báo! </strong>Sai tên tài khoản hoặc mật khẩu, vui lòng quay lại <a href=\"Login.jsp\">Đăng nhập</a> và tiếp tục</div>");
+                out.println("</body>");
+                out.println("</html>");
 			}
 			break;
 		case "updateProfile":

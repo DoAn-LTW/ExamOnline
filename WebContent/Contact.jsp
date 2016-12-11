@@ -35,11 +35,9 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                       </button>
-                      <a  class="navbar-brand" href="OnlineTest.jsp">
+                      <a  class="navbar-brand" href="index.jsp">
                           <span class="glyphicon glyphicon-home" aria-hidden="true"></span></a>
                     </div>
-
-                    <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="navbar-main">
                       <ul class="nav navbar-nav">
                         <li data-toggle="tooltip" data-placement="top" title="Liên hệ"><a href="Contact.jsp">Liên hệ <span class="sr-only">(current)</span></a></li>
@@ -73,7 +71,7 @@
                 </div>
                 <br>
                 <div class="row">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d979.6336818316772!2d106.76927882916324!3d10.84687399951711!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317527a09749aeeb%3A0x8a8df1c6ee763bb5!2zMzk1NzEgSOG7r3UgTmdo4buLLCBCw6xuaCBUaOG7jSwgVGjhu6cgxJDhu6ljLCBI4buTIENow60gTWluaCwgVmlldG5hbQ!5e0!3m2!1sen!2s!4v1474857118533" width="100%" height="338" frameborder="0" style="border:0" allowfullscreen></iframe>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.479909386308!2d106.76982351428005!3d10.851056392270884!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3175270ad28d48ab%3A0xa6c02de0a7c40d6c!2zVHLGsOG7nW5nIMSQSFNQIEvhu7kgVGh14bqtdCBUcC4gSENN!5e0!3m2!1sen!2s!4v1481444115190" width="100%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
                 </div> 
             </div>
         </div>

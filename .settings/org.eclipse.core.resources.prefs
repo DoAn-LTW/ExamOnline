@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
+encoding//WebContent/DSDiem.jsp=UTF-8
 encoding//src/controller/CheckEmailServlet.java=UTF-8
 encoding//src/controller/CheckMaMH.java=UTF-8
 encoding//src/controller/CheckMaND.java=UTF-8

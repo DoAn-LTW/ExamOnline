@@ -40,11 +40,12 @@
 <body>
 	<%
 		Users users = null;
-		if (session.getAttribute("userSV") != null) {
-			users = (Users) session.getAttribute("userSV");
-		}
 		DeThiDAO deThiDAO = new DeThiDAO();
-		KyThiDAO kyThiDAO=new KyThiDAO();
+		KyThiDAO kyThiDAO = new KyThiDAO();
+		if (session.getAttribute("userSV") == null) {
+			response.sendRedirect("/ExamOnline/Login.jsp");
+		} else {
+			users = (Users) session.getAttribute("userSV");
 	%>
 	<div class="wapper">
 		<jsp:include page="Header.jsp"></jsp:include>
@@ -97,8 +98,7 @@
 									<a class="dropdown-toggle dropdown-vta-login" role="button"
 										id="dropdownMenu1" data-toggle="dropdown"> <%
  	if (users != null) {
- %>
-										<span class="hello">Xin chào <span
+ %> <span class="hello">Xin chào <span
 											style="color: #ED7642; font-weight: 600"><%=users.getFullname()%></span></span>
 										<span class="caret"></span></a>
 									<ul class="dropdown-menu dropdown-vta-sub-menu"
@@ -127,13 +127,14 @@
 				<div class="row">
 					<div class="customDiv-5">
 						<div class="list-group">
-						
+
 							<%
 								for (DeThi dt : deThiDAO.getDSDTuser(users.getUserName())) {
-
 							%>
-							
-							<a href="Thi.jsp?UserName=<%=users.getUserName()%>&maDe=<%=dt.getMaDe()%>&pages=1&sthi=0" class="list-group-item"><%=dt.getTenDe()%></a>
+
+							<a
+								href="Thi.jsp?UserName=<%=users.getUserName()%>&maDe=<%=dt.getMaDe()%>&pages=1&sthi=0&mthi=<%=dt.getThoiGian()%>"
+								class="list-group-item"><%=dt.getTenDe()%></a>
 							<%
 								}
 							%>
@@ -147,5 +148,8 @@
 	</div>
 	<script src="assets/bootstrap/js/bootstrap.min.js"
 		type="text/javascript"></script>
+	<%
+		}
+	%>
 </body>
 </html>

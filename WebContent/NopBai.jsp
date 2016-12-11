@@ -4,6 +4,9 @@
     Author     : BAO UY
 --%>
 
+<%@page import="org.apache.tomcat.jni.Mmap"%>
+<%@page import="model.CTThi"%>
+<%@page import="dao.CTThiDAO"%>
 <%@page import="dao.DeThiDAO"%>
 <%@page import="model.DeThi"%>
 <%@page import="dao.CauHoiDAO"%>
@@ -29,22 +32,22 @@
 <link
 	href="assets/material-design-iconic-font/css/material-design-iconic-font.min.css"
 	rel="stylesheet" type="text/css" />
-<link href="https://fonts.googleapis.com/css?family=Ubuntu"
-	rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Bungee" rel="stylesheet">
 </head>
 
 <body>
 	<%
 		UsersDAO usersDAO = new UsersDAO();
 		ThiDAO thiDAO = new ThiDAO();
-		CauHoiDAO cauHoiDAO = new CauHoiDAO();
 		DeThiDAO deThiDAO = new DeThiDAO();
 		Users users = new Users();
-
-		String made = request.getParameter("made");
-		String username = request.getParameter("username");
-		users = usersDAO.getUsers(username);
-		DeThi dt = deThiDAO.CTDeThi(made);
+		CTThiDAO ctThiDAO = new CTThiDAO();
+		CTThi ctThi = new CTThi();
+		if (session.getAttribute("ctthi") != null) {
+			ctThi = (CTThi) session.getAttribute("ctthi");
+		}
+		users = usersDAO.getUsers(ctThi.getUsername());
+		DeThi dt = deThiDAO.CTDeThi(ctThi.getMaDe());
 	%>
 	<div class="wapper">
 		<jsp:include page="Header.jsp"></jsp:include>
@@ -61,9 +64,9 @@
 								class="icon-bar"></span> <span class="icon-bar"></span> <span
 								class="icon-bar"></span>
 						</button>
-						<a class="navbar-brand" href="index.jsp"
-							data-toggle="tooltip" data-placement="top" title="Trang chủ">
-							<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+						<a class="navbar-brand" href="index.jsp" data-toggle="tooltip"
+							data-placement="top" title="Trang chủ"> <span
+							class="glyphicon glyphicon-home" aria-hidden="true"></span>
 						</a>
 					</div>
 
@@ -129,67 +132,67 @@
 							<h3 class="panel-title">Kết quả bài làm</h3>
 						</div>
 						<div class="panel-body">
-							<form method="post" action="KetThucBaiThi">
-								<div class="row" id="detail-mark">
-									<%
-										float count = 0;
-										float diem = 0;
-										int dung = 0;
+							<div class="row" id="detail-mark">
+								<%
+									int dung = thiDAO.countRight(ctThi.getUsername(), ctThi.getMaDe());
+								%>
+								<div class="col-md-2"></div>
+								<div class="col-md-4" id="detail-mark">
+									<p>
+										- Mã số sinh viên: <span><%=users.getUserName()%></span>
+									</p>
+									<p>
+										- Họ và tên: <span><%=users.getFullname()%></span>
+									</p>
+									<p>
+										- Lớp: <span><%=users.getMaLop()%></span>
+									</p>
+								</div>
+								<div class="col-md-2"></div>
+								<div class="col-md-4" id="detail-mark">
+									<p>
+										- Đề thi: <span style="font-size: 18px"><%=dt.getTenDe()%></span>
+									</p>
+									<p>
 
-										count = cauHoiDAO.countCHByMaDe(made);
-										dung = thiDAO.countRight(username, made);
+										- Số câu đúng: <span style="text-decoration: underline;"><%=dung%></span>
+									</p>
 
-										diem = (10 / count) * dung;
-									%>
-									<div class="col-md-2"></div>
-									<div class="col-md-4">
-										<p>
-											- Mã số sinh viên: <span><%=users.getUserName()%></span>
-										</p>
-										<p>
-											- Họ và tên: <span><%=users.getFullname()%></span>
-										</p>
-										<p>
-											- Lớp: <span><%=users.getMaLop()%></span>
-										</p>
-									</div>
-									<div class="col-md-2"></div>
-									<div class="col-md-4">
-										<p>
-											- Đề thi: <span style="font-size: 18px"><%=dt.getTenDe()%></span>
-										</p>
-										<p>
-
-											- Số câu đúng: <span style="text-decoration: underline;"><%=dung%></span>
-										</p>
-
-										<p>
-											* Điểm: <span style="text-decoration: underline;"><%=diem%></span>
-										</p>
-										<input type="hidden" value="<%=diem %>" name="diem">
-										<input type="hidden" value="<%=dt.getMaDe()%>" name="made">
-										<input type="hidden" value="<%=users.getUserName()%>" name="username">
-										<button type="submit" class="btn btn-primary">Lưu</button>
-									</div>
+									<p style="color: red">
+										* Điểm: <span style="text-decoration: underline;"><%=ctThi.getDiem()%></span>
+									</p>
 
 								</div>
-								
-							</form>
+
+							</div>
 						</div>
 					</div>
 				</div>
+				<br><br><br>
+				<div class="row" id="noti">
+					<%
+						if (ctThi.getDiem() < 5) {
+					%>
+					<p id="mark-bad">Bài làm khá tệ, cố gắng lần sau nhé !!!</p>
+					<img src="assets/Images/sad.png">
+					<%
+						} else if (ctThi.getDiem() >= 7) {
+					%>
+					<p id="mark-good">Chúc mừng bạn, bài làm rất tốt !!!</p>
+					<img src="assets/Images/happy.png">
+					<%
+						} else {
+					%>
+					<p id="mark-cool">Bài làm khá tốt, chúc mừng bạn !!!</p>
+					<img src="assets/Images/smile.png">
+					<%
+						}
+					%>
+				</div>
 			</div>
 		</div>
-
-	</div>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<jsp:include page="Footer.jsp"></jsp:include>
+		<br> <br> <br> <br> <br> <br> <br><br> <br>
+		<jsp:include page="Footer.jsp"></jsp:include>
 	</div>
 	<script src="assets/JS/jquery.min.js" type="text/javascript"></script>
 	<script src="assets/JS/bootstrap.min.js" type="text/javascript"></script>

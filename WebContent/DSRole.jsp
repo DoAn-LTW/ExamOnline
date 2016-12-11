@@ -70,12 +70,12 @@
 		RoleDAO roleDAO = new RoleDAO();
 		Users users = null;
 		Role role = null;
-		if (session.getAttribute("userAdmin") != null) {
+		if (session.getAttribute("userAdmin") == null) {
+			response.sendRedirect("/ExamOnline/Login.jsp");
+			
+		}
+		else{
 			users = (Users) session.getAttribute("userAdmin");
-		}
-		if (session.getAttribute("insertRole") != null) {
-			role = (Role) session.getAttribute("insertRole");
-		}
 	%>
 	<!-- Begin page -->
 	<div id="wrapper">
@@ -171,6 +171,9 @@
 							</ul></li>
 						<li class="has_sub"><a href="DSRole.jsp" class="waves-effect"><i class="fa fa-tachometer" aria-hidden="true"></i><span
 								style="margin-left: 20px"> Vai trò </span></a></li>
+								<li class="text-muted menu-title"><i class="fa fa-adn" aria-hidden="true"></i> Quản lý điểm</li>
+								<li class="has_sub"><a href="DSDiem.jsp" class="waves-effect"><i class="fa fa-tachometer" aria-hidden="true"></i><span
+								style="margin-left: 20px"> Điểm </span></a></li>
 
 					</ul>
 					<div class="clearfix"></div>
@@ -237,7 +240,6 @@
 
 										</div>
 									</div>
-									<input type="hidden" value="insertRole" name="command">
 									<button type="submit" class="btn btn-primary"
 										ng-disabled="!form.$dirty || (form.$dirty && form.$invalid)"
 										style="margin-top: 10px; margin-bottom: 10px">Thêm</button>
@@ -374,6 +376,7 @@
 	
 		})
 	</script>
+	<%} %>
 </body>
 
 <!-- Mirrored from coderthemes.com/uplon_1.4/light/tables-datatable.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 14 Oct 2016 16:07:55 GMT -->

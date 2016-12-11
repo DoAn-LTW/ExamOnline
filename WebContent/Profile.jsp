@@ -35,10 +35,12 @@
 		if (session.getAttribute("updateProfile") != null) {
 			users = (Users) session.getAttribute("updateProfile");
 		}
-		if (request.getParameter("UserName") != null) {
+		if (request.getParameter("UserName") == null) {
+			response.sendRedirect("/ExamOnline/Login.jsp");
+			
+		}else{
 			String userName = request.getParameter("UserName");
 			users = usersDAO.getUsers(userName);
-		}
 	%>
 
 	<div class="wapper">
@@ -56,9 +58,9 @@
 								class="icon-bar"></span> <span class="icon-bar"></span> <span
 								class="icon-bar"></span>
 						</button>
-						<a class="navbar-brand" href="index.jsp"
-							data-toggle="tooltip" data-placement="top" title="Trang chủ">
-							<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+						<a class="navbar-brand" href="index.jsp" data-toggle="tooltip"
+							data-placement="top" title="Trang chủ"> <span
+							class="glyphicon glyphicon-home" aria-hidden="true"></span>
 						</a>
 					</div>
 
@@ -98,9 +100,8 @@
 									<img alt="" /> <a class="dropdown-toggle dropdown-vta-login"
 										role="button" id="dropdownMenu1" data-toggle="dropdown"> <%
  	if (users != null) {
- %>
-										<span class="hello">Xin chào <span
-											style="color: #EDB637; font-weight: bold"><%=users.getUserName()%></span></span>
+ %> <span class="hello">Xin chào <span
+											style="color: #EDB637; font-weight: bold"><%=users.getFullname()%></span></span>
 										<%
 											}
 										%> <span class="caret"></span>
@@ -125,7 +126,7 @@
 				<div class="row">
 					<ol class="breadcrumb">
 						<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-						<li><a href="OnlineTest.jsp" title="">Trang chủ</a></li>
+						<li><a href="index.jsp" title="">Trang chủ</a></li>
 						<li class="active">Trang cá nhân</li>
 					</ol>
 				</div>
@@ -265,7 +266,6 @@
 				<!-- end col -->
 			</div>
 		</div>
-	</div>
 	<br>
 	<br>
 	<br>
@@ -287,6 +287,7 @@
 					}
 				} ]);
 	</script>
+	<%} %>
 </body>
 
 </html>

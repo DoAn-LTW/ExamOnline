@@ -38,6 +38,6 @@ public class MonHocServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		session.setAttribute("insertMH", monhoc);
 		request.setAttribute("/NguoiQTNHCH.jsp", "Tạo thành công môn học");
-
+		response.sendRedirect("/ExamOnline/NguoiQTNHCH.jsp");
 	}
 }

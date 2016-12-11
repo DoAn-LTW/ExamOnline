@@ -30,17 +30,18 @@
 <!-- Latest compiled and minified JavaScript -->
 <link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet"
 	type="text/css" />
-<script src="assets/JQuery/jquery-3.1.1.min.js"></script>
-<script src="assets/JS/angular.min.js" type="text/javascript"></script>
+
 <body>
 	<%
 		Users users = null;
 		MonhocDAO mhDAO = new MonhocDAO();
 		NoiDungThiDAO ndtDAO = new NoiDungThiDAO();
 		NoiDung noiDung = new NoiDung();
-		if (session.getAttribute("userQLDE") != null) {
+		if (session.getAttribute("userQLDE") == null) {
+			response.sendRedirect("/ExamOnline/Login.jsp");
+		}else{
 			users = (Users) session.getAttribute("userQLDE");
-		}
+		
 	%>
 	<div class="wapper">
 		<jsp:include page="Header.jsp"></jsp:include>
@@ -327,7 +328,7 @@
 													<td><%=rs.getString("MaDe")%></td>
 													<td><%=rs.getString("TenMH")%></td>
 													<td><%=rs.getInt("SLCH")%></td>
-													<td><a data-toggle="modal" href='#form-update-dethi'
+													<td><a data-toggle="modal" href="#form-update-dethi"
 														data-target="#form-update-dethi"
 														data-made='<%=rs.getString("MaDe")%>'
 														data-tende='<%=rs.getString("TenDe")%>'
@@ -347,7 +348,10 @@
 											}
 										%>
 									</div>
-									<div class="modal fade" id="form-update-dethi">
+								</div>
+							</div>
+						</div>
+						<div class="modal fade" id="form-update-dethi">
 										<div class="modal-dialog">
 											<div class="modal-content">
 												<div class="modal-header">
@@ -363,7 +367,7 @@
 																đề</label>
 															<div class="col-sm-9">
 																<input readonly type="text" name="made" id="input-made"
-																	class="form-control input-sm" value="" required="">
+																	class="form-control input-sm" value="" required>
 															</div>
 														</fieldset>
 
@@ -372,7 +376,7 @@
 																đề</label>
 															<div class="col-sm-9">
 																<input type="text" name="tende" id="input-tende"
-																	class="form-control input-sm" value="" required="">
+																	class="form-control input-sm" value="" required>
 															</div>
 														</fieldset>
 														<fieldset class=form-group>
@@ -380,7 +384,7 @@
 																gian</label>
 															<div class="col-sm-9">
 																<input type="text" name="thoigian" id="input-thoigian"
-																	class="form-control input-sm" value="" required="">
+																	class="form-control input-sm" value="" required>
 															</div>
 														</fieldset>
 														<fieldset class="form-group">
@@ -398,9 +402,6 @@
 											</div>
 										</div>
 									</div>
-								</div>
-							</div>
-						</div>
 					</div>
 				</div>
 			</div>
@@ -414,8 +415,22 @@
 			</p>
 		</button>
 	</div>
-
+<script src="assets/JQuery/jquery-3.1.1.min.js"></script>
+<script src="assets/JS/angular.min.js" type="text/javascript"></script>
 	<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+	<script>
+		$('#form-update-dethi').on('show.bs.modal', function(event) {
+			var a = $(event.relatedTarget) // Button that triggered the modal
+			var made = a.data('made') // Extract info from data-* attributes
+			var tende = a.data('tende') // Extract info from data-* attributes
+			var thoigian = a.data('thoigian')
+			// If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+			// Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+			$('#input-made').val(made)
+			$('#input-tende').val(tende)
+			$('#input-thoigian').val(thoigian)
+		});
+	</script>
 	<script>
 		var demoApp = angular.module('demoApp', []).controller(
 				"InsertMHNDCtrl", [ '$scope', function($scope) {
@@ -425,23 +440,6 @@
 					}
 				} ]);
 	</script>
-	<script>
-		function myFunction() {
-			document.getElementById("demo").innerHTML = "Xóa thành công đề thi";
-		}
-	</script>
-	<script>
-		$('#form-update-dethi').on('show.bs.modal', function(event) {
-			var a = $(event.relatedTarget) // Button that triggered the modal
-			var mamh = a.data('made') // Extract info from data-* attributes
-			var tenmh = a.data('tende') // Extract info from data-* attributes
-			var thoigian = a.data('thoigian')
-			// If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-			// Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-			$('#input-made').val(made)
-			$('#input-tende').val(tende)
-			$('#input-thoigian').val(thoigian)
-		})
-	</script>
+	<%} %>
 </body>
 </html>

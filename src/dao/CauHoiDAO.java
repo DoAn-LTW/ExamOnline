@@ -60,7 +60,7 @@ public class CauHoiDAO {
 	public ArrayList<CauHoi> searchCH(String tenCH) throws SQLException {
 		Connection con = DBconnect.getConnecttion();
 		ArrayList<CauHoi> list = new ArrayList<>();
-		String sql = "select * from cauhoi where NoiDung='" + tenCH + "'";
+		String sql = "select * from cauhoi where NoiDung like '%" + tenCH + "%'";
 		PreparedStatement ps = con.prepareCall(sql);
 		ResultSet rs = ps.executeQuery();
 		while (rs.next()) {
@@ -72,6 +72,8 @@ public class CauHoiDAO {
 			cauHoi.setDapAnC(rs.getString("PhuongAnC"));
 			cauHoi.setDapAnD(rs.getString("PhuongAnD"));
 			cauHoi.setDapAn(rs.getString("DapAn"));
+			cauHoi.setMaMH(rs.getString("MaMH"));
+			cauHoi.setMaND(rs.getString("MaND"));
 			list.add(cauHoi);
 		}
 		return list;
@@ -100,7 +102,7 @@ public class CauHoiDAO {
 				+ "FROM (SELECT ct.MaCH FROM (SELECT kt.MaDe FROM (SELECT MaDe,ThoiGian from dethi WHERE MaDe='" + maDe
 				+ "') a INNER JOIN kythi kt on a.MaDe=kt.MaDe "
 				+ "WHERE kt.NgayThi>=CURDATE() and kt.ThoiGian<=CURTIME() and CURRENT_TIME<=ADDTIME(kt.ThoiGian,CONCAT('00:',a.ThoiGian,':00'))) b "
-				+ "inner join ctdethi ct on b.MaDe=ct.MaDe) c INNER JOIN cauhoi ch on c.MaCH=ch.MaCH LIMIT ?,?";
+				+ "inner join ctdethi ct on b.MaDe=ct.MaDe ORDER BY RAND()) c INNER JOIN cauhoi ch on c.MaCH=ch.MaCH  LIMIT ?,?";
 		PreparedStatement ps;
 		try {
 			ps = connection.prepareCall(sql);

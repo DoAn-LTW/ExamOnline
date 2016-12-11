@@ -39,12 +39,14 @@
 
 <body>
 	<%
-		Users users = null;
-		if (session.getAttribute("userQLKT") != null) {
-			users = (Users) session.getAttribute("userQLKT");
-		}
 		UsersDAO usersDAO = new UsersDAO();
 		DeThiDAO deThiDAO = new DeThiDAO();
+		Users users = null;
+		if (session.getAttribute("userQLKT") == null) {
+			response.sendRedirect("/ExamOnline/Login.jsp");
+
+		} else {
+			users = (Users) session.getAttribute("userQLKT");
 	%>
 	<div class="wapper">
 		<jsp:include page="Header.jsp"></jsp:include>
@@ -201,7 +203,8 @@
 															gian thi</label>
 														<div class="col-sm-7">
 															<input type="text" class="form-control" required=""
-																id="inputTGT" placeholder="" name="giothi">
+																id="inputTGT" placeholder="Nhập đúng định dạng hh:mm:ss"
+																name="giothi">
 														</div>
 													</div>
 													<div class="form-group">
@@ -241,14 +244,14 @@
 										<div class="row">
 											<%
 												Connection con = null;
-												PreparedStatement ps = null;
-												try {
-													
-													con = DBconnect.getConnecttion();
-													String sql = "select dt.MaDe,dt.TenDe,kt.MaLop,kt.NgayThi,kt.ThoiGian,kt.PhongThi "
-															+ "from kythi kt INNER JOIN dethi dt on kt.MaDe=dt.MaDe";
-													ps = con.prepareCall(sql);
-													ResultSet rs = ps.executeQuery(sql);
+													PreparedStatement ps = null;
+													try {
+
+														con = DBconnect.getConnecttion();
+														String sql = "select dt.MaDe,dt.TenDe,kt.MaLop,kt.NgayThi,kt.ThoiGian,kt.PhongThi "
+																+ "from kythi kt INNER JOIN dethi dt on kt.MaDe=dt.MaDe";
+														ps = con.prepareCall(sql);
+														ResultSet rs = ps.executeQuery(sql);
 											%>
 											<div class="table-responsive">
 												<table class="table table-hover">
@@ -293,8 +296,8 @@
 											</div>
 											<%
 												} catch (Exception e) {
-													out.println(e.getMessage());
-												}
+														out.println(e.getMessage());
+													}
 											%>
 										</div>
 										<div class="modal fade" id="form-update-kythi">
@@ -355,10 +358,9 @@
 																<hr>
 																<div class="pull-right">
 																	<input type="hidden" value="update" name="command">
-																	<button type="submit" class="btn btn-primary btn-sm">Save
-																		changes</button>
+																	<button type="submit" class="btn btn-primary btn-sm">Lưu</button>
 																	<button type="button" class="btn btn-default btn-sm"
-																		data-dismiss="modal">Close</button>
+																		data-dismiss="modal" style="margin-right: 20px">Đóng</button>
 																</div>
 															</fieldset>
 														</form>
@@ -398,5 +400,8 @@
 			$('#input-phongthi').val(phongthi)
 		})
 	</script>
+	<%
+		}
+	%>
 </body>
 </html>

@@ -30,40 +30,7 @@
 <!-- App title -->
 <title>Admin - Danh sách tài khoản</title>
 
-<!-- DataTables -->
-<link href="assets/plugins/datatables/dataTables.bootstrap4.min.css"
-	rel="stylesheet" type="text/css" />
-<link href="assets/plugins/datatables/buttons.bootstrap4.min.css"
-	rel="stylesheet" type="text/css" />
-<!-- Responsive datatable examples -->
-<link href="assets/plugins/datatables/responsive.bootstrap4.min.css"
-	rel="stylesheet" type="text/css" />
-<link href="assets/plugins/bootstrap-sweetalert/sweet-alert.css"
-	rel="stylesheet" type="text/css" />
-<!-- Switchery css -->
-<link href="assets/plugins/switchery/switchery.min.css" rel="stylesheet" />
-
-<!-- App CSS -->
 <link href="assets/css/style.css" rel="stylesheet" type="text/css" />
-<script>
-	(function(i, s, o, g, r, a, m) {
-		i['GoogleAnalyticsObject'] = r;
-		i[r] = i[r] || function() {
-			(i[r].q = i[r].q || []).push(arguments)
-		}, i[r].l = 1 * new Date();
-		a = s.createElement(o), m = s.getElementsByTagName(o)[0];
-		a.async = 1;
-		a.src = g;
-		m.parentNode.insertBefore(a, m)
-	})(window, document, 'script',
-			'../../../www.google-analytics.com/analytics.js', 'ga');
-
-	ga('create', 'UA-79190402-1', 'auto');
-	ga('send', 'pageview');
-</script>
-
-<!-- Modernizr js -->
-<script src="assets/JS/modernizr.min.js"></script>
 
 <script src="assets/JS/jquery.min.js"></script>
 <script src="assets/JS/angular.min.js" type="text/javascript"></script>
@@ -80,9 +47,12 @@
 		RoleDAO roleDAO = new RoleDAO();
 		Users users = null;
 		Role role = null;
-		if (session.getAttribute("userAdmin") != null) {
-			users = (Users) session.getAttribute("userAdmin");
+		if (session.getAttribute("userAdmin") == null) {
+			response.sendRedirect("/ExamOnline/Login.jsp");
+			
 		}
+		else{
+			users = (Users) session.getAttribute("userAdmin");
 	%>
 	<!-- Begin page -->
 	<div id="wrapper">
@@ -179,7 +149,9 @@
 							</ul></li>
 						<li class="has_sub"><a href="DSRole.jsp" class="waves-effect"><i class="fa fa-tachometer" aria-hidden="true"></i><span
 								style="margin-left: 20px"> Vai trò </span></a></li>
-
+<li class="text-muted menu-title"><i class="fa fa-adn" aria-hidden="true"></i> Quản lý điểm</li>
+								<li class="has_sub"><a href="DSDiem.jsp" class="waves-effect"><i class="fa fa-tachometer" aria-hidden="true"></i><span
+								style="margin-left: 20px"> Điểm </span></a></li>
 					</ul>
 					<div class="clearfix"></div>
 				</div>
@@ -289,7 +261,7 @@
 											<div class="col-sm-9">
 												<input readonly type="text" name="username"
 													id="input-username" class="form-control input-sm" value=""
-													required="">
+													required>
 											</div>
 										</fieldset>
 
@@ -297,7 +269,7 @@
 											<label for="input-username" class="col-sm-3">Password</label>
 											<div class="col-sm-9">
 												<input type="password" name="password" id="input-password"
-													class="form-control input-sm" value="" required="">
+													class="form-control input-sm" value="" required>
 											</div>
 										</fieldset>
 
@@ -305,7 +277,7 @@
 											<label for="input-fullname" class="col-sm-3">Fullname</label>
 											<div class="col-sm-9">
 												<input type="text" name="fullname" id="input-fullname"
-													class="form-control input-sm" value="" required="">
+													class="form-control input-sm" value="" required>
 											</div>
 										</fieldset>
 										<fieldset class="form-group">
@@ -313,14 +285,14 @@
 												thoại</label>
 											<div class="col-sm-9">
 												<input type="text" name="numberphone" id="input-number"
-													class="form-control input-sm" value="" required="">
+													class="form-control input-sm" value="" required>
 											</div>
 										</fieldset>
 										<fieldset class="form-group">
 											<label for="input-fullname" class="col-sm-3">Email</label>
 											<div class="col-sm-9">
 												<input type="text" name="email" id="input-email"
-													class="form-control input-sm" value="" required="">
+													class="form-control input-sm" value="" required>
 											</div>
 										</fieldset>
 										<fieldset class="form-group">
@@ -353,7 +325,7 @@
 											<label for="input-username" class="col-sm-3">Username</label>
 											<div class="col-sm-9">
 												<input type="text" name="username" id="input-username"
-													class="form-control input-sm" value="" required="">
+													class="form-control input-sm" value="" required>
 											</div>
 										</fieldset>
 
@@ -361,7 +333,7 @@
 											<label for="input-username" class="col-sm-3">Password</label>
 											<div class="col-sm-9">
 												<input type="password" name="password" id="input-password"
-													class="form-control input-sm" value="" required="">
+													class="form-control input-sm" value="" required>
 											</div>
 										</fieldset>
 
@@ -369,7 +341,7 @@
 											<label for="input-fullname" class="col-sm-3">Fullname</label>
 											<div class="col-sm-9">
 												<input type="text" name="fullname" id="input-fullname"
-													class="form-control input-sm" value="" required="">
+													class="form-control input-sm" value="" required>
 											</div>
 										</fieldset>
 										<fieldset class="form-group">
@@ -377,22 +349,22 @@
 												thoại</label>
 											<div class="col-sm-9">
 												<input type="text" name="numberphone" id="input-number"
-													class="form-control input-sm" value="" required="">
+													class="form-control input-sm" value="" required>
 											</div>
 										</fieldset>
 										<fieldset class="form-group">
 											<label for="input-fullname" class="col-sm-3">Email</label>
 											<div class="col-sm-9">
 												<input type="text" name="email" id="input-email"
-													class="form-control input-sm" value="" required="">
+													class="form-control input-sm" value="" required>
 											</div>
 										</fieldset>
 										<fieldset class="form-group">
 											<label for="input-fullname" class="col-sm-3">Lớp</label>
 											<div class="col-sm-9">
 												<input type="text" name="lop" id="input-lop"
-													class="form-control input-sm" value="" required="" 
-													placeholder="Nếu là sinh viên thì điền lớp vào đây">
+													class="input-lg" value=""
+													placeholder="Nếu là sinh viên thì điền lớp vào đây" style="width: 100%;border-radius: 4px;">
 											</div>
 										</fieldset>
 										<fieldset class="form-group">
@@ -439,23 +411,9 @@
 
 	<!-- jQuery  -->
 
-	<script src="assets/JS/tether.min.js"></script>
-	<!-- Tether for Bootstrap -->
+	
 	<script src="assets/JS/bootstrap.min.js"></script>
-	<script src="assets/JS/detect.js"></script>
-	<script src="assets/JS/fastclick.js"></script>
-	<script src="assets/JS/jquery.blockUI.js"></script>
-	<script src="assets/JS/waves.js"></script>
-	<script src="assets/JS/jquery.nicescroll.js"></script>
-	<script src="assets/JS/jquery.scrollTo.min.js"></script>
-	<script src="assets/JS/jquery.slimscroll.js"></script>
-	<script src="assets/plugins/switchery/switchery.min.js"></script>
 
-	<!-- Sweet Alert js -->
-	<script src="assets/plugins/bootstrap-sweetalert/sweet-alert.min.js"
-		type="text/javascript"></script>
-	<script src="assets/pages/jquery.sweet-alert.init.js"
-		type="text/javascript"></script>
 	<script src="assets/JS/jquery.core.js"></script>
 	<script src="assets/JS/jquery.app.js"></script>
 	<script>
@@ -476,6 +434,7 @@
 			$('#input-email').val(Email)
 		})
 	</script>
+	<%} %>
 </body>
 
 <!-- Mirrored from coderthemes.com/uplon_1.4/light/tables-datatable.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 14 Oct 2016 16:07:55 GMT -->

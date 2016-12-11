@@ -3,6 +3,7 @@
     Created on : Oct 14, 2016, 10:39:56 AM
     Author     : Kelvin
 --%>
+<%@page import="dao.CauHoiDAO"%>
 <%@page import="connect.DBconnect"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.DriverManager"%>
@@ -42,18 +43,13 @@
 		CauHoi cauhoi = new CauHoi();
 		MonhocDAO monhocDAO = new MonhocDAO();
 		NoiDungThiDAO noiDungThiDAO = new NoiDungThiDAO();
-		if (session.getAttribute("userNHCH") != null) {
+		CauHoiDAO cauHoiDAO = new CauHoiDAO();
+		if (session.getAttribute("userNHCH") == null) {
+			response.sendRedirect("/ExamOnline/Login.jsp");
+			
+		}
+		else{
 			users = (Users) session.getAttribute("userNHCH");
-		}
-		if (session.getAttribute("insertMH") != null) {
-			monHoc = (MonHoc) session.getAttribute("insertMH");
-		}
-		if (session.getAttribute("insertNoidung") != null) {
-			noidung = (NoiDung) session.getAttribute("insertNoidung");
-		}
-		if (session.getAttribute("insertCauhoi") != null) {
-			cauhoi = (CauHoi) session.getAttribute("insertCauhoi");
-		}
 	%>
 	<div class="wapper">
 		<jsp:include page="Header.jsp"></jsp:include>
@@ -229,7 +225,7 @@
 														<tr>
 															<td><%=rs.getString("MaMH")%></td>
 															<td><%=rs.getString("TenMH")%></td>
-															<td><a data-toggle="modal" href='#form-update-mh'
+															<td><a data-toggle="modal" href="#form-update-mh"
 																data-target="#form-update-mh"
 																data-mamh='<%=rs.getString("MaMH")%>'
 																data-tenmh='<%=rs.getString("TenMH")%>'>Edit</a> || <a
@@ -415,11 +411,12 @@
 												<div class="col-md-6">
 													<div class="col-sm-4"></div>
 													<div class=col-sm-8>
-														<button type="button" class="btn btn-primary"
-															data-toggle="modal" data-target=".bs-example-modal-lg">Thêm
-															câu hỏi</button>
+														<a type="button" class="btn btn-primary"
+															href="#form-insert-ch" data-toggle="modal"
+															data-target="#form-insert-ch">Thêm câu hỏi</a>
 														<div class="modal fade bs-example-modal-lg" tabindex="-1"
-															role="dialog" aria-labelledby="myLargeModalLabel">
+															role="dialog" aria-labelledby="myLargeModalLabel"
+															id="form-insert-ch">
 															<div class="modal-dialog modal-lg" role="document">
 																<div class="modal-content">
 																	<div class="modal-header">
@@ -507,50 +504,7 @@
 													</div>
 												</div>
 											</div>
-											<div class="form-group">
-												<div class="col-md-12">
-													<table class="table table-bordered">
-														<thead>
-															<tr>
-																<th>Mã CH</th>
-																<th>Nội dung</th>
-																<th>Đáp án</th>
-																<th>Hành động</th>
-															</tr>
 
-														</thead>
-														<%
-															Connection connection2 = DBconnect.getConnecttion();
-															String sql2 = "SELECT * FROM cauhoi";
-															PreparedStatement ps2 = connection2.prepareCall(sql2);
-															ResultSet rs2;
-															rs2 = ps2.executeQuery();
-															while (rs2.next()) {
-														%>
-														<tr>
-															<td><%=rs2.getString("MaCH")%></td>
-															<td><%=rs2.getString("NoiDung")%></td>
-															<td><%=rs2.getString("DapAn")%></td>
-															<td><a data-toggle="modal" href='#form-update-ch'
-																data-target="#form-update-ch"
-																data-mach='<%=rs2.getString("MaCH")%>'
-																data-nd='<%=rs2.getString("NoiDung")%>'
-																data-paa='<%=rs2.getString("PhuongAnA")%>'
-																data-pab='<%=rs2.getString("PhuongAnB")%>'
-																data-pac='<%=rs2.getString("PhuongAnC")%>'
-																data-pad='<%=rs2.getString("PhuongAnD")%>'
-																data-da='<%=rs2.getString("DapAn")%>'
-																data-mamh='<%=rs2.getString("MaMH")%>'
-																data-mand='<%=rs2.getString("MaND")%>'>Edit</a> || <a
-																onclick="return confirm('Bạn có chắc chắn muốn xóa?')"
-																href="DeleteUser?command=deleteCH&MaCH=<%=rs2.getString("MaCH")%>">Delete</a></td>
-														</tr>
-														<%
-															}
-														%>
-													</table>
-												</div>
-											</div>
 										</form>
 									</div>
 								</div>
@@ -561,7 +515,7 @@
 										<a role="button" data-toggle="collapse"
 											data-parent="#accordion" href="#collapseThree"
 											aria-expanded="true" aria-controls="collapseThree"> 3.
-											Import ngân hàng câu hỏi</a>
+											Tìm kiếm câu hỏi</a>
 									</h4>
 								</div>
 								<div id="collapseThree" class="panel-collapse collapse"
@@ -569,58 +523,59 @@
 									<div class="panel-body">
 										<div class="row">
 											<div class="col-md-6">
-												<form class="form-horizontal">
+												<form class="form-horizontal" method="post" action="">
 													<div class="form-group">
 														<label for="inputEmail3"
-															class="col-sm-4 control-label text-left">Môn thi</label>
-														<div class="col-sm-8">
-															<select class="form-control input-xs" value="">
-																<option>1</option>
-																<option>2</option>
-																<option>3</option>
-																<option>4</option>
-																<option>5</option>
-															</select>
+															class="col-sm-5 control-label text-left">Nhập nội
+															dung câu hỏi</label>
+														<div class="col-sm-7">
+															<input class="form-control" type="text" name="noidung">
 														</div>
 													</div>
 													<div class="form-group">
-														<label for="inputEmail3"
-															class="col-sm-4 control-label text-left">Nội dung
-															thi </label>
-														<div class="col-sm-8">
-															<select class="form-control input-xs" value="">
-																<option>1</option>
-																<option>2</option>
-																<option>3</option>
-																<option>4</option>
-																<option>5</option>
-															</select>
+														<label class="col-sm-5 control-label"></label>
+														<div class="col-sm-7">
+															<button type="submit" class="btn btn-primary">Search</button>
 														</div>
 													</div>
-													<div class="form-group">
-														<div class="col-sm-4 control-label text-left"></div>
-														<div class="col-sm-8">
-															<button type="button" class="btn btn-success"
-																data-toggle="modal" data-target=".bs-example-modal-sm">Import
-															</button>
-															<div class="modal fade bs-example-modal-sm" tabindex="-1"
-																role="dialog" aria-labelledby="mySmallModalLabel">
-																<div class="modal-dialog modal-sm" role="document">
-																	<div class="modal-content">
-																		<p>Chọn đường dẫn để tải tệp lên:</p>
-																		<input type="file" name=""> <a href="#"
-																			class="btn btn-success" id="btn-OK" role="button">OK</a>
-																	</div>
-																</div>
-															</div>
-															<button type="" class="btn btn-danger"
-																style="margin-left: 10px" id="btn-CN-import">Cập
-																nhật</button>
-														</div>
-													</div>
+
 												</form>
 											</div>
-											<div class="col-md-6"></div>
+											<table class="table table-bordered">
+												<thead>
+													<tr>
+														<th>Mã CH</th>
+														<th>Nội dung</th>
+														<th>Đáp án</th>
+														<th>Hành động</th>
+													</tr>
+
+												</thead>
+												<%
+													String nd = request.getParameter("noidung");
+													for (CauHoi ch : cauHoiDAO.searchCH(nd)) {
+												%>
+												<tr>
+													<td><%=ch.getMaCH()%></td>
+													<td><%=ch.getNoiDung()%></td>
+													<td><%=ch.getDapAn()%></td>
+													<td><a data-toggle="modal" href='#form-update-ch'
+														data-target="#form-update-ch"
+														data-mach='<%=ch.getMaCH()%>'
+														data-nd='<%=ch.getNoiDung()%>'
+														data-paa='<%=ch.getDapAnA()%>'
+														data-pab='<%=ch.getDapAnB()%>'
+														data-pac='<%=ch.getDapAnC()%>'
+														data-pad='<%=ch.getDapAnD()%>'
+														data-da='<%=ch.getDapAn()%>' data-mamh='<%=ch.getMaMH()%>'
+														data-mand='<%=ch.getMaND()%>'>Edit</a> || <a
+														onclick="return confirm('Bạn có chắc chắn muốn xóa?')"
+														href="DeleteUser?command=deleteCH&MaCH=<%=ch.getMaCH()%>">Delete</a></td>
+												</tr>
+												<%
+													}
+												%>
+											</table>
 										</div>
 									</div>
 								</div>
@@ -905,6 +860,7 @@
 			$('#input-mamh2').val(mamh)
 		})
 	</script>
+	<%} %>
 </body>
 
 </html>
