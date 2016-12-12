@@ -68,8 +68,9 @@
 		//  - Dừng chương trình
 		if (h == -1) {
 			clearTimeout(timeout);
-			$('#nopbai').click(function(){
-			});
+			$('#nopbai').click();
+			document.getElementById("next").disabled = true;
+			document.getElementById("pre").disabled = true;
 			return false;
 		}
 		var a = $("s1").val(s.toString());
@@ -121,14 +122,9 @@
 		}
 		deThi = deThiDAO.CTDeThi(made);
 		total = cauHoiDAO.countCHByMaDe(made);
-		if (total <= 1) {
-			firstResult = 1;
-			maxResult = total;
-		} else {
-			firstResult = (pages - 1) * 1;
-			maxResult = 1;
-			count = firstResult + 1;
-		}
+		firstResult = (pages - 1) * 1;
+		maxResult = 1;
+		count = firstResult + 1;
 		ArrayList<CauHoi> listCH = cauHoiDAO.getListCHWithMaDe(made, firstResult, maxResult);
 		if (session.getAttribute("userSV") == null) {
 			response.sendRedirect("/ExamOnline/Login.jsp");
@@ -475,15 +471,37 @@
 									%>
 									<button class="btn btn-primary" disabled name="next"
 										style="margin-top: 10px">Previous</button>
+										<input type="hidden" name="pages"
+										value="<%=pages%>"> <input type="hidden" name="mach"
+										value="<%=ch.getMaCH()%>"> <input type="hidden"
+										name="made" value="<%=request.getParameter("maDe")%>">
+									<input type="hidden" name="username"
+										value="<%=users.getUserName()%>"> <input type="hidden"
+										id="s1" value="<%=sthi%>" name="sthi"> <input
+										type="hidden" id="m1" value="<%=mthi%>" name="mthi"> <input
+										class="btn btn-primary" id="next" type="submit" value="Next"
+										name="command">
 									<%
-										} else {
+										} else if (pages == total) {
 									%>
 									<input class="btn btn-primary" type="submit"
-										style="margin-top: 10px"
-										value="Previous" name="command">
+										style="margin-top: 10px" value="Previous" name="command"
+										id="pre"> <input type="hidden" name="pages"
+										value="<%=pages%>"> <input type="hidden" name="mach"
+										value="<%=ch.getMaCH()%>"> <input type="hidden"
+										name="made" value="<%=request.getParameter("maDe")%>">
+									<input type="hidden" name="username"
+										value="<%=users.getUserName()%>"> <input type="hidden"
+										id="s1" value="<%=sthi%>" name="sthi"> <input
+										type="hidden" id="m1" value="<%=mthi%>" name="mthi"> <input
+										class="btn btn-primary" id="next" type="submit" value="Next"
+										name="command" disabled>
 									<%
-										}
+										}else{
 									%>
+									<input class="btn btn-primary" type="submit"
+										style="margin-top: 10px" value="Previous" name="command"
+										id="pre">
 									<input type="hidden" name="pages" value="<%=pages%>"> <input
 										type="hidden" name="mach" value="<%=ch.getMaCH()%>"> <input
 										type="hidden" name="made"
@@ -491,21 +509,22 @@
 										type="hidden" name="username" value="<%=users.getUserName()%>">
 									<input type="hidden" id="s1" value="<%=sthi%>" name="sthi">
 									<input type="hidden" id="m1" value="<%=mthi%>" name="mthi">
-									<input class="btn btn-primary" type="submit" value="Next" name="command">
+									<input class="btn btn-primary" id="next" type="submit"
+										value="Next" name="command">
+
 									<%
 										}
 									%>
 								</div>
 							</div>
+							<div class="form-group">
+								<input class="btn btn-danger" id="nopbai" type="submit"
+									value="Submit" name="command"
+									onclick="return confirm('Bạn có chắc chắn muốn nộp bài không ?')">
+							</div>
+							<%} %>
 						</form>
-						<form method="POST" action="Nopbai">
-							<input type="hidden" name="made"
-								value="<%=request.getParameter("maDe")%>"> <input
-								type="hidden" name="username" value="<%=users.getUserName()%>">
-							<button class="btn btn-danger" type="submit" id="nopbai"
-								onclick="return confirm('Bạn có chắc chắn muốn nộp bài ?')">Nộp
-								bài</button>
-						</form>
+
 					</div>
 					<%
 						} else {

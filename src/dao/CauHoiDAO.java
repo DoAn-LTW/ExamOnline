@@ -99,10 +99,10 @@ public class CauHoiDAO {
 	public ArrayList<CauHoi> getListCHWithMaDe(String maDe, int firstResult, int maxResult) throws SQLException {
 		Connection connection = DBconnect.getConnecttion();
 		String sql = "SELECT ch.MaCH,ch.NoiDung,ch.PhuongAnA,ch.PhuongAnB,ch.PhuongAnC,ch.PhuongAnD,ch.DapAn "
-				+ "FROM (SELECT ct.MaCH FROM (SELECT kt.MaDe FROM (SELECT MaDe,ThoiGian from dethi WHERE MaDe='" + maDe
-				+ "') a INNER JOIN kythi kt on a.MaDe=kt.MaDe "
-				+ "WHERE kt.NgayThi>=CURDATE() and kt.ThoiGian<=CURTIME() and CURRENT_TIME<=ADDTIME(kt.ThoiGian,CONCAT('00:',a.ThoiGian,':00'))) b "
-				+ "inner join ctdethi ct on b.MaDe=ct.MaDe ORDER BY RAND()) c INNER JOIN cauhoi ch on c.MaCH=ch.MaCH  LIMIT ?,?";
+				+"FROM (SELECT ct.MaCH FROM (SELECT kt.MaDe FROM (SELECT MaDe,ThoiGian from dethi WHERE MaDe='"+maDe+"') a INNER JOIN kythi kt on a.MaDe=kt.MaDe "
+				+"WHERE kt.NgayThi>=CURDATE() and kt.ThoiGian<=CURTIME() and CURTIME()<=ADDTIME(kt.ThoiGian,CONCAT('00:',a.ThoiGian,':00'))) " 
+				+"b inner join ctdethi ct on b.MaDe=ct.MaDe ORDER BY RAND()) c INNER JOIN cauhoi ch on c.MaCH=ch.MaCH  LIMIT ?,? ";
+							
 		PreparedStatement ps;
 		try {
 			ps = connection.prepareCall(sql);

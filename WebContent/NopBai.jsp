@@ -1,9 +1,5 @@
-<%-- 
-    Document   : SinhVien_NopBai
-    Created on : Oct 17, 2016, 9:16:19 PM
-    Author     : BAO UY
---%>
 
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@page import="org.apache.tomcat.jni.Mmap"%>
 <%@page import="model.CTThi"%>
 <%@page import="dao.CTThiDAO"%>
@@ -14,12 +10,11 @@
 <%@page import="model.Users"%>
 <%@page import="dao.UsersDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
 <html>
 
 <head>
 <title>Kết quả bài làm</title>
-<meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="assets/css/style_OT.css" rel="stylesheet" type="text/css" />
 <!-- Latest compiled and minified CSS -->
@@ -32,7 +27,8 @@
 <link
 	href="assets/material-design-iconic-font/css/material-design-iconic-font.min.css"
 	rel="stylesheet" type="text/css" />
-	<link href="https://fonts.googleapis.com/css?family=Bungee" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Bungee"
+	rel="stylesheet">
 </head>
 
 <body>
@@ -54,37 +50,37 @@
 		<div class="main-menu">
 			<nav class="navbar navbar-inverse" data-spy="affix" role="navigation"
 				data-offset-top="67">
-				<div class="container-fluid">
-					<!-- Brand and toggle get grouped for better mobile display -->
-					<div class="navbar-header">
-						<button type="button" class="navbar-toggle collapsed"
-							data-toggle="collapse" data-target="#navbar-main"
-							aria-expanded="false">
-							<span class="sr-only">Toggle navigation</span> <span
-								class="icon-bar"></span> <span class="icon-bar"></span> <span
-								class="icon-bar"></span>
-						</button>
-						<a class="navbar-brand" href="index.jsp" data-toggle="tooltip"
-							data-placement="top" title="Trang chủ"> <span
-							class="glyphicon glyphicon-home" aria-hidden="true"></span>
-						</a>
-					</div>
-
-					<!-- Collect the nav links, forms, and other content for toggling -->
-					<div class="collapse navbar-collapse" id="navbar-main">
-						<ul class="nav navbar-nav">
-							<li data-toggle="tooltip" data-placement="top" title="Liên hệ"><a
-								href="Contact.jsp">Liên hệ <span class="sr-only">(current)</span></a></li>
-							<li data-toggle="tooltip" data-placement="top" title="Hướng dẫn"><a
-								href="#">Hướng dẫn</a></li>
-						</ul>
-						<ul class="nav navbar-nav navbar-right">
-							<li><a href="Login.jsp" class="glyphicon glyphicon-log-out"></a></li>
-						</ul>
-					</div>
-					<!-- /.navbar-collapse -->
+			<div class="container-fluid">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed"
+						data-toggle="collapse" data-target="#navbar-main"
+						aria-expanded="false">
+						<span class="sr-only">Toggle navigation</span> <span
+							class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="index.jsp" data-toggle="tooltip"
+						data-placement="top" title="Trang chủ"> <span
+						class="glyphicon glyphicon-home" aria-hidden="true"></span>
+					</a>
 				</div>
-				<!-- /.container-fluid -->
+
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse" id="navbar-main">
+					<ul class="nav navbar-nav">
+						<li data-toggle="tooltip" data-placement="top" title="Liên hệ"><a
+							href="Contact.jsp">Liên hệ <span class="sr-only">(current)</span></a></li>
+						<li data-toggle="tooltip" data-placement="top" title="Hướng dẫn"><a
+							href="#">Hướng dẫn</a></li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="Login.jsp" class="glyphicon glyphicon-log-out"></a></li>
+					</ul>
+				</div>
+				<!-- /.navbar-collapse -->
+			</div>
+			<!-- /.container-fluid -->
 			</nav>
 		</div>
 		<div class="main">
@@ -168,7 +164,9 @@
 						</div>
 					</div>
 				</div>
-				<br><br><br>
+				<br>
+				<br>
+				<br>
 				<div class="row" id="noti">
 					<%
 						if (ctThi.getDiem() < 5) {
@@ -191,7 +189,8 @@
 				</div>
 			</div>
 		</div>
-		<br> <br> <br> <br> <br> <br> <br><br> <br>
+		<br> <br> <br> <br> <br> <br> <br>
+		<br> <br>
 		<jsp:include page="Footer.jsp"></jsp:include>
 	</div>
 	<script src="assets/JS/jquery.min.js" type="text/javascript"></script>
