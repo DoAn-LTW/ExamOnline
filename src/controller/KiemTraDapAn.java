@@ -166,9 +166,10 @@ public class KiemTraDapAn extends HttpServlet {
 
 			break;
 		case "Submit":
-			float count = 0;
-			float diem = 0;
+			double count = 0;
+			double diem = 0;
 			int dung = 0;
+			int a=0;
 			HttpSession session = request.getSession();
 			try {
 				count = cauHoiDAO.countCHByMaDe(made);
@@ -188,7 +189,8 @@ public class KiemTraDapAn extends HttpServlet {
 					try {
 						thiDAO.update(thi);
 						dung = thiDAO.countRight(username, made);
-						diem = (10 / count) * dung;
+						a=(int)(((10.00 / count) * dung)*10);
+						diem =(double)a/10;
 						CTThi ctThi=new CTThi();
 						ctThi.setUsername(username);
 						ctThi.setMaDe(made);
@@ -208,7 +210,8 @@ public class KiemTraDapAn extends HttpServlet {
 					try {
 						thiDAO.update(thi);
 						dung = thiDAO.countRight(username, made);
-						diem = (10 / count) * dung;
+						a=(int)(((10.00 / count) * dung)*10);
+						diem =(double)a/10;
 						CTThi ctThi=new CTThi();
 						ctThi.setUsername(username);
 						ctThi.setMaDe(made);
@@ -227,7 +230,8 @@ public class KiemTraDapAn extends HttpServlet {
 					try {
 						thiDAO.update(thi);
 						dung = thiDAO.countRight(username, made);
-						diem = (10 / count) * dung;
+						a=(int)(((10.00 / count) * dung)*10);
+						diem =(double)a/10;
 						CTThi ctThi=new CTThi();
 						ctThi.setUsername(username);
 						ctThi.setMaDe(made);
@@ -252,7 +256,8 @@ public class KiemTraDapAn extends HttpServlet {
 					try {
 						thiDAO.insert(thi1);
 						dung = thiDAO.countRight(username, made);
-						diem = (10 / count) * dung;
+						a=(int)(((10.00 / count) * dung)*10);
+						diem =(double)a/10;
 						CTThi ctThi=new CTThi();
 						ctThi.setUsername(username);
 						ctThi.setMaDe(made);
@@ -272,7 +277,8 @@ public class KiemTraDapAn extends HttpServlet {
 					try {
 						thiDAO.insert(thi1);
 						dung = thiDAO.countRight(username, made);
-						diem = (10 / count) * dung;
+						a=(int)(((10.00 / count) * dung)*10);
+						diem =(double)a/10;
 						CTThi ctThi=new CTThi();
 						ctThi.setUsername(username);
 						ctThi.setMaDe(made);
@@ -292,7 +298,8 @@ public class KiemTraDapAn extends HttpServlet {
 					try {
 						thiDAO.insert(thi1);
 						dung = thiDAO.countRight(username, made);
-						diem = (10 / count) * dung;
+						a=(int)(((10.00 / count) * dung)*10);
+						diem =(double)a/10;
 						CTThi ctThi=new CTThi();
 						ctThi.setUsername(username);
 						ctThi.setMaDe(made);
@@ -305,7 +312,6 @@ public class KiemTraDapAn extends HttpServlet {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-
 				}
 			}
 			break;

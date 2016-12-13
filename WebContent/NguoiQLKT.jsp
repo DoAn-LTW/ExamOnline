@@ -4,6 +4,7 @@
     Author     : Kelvin
 --%>
 
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="connect.DBconnect"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.DriverManager"%>
@@ -47,6 +48,7 @@
 
 		} else {
 			users = (Users) session.getAttribute("userQLKT");
+			SimpleDateFormat fmt=new SimpleDateFormat("dd-MM-yyyy");
 	%>
 	<div class="wapper">
 		<jsp:include page="Header.jsp"></jsp:include>
@@ -193,7 +195,7 @@
 														<label for="inputTGBD"
 															class="col-sm-5 control-label text-left">Ngày thi</label>
 														<div class="col-sm-7">
-															<input type="date" class="form-control" required=""
+															<input type="date" class="form-control" required
 																id="inputTGBD" placeholder="" name="ngaythi">
 														</div>
 													</div>
@@ -202,7 +204,7 @@
 															class="col-sm-5 control-label text-left">Thời
 															gian thi</label>
 														<div class="col-sm-7">
-															<input type="text" class="form-control" required=""
+															<input type="text" class="form-control" required
 																id="inputTGT" placeholder="Nhập đúng định dạng hh:mm:ss"
 																name="giothi">
 														</div>
@@ -212,7 +214,7 @@
 															class="col-sm-5 control-label text-left">Phòng
 															thi</label>
 														<div class="col-sm-7">
-															<input type="text" class="form-control" required=""
+															<input type="text" class="form-control" required
 																id="inputDD" placeholder="" name="phongthi">
 														</div>
 													</div>
@@ -220,7 +222,7 @@
 														<div class="col-sm-5"></div>
 														<div class="col-sm-7">
 															<input type="hidden" value="insert" name="command">
-															<button type="submit" class="btn btn-info">Lưu</button>
+															<button type="submit" class="btn btn-info" onclick="return alert('Tạo đề thi thành công')">Lưu</button>
 														</div>
 													</div>
 												</form>
@@ -316,7 +318,7 @@
 																	đề</label>
 																<div class="col-sm-10">
 																	<input readonly type="text" name="made" id="input-made"
-																		class="form-control input-sm" value="" required="">
+																		class="form-control input-sm" value="" required>
 																</div>
 															</fieldset>
 
@@ -326,7 +328,7 @@
 																<div class="col-sm-10">
 																	<input readonly type="text" name="lop"
 																		id="input-lopthi" class="form-control input-sm"
-																		value="" required="">
+																		value="" required>
 																</div>
 															</fieldset>
 
@@ -335,7 +337,7 @@
 																	gian</label>
 																<div class="col-sm-10">
 																	<input type="text" name="giothi" id="input-thoigian"
-																		class="form-control input-sm" value="" required="">
+																		class="form-control input-sm" value="" required>
 																</div>
 															</fieldset>
 															<fieldset class="form-group">
@@ -343,7 +345,7 @@
 																	thi</label>
 																<div class="col-sm-10">
 																	<input type="date" name="ngaythi" id="input-ngaythi"
-																		class="form-control input-sm" value="" required="">
+																		class="form-control input-sm" value="" required>
 																</div>
 															</fieldset>
 															<fieldset class="form-group">
@@ -358,7 +360,7 @@
 																<hr>
 																<div class="pull-right">
 																	<input type="hidden" value="update" name="command">
-																	<button type="submit" class="btn btn-primary btn-sm">Lưu</button>
+																	<button type="submit" class="btn btn-primary btn-sm" onclick="return alert('Chỉnh sửa thành công đề thi')">Lưu</button>
 																	<button type="button" class="btn btn-default btn-sm"
 																		data-dismiss="modal" style="margin-right: 20px">Đóng</button>
 																</div>

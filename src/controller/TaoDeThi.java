@@ -64,6 +64,7 @@ public class TaoDeThi extends HttpServlet {
 			dt.setTenDe(tenDe);
 			dt.setThoiGian(thoigian);
 			deThiDAO.insert(dt);
+			
 			for(CauHoi c:cauHoiDAO.randomCH(maMH, maND, SL)){
 				ctDeThi.setMaDe(maDe);
 				ctDeThi.setMaCH(c.getMaCH());

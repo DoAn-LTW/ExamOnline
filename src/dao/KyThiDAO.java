@@ -70,6 +70,10 @@ public class KyThiDAO {
 			ps=con.prepareCall(sql);
 			ResultSet rs=ps.executeQuery();
 			while(rs.next()){
+				thi.setMaDe(rs.getString("MaDe"));
+				thi.setNgayThi(rs.getDate("NgayThi"));
+				thi.setPhongThi(rs.getString("PhongThi"));
+				thi.setLopThi(rs.getString("MaLop"));
 				thi.setThoiGian(rs.getTime("ThoiGian"));
 			}
 			

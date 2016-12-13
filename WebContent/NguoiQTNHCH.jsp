@@ -200,7 +200,7 @@
 																<button type="submit" class="btn btn-primary"
 																	onClick="alert('Tạo thành công môn học')"
 																	ng-disabled="!form.$dirty || (form.$dirty && form.$invalid)"
-																	style="margin-top: 10px; margin-bottom: 10px">
+																	style="margin-top: 10px; margin-bottom: 10px" onclick="return alert('Thêm môn học thành công')">
 																	Thêm</button>
 															</div>
 														</div>
@@ -306,7 +306,7 @@
 																<button type="submit" class="btn btn-primary"
 																	onClick="alert('Tạo thành công nội dung thi')"
 																	ng-disabled="!form1.$dirty || (form1.$dirty && form1.$invalid)"
-																	style="margin-top: 10px; margin-bottom: 10px">
+																	style="margin-top: 10px; margin-bottom: 10px" onclick="return alert('Thêm nội dung thành công')">
 																	Thêm</button>
 															</div>
 														</div>
@@ -496,7 +496,7 @@
 																		<button type="button" class="btn btn-default"
 																			data-dismiss="modal">Đóng</button>
 																		<button type="submit" class="btn btn-primary"
-																			id="btn-add">Lưu</button>
+																			id="btn-add" onclick="return alert('Tạo câu hỏi thành công')">Lưu</button>
 																	</div>
 																</div>
 															</div>
@@ -677,7 +677,7 @@
 												<div class="pull-right">
 													<input type="hidden" value="updateTK" name="command">
 													<button type="submit" class="btn btn-primary btn-sm"
-														style="margin-right: 20px">Lưu</button>
+														style="margin-right: 20px" onclick="return alert('Chỉnh sửa thành công câu hỏi')">Lưu</button>
 													<button type="button" class="btn btn-default btn-sm"
 														data-dismiss="modal" style="margin-right: 30px">Đóng</button>
 												</div>
@@ -720,7 +720,7 @@
 												<div class="pull-right">
 													<input type="hidden" value="updateMH" name="command">
 													<button type="submit" class="btn btn-primary btn-sm"
-														style="margin-right: 20px">Lưu</button>
+														style="margin-right: 20px" onclick="return alert('Chỉnh sửa thành công môn học')">Lưu</button>
 													<button type="button" class="btn btn-default btn-sm"
 														data-dismiss="modal" style="margin-right: 30px">Đóng</button>
 												</div>
@@ -771,7 +771,7 @@
 												<div class="pull-right">
 													<input type="hidden" value="updateND" name="command">
 													<button type="submit" class="btn btn-primary btn-sm"
-														style="margin-right: 20px">Lưu</button>
+														style="margin-right: 20px" onclick="return alert('Chỉnh sửa thành công nội dung')">Lưu</button>
 													<button type="button" class="btn btn-default btn-sm"
 														data-dismiss="modal" style="margin-right: 30px">Đóng</button>
 												</div>

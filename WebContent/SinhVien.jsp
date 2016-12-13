@@ -42,10 +42,12 @@
 		Users users = null;
 		DeThiDAO deThiDAO = new DeThiDAO();
 		KyThiDAO kyThiDAO = new KyThiDAO();
+		KyThi kyThi = new KyThi();
 		if (session.getAttribute("userSV") == null) {
 			response.sendRedirect("/ExamOnline/Login.jsp");
 		} else {
 			users = (Users) session.getAttribute("userSV");
+			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 	%>
 	<div class="wapper">
 		<jsp:include page="Header.jsp"></jsp:include>
@@ -130,11 +132,15 @@
 
 							<%
 								for (DeThi dt : deThiDAO.getDSDTuser(users.getUserName())) {
+										kyThi = kyThiDAO.getWithMaDe(dt.getMaDe());
+										
 							%>
 
 							<a
 								href="Thi.jsp?UserName=<%=users.getUserName()%>&maDe=<%=dt.getMaDe()%>&pages=1&sthi=0&mthi=<%=dt.getThoiGian()%>"
-								class="list-group-item"><%=dt.getTenDe()%></a>
+								class="list-group-item">
+								<%=dt.getTenDe()%> - Ngày thi: <%=formatter.format(kyThi.getNgayThi())%>
+								 - Giờ thi: <%=kyThi.getThoiGian() %> - Phòng thi: <%=kyThi.getPhongThi() %></a>
 							<%
 								}
 							%>

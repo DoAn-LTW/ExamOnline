@@ -15,7 +15,7 @@ public class CTThiDAO {
 
 	public boolean insert(CTThi ctt) {
 		Connection con = DBconnect.getConnecttion();
-		String sql = "insert into ctThi values(?,?,?)";
+		String sql = "insert into ctthi values(?,?,?)";
 		try {
 			PreparedStatement ps = con.prepareCall(sql);
 			ps.setString(1, ctt.getMaDe());

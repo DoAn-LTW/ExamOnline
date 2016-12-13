@@ -620,3 +620,6 @@ table #datatable-buttons thead>tr>th {
 	    margin: 0 auto;
     display: block;
 }
+.list-group a:hover{
+	color: #ec5355 !important;
+}

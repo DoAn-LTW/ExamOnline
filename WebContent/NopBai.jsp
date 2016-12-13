@@ -169,12 +169,12 @@
 				<br>
 				<div class="row" id="noti">
 					<%
-						if (ctThi.getDiem() < 5) {
+						if (ctThi.getDiem() < 4) {
 					%>
 					<p id="mark-bad">Bài làm khá tệ, cố gắng lần sau nhé !!!</p>
 					<img src="assets/Images/sad.png">
 					<%
-						} else if (ctThi.getDiem() >= 7) {
+						} else if (ctThi.getDiem() <= 7) {
 					%>
 					<p id="mark-good">Chúc mừng bạn, bài làm rất tốt !!!</p>
 					<img src="assets/Images/happy.png">

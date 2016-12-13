@@ -4,6 +4,7 @@
     Author     : BAO UY
 --%>
 
+<%@page import="model.DeThi"%>
 <%@page import="connect.DBconnect"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.DriverManager"%>
@@ -30,18 +31,18 @@
 <!-- Latest compiled and minified JavaScript -->
 <link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet"
 	type="text/css" />
-
 <body>
 	<%
 		Users users = null;
 		MonhocDAO mhDAO = new MonhocDAO();
 		NoiDungThiDAO ndtDAO = new NoiDungThiDAO();
 		NoiDung noiDung = new NoiDung();
+		DeThi deThi = new DeThi();
 		if (session.getAttribute("userQLDE") == null) {
 			response.sendRedirect("/ExamOnline/Login.jsp");
-		}else{
+
+		} else {
 			users = (Users) session.getAttribute("userQLDE");
-		
 	%>
 	<div class="wapper">
 		<jsp:include page="Header.jsp"></jsp:include>
@@ -274,7 +275,8 @@
 													<div class="col-sm-4"></div>
 													<div class="col-sm-8">
 														<button type="submit" class="btn btn-danger" id="btn-CN"
-															ng-disabled="!form.$dirty || (form.$dirty && form.$invalid)">
+															ng-disabled="!form.$dirty || (form.$dirty && form.$invalid)"
+															onclick="return alert('Tạo đề thi thành công')">
 															Thêm</button>
 													</div>
 												</div>
@@ -300,15 +302,15 @@
 									<div class="row">
 										<%
 											Connection con = null;
-											PreparedStatement ps = null;
-											try {
-												con = DBconnect.getConnecttion();
-												String sql = "select b.MaMH,b.MaDe,b.SLCH,b.TenMH,dethi.TenDe,dethi.ThoiGian "
-														+ "from (SELECT a.MaMH,MaDe,SLCH, TenMH from (select MaMH,MaDe,COUNT(dt.MaCH) as SLCH "
-														+ "from ctdethi dt inner join cauhoi ch on dt.MaCH=ch.MaCH GROUP BY MaDe) as a "
-														+ "inner JOIN monhoc mh on a.MaMH=mh.MaMH) as b INNER JOIN dethi on b.MaDe=dethi.MaDe";
-												ps = con.prepareCall(sql);
-												ResultSet rs = ps.executeQuery(sql);
+												PreparedStatement ps = null;
+												try {
+													con = DBconnect.getConnecttion();
+													String sql = "select b.MaMH,b.MaDe,b.SLCH,b.TenMH,dethi.TenDe,dethi.ThoiGian "
+															+ "from (SELECT a.MaMH,MaDe,SLCH, TenMH from (select MaMH,MaDe,COUNT(dt.MaCH) as SLCH "
+															+ "from ctdethi dt inner join cauhoi ch on dt.MaCH=ch.MaCH GROUP BY MaDe) as a "
+															+ "inner JOIN monhoc mh on a.MaMH=mh.MaMH) as b INNER JOIN dethi on b.MaDe=dethi.MaDe";
+													ps = con.prepareCall(sql);
+													ResultSet rs = ps.executeQuery(sql);
 										%>
 
 										<table class="table table-bordered">
@@ -344,64 +346,63 @@
 
 										<%
 											} catch (Exception e) {
-												out.println(e.getMessage());
-											}
+													out.println(e.getMessage());
+												}
 										%>
 									</div>
 								</div>
 							</div>
 						</div>
 						<div class="modal fade" id="form-update-dethi">
-										<div class="modal-dialog">
-											<div class="modal-content">
-												<div class="modal-header">
-													<button type="button" class="close" data-dismiss="modal"
-														aria-hidden="true">&times;</button>
-													<h4 class="modal-title">Chỉnh sửa đề</h4>
-												</div>
-												<div class="modal-body">
-													<form action="Update" method="POST" class="form-horizontal"
-														role="form">
-														<fieldset class="form-group">
-															<label for="input-username" class="col-sm-3">Mã
-																đề</label>
-															<div class="col-sm-9">
-																<input readonly type="text" name="made" id="input-made"
-																	class="form-control input-sm" value="" required>
-															</div>
-														</fieldset>
-
-														<fieldset class=form-group>
-															<label for="input-username" class="col-sm-3">Tên
-																đề</label>
-															<div class="col-sm-9">
-																<input type="text" name="tende" id="input-tende"
-																	class="form-control input-sm" value="" required>
-															</div>
-														</fieldset>
-														<fieldset class=form-group>
-															<label for="input-username" class="col-sm-3">Thời
-																gian</label>
-															<div class="col-sm-9">
-																<input type="text" name="thoigian" id="input-thoigian"
-																	class="form-control input-sm" value="" required>
-															</div>
-														</fieldset>
-														<fieldset class="form-group">
-															<hr>
-															<div class="pull-right">
-																<input type="hidden" value="updateDE" name="command">
-																<button type="submit" class="btn btn-primary btn-sm"
-																	style="margin-right: 20px">Lưu</button>
-																<button type="button" class="btn btn-default btn-sm"
-																	data-dismiss="modal" style="margin-right: 30px">Đóng</button>
-															</div>
-														</fieldset>
-													</form>
-												</div>
-											</div>
-										</div>
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"
+											aria-hidden="true">&times;</button>
+										<h4 class="modal-title">Chỉnh sửa đề</h4>
 									</div>
+									<div class="modal-body">
+										<form action="Update" method="POST" class="form-horizontal"
+											role="form">
+											<fieldset class="form-group">
+												<label for="input-username" class="col-sm-3">Mã đề</label>
+												<div class="col-sm-9">
+													<input readonly type="text" name="made" id="input-made"
+														class="form-control input-sm" value="" required>
+												</div>
+											</fieldset>
+
+											<fieldset class=form-group>
+												<label for="input-username" class="col-sm-3">Tên đề</label>
+												<div class="col-sm-9">
+													<input type="text" name="tende" id="input-tende"
+														class="form-control input-sm" value="" required>
+												</div>
+											</fieldset>
+											<fieldset class=form-group>
+												<label for="input-username" class="col-sm-3">Thời
+													gian</label>
+												<div class="col-sm-9">
+													<input type="text" name="thoigian" id="input-thoigian"
+														class="form-control input-sm" value="" required>
+												</div>
+											</fieldset>
+											<fieldset class="form-group">
+												<hr>
+												<div class="pull-right">
+													<input type="hidden" value="updateDE" name="command">
+													<button type="submit" class="btn btn-primary btn-sm"
+														style="margin-right: 20px"
+														onclick="return confirm('Chỉnh sửa thành công đề thi')">Lưu</button>
+													<button type="button" class="btn btn-default btn-sm"
+														data-dismiss="modal" style="margin-right: 30px">Đóng</button>
+												</div>
+											</fieldset>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -415,8 +416,8 @@
 			</p>
 		</button>
 	</div>
-<script src="assets/JQuery/jquery-3.1.1.min.js"></script>
-<script src="assets/JS/angular.min.js" type="text/javascript"></script>
+	<script src="assets/JQuery/jquery-3.1.1.min.js"></script>
+	<script src="assets/JS/angular.min.js" type="text/javascript"></script>
 	<script src="assets/bootstrap/js/bootstrap.min.js"></script>
 	<script>
 		$('#form-update-dethi').on('show.bs.modal', function(event) {
@@ -440,6 +441,8 @@
 					}
 				} ]);
 	</script>
-	<%} %>
+	<%
+		}
+	%>
 </body>
 </html>
