@@ -12,12 +12,12 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="D:/JAVA/Library-JAVA/com.mysql.jdbc_5.1.5.jar"/>
-	<classpathentry kind="lib" path="D:/JAVA/Library-JAVA/javax.servlet.jsp.jstl-1.2.4.jar"/>
-	<classpathentry kind="lib" path="D:/JAVA/Library-JAVA/javax.servlet.jsp.jstl-api-1.2.1.jar"/>
-	<classpathentry kind="lib" path="D:/JAVA/Library-JAVA/jstl-1.2.jar"/>
-	<classpathentry kind="lib" path="D:/JAVA/Library-JAVA/mysql-connector-java-5.1.23-bin.jar"/>
-	<classpathentry kind="lib" path="D:/JAVA/Library-JAVA/sqljdbc4-2.0.jar"/>
-	<classpathentry kind="lib" path="D:/JAVA/Library-JAVA/standard.jar"/>
+	<classpathentry exported="true" kind="lib" path="D:/JAVA/Library-JAVA/com.mysql.jdbc_5.1.5.jar"/>
+	<classpathentry exported="true" kind="lib" path="D:/JAVA/Library-JAVA/javax.servlet.jsp.jstl-1.2.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="D:/JAVA/Library-JAVA/javax.servlet.jsp.jstl-api-1.2.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="D:/JAVA/Library-JAVA/jstl-1.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="D:/JAVA/Library-JAVA/mysql-connector-java-5.1.23-bin.jar"/>
+	<classpathentry exported="true" kind="lib" path="D:/JAVA/Library-JAVA/sqljdbc4-2.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="D:/JAVA/Library-JAVA/standard.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

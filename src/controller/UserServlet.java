@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Users;
-
+import tools.MD5;
 /**
  *
  * @author Kelvin
@@ -25,9 +25,12 @@ public class UserServlet extends HttpServlet {
 	/**
 	 * 
 	 */
+	private static final long serialVersionUID = 1L;
+	/**
+	 * 
+	 */
 	UsersDAO usersDAO = new UsersDAO();
 	RoleDAO roleDAO = new RoleDAO();
-
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -41,10 +44,14 @@ public class UserServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		String command = request.getParameter("command");
 		Users users = new Users();
+		PrintWriter out = response.getWriter();
+		String pass=request.getParameter("password");
+		String username=request.getParameter("username");
 		switch (command) {
 		case "insert":
-			users.setUserName(request.getParameter("username"));
-			users.setPassword(request.getParameter("password"));
+			
+			users.setUserName(username);
+			users.setPassword(MD5.encryption(pass));
 			users.setFullname(request.getParameter("fullname"));
 			users.setEmail(request.getParameter("email"));
 			users.setNumberPhone(request.getParameter("numberphone"));
@@ -58,7 +65,7 @@ public class UserServlet extends HttpServlet {
 			}
 			break;
 		case "login":
-			users = usersDAO.login(request.getParameter("username"), request.getParameter("password"),
+			users = usersDAO.login(username, MD5.encryption(pass),
 					request.getParameter("Role"));
 			String roles = request.getParameter("Role");
 
@@ -89,18 +96,12 @@ public class UserServlet extends HttpServlet {
 					response.sendRedirect("/ExamOnline/SinhVien.jsp");
 				}
 			} else {
-				PrintWriter out = response.getWriter();
+				
                 out.println("<html>");
-                out.println("<head>");
-                out.println("<title>Thông báo</title>");
-                out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"assets/bootstrap/css/bootstrap.min.css\">");
-                out.println("</head>");
-                out.println("<body>");
-                out.println("<div class=\"alert alert-danger alert-dismissible\" role=\"alert\" style=\"text-align: center\">"
-                		+ "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>"
-                        + "<strong>Thông báo! </strong>Sai tên tài khoản hoặc mật khẩu, vui lòng quay lại <a href=\"Login.jsp\">Đăng nhập</a> và tiếp tục</div>");
-                out.println("</body>");
-                out.println("</html>");
+				out.println("<script type=\"text/javascript\">");
+                out.println("alert('Sai tên tài khoản hoặc mật khẩu');");
+                out.println("location='Login.jsp';");
+                out.println("</script>");
 			}
 			break;
 		case "updateProfile":
@@ -117,11 +118,11 @@ public class UserServlet extends HttpServlet {
 				Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
 			}
 
-			String username = request.getParameter("UserName");
+			String user_name = request.getParameter("UserName");
 			HttpSession session2 = request.getSession();
 			if (users != null) {
 				session2.setAttribute("updateProfile", users);
-				response.sendRedirect("/ExamOnline/Profile.jsp?UserName=" + username);
+				response.sendRedirect("/ExamOnline/Profile.jsp?UserName=" + user_name);
 			}
 			break;
 		}

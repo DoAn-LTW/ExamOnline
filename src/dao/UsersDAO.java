@@ -88,7 +88,6 @@ public class UsersDAO {
             ps=connect.prepareCall(sql);
             ResultSet rs=ps.executeQuery();
             while (rs.next()) {
-                connect.close();
                 return true; 
          }
         } catch (SQLException e) {
@@ -106,7 +105,22 @@ public class UsersDAO {
             ps=connect.prepareCall(sql);
             ResultSet rs=ps.executeQuery();
             while (rs.next()) {
-                connect.close();
+                return true; 
+         }
+        } catch (SQLException e) {
+            Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE,null,e);
+        }
+        return false;
+    }
+    public boolean checkLogin1(String username, String pass)
+    {
+        Connection connect=DBconnect.getConnecttion();
+        String sql="SELECT * FROM users WHERE UserName='"+username+"' and PASSWORD='"+pass+"'";
+        PreparedStatement ps;
+        try {
+            ps=connect.prepareCall(sql);
+            ResultSet rs=ps.executeQuery();
+            while (rs.next()) {
                 return true; 
          }
         } catch (SQLException e) {
@@ -132,7 +146,6 @@ public class UsersDAO {
                         users.setNumberPhone(rs.getString("NumberPhone"));
                         users.setAddress(rs.getString("Address"));
                         users.setEmail(rs.getString("Email"));
-                            con.close();
                             return users;
                     }
             } catch (SQLException e) {
@@ -224,7 +237,6 @@ public class UsersDAO {
             ps=con.prepareCall(sql);
             ResultSet rs=ps.executeQuery();
             while(rs.next()){
-            	con.close();
             	return true;
             }
         } catch (SQLException e) {

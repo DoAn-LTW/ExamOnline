@@ -22,18 +22,34 @@
 <link href="assets/bootstrap/css/bootstrap-theme.min.css"
 	rel="stylesheet" type="text/css" />
 <!-- Latest compiled and minified JavaScript -->
+
+
 <link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet"
 	type="text/css" />
-<script src="assets/JQuery/jquery-3.1.1.min.js" type="text/javascript"></script>
 <link
 	href="assets/material-design-iconic-font/css/material-design-iconic-font.min.css"
 	rel="stylesheet" type="text/css" />
 <link href="assets/font-awesome-4.6.3/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css" />
-<script src="assets/JS/angular.min.js" type="text/javascript"></script>
+<script src="assets/JQuery/jquery-3.1.1.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		var form = $("#login-form");
+		var username = $("#user");
+		var pass = $("#pass");
+		form.submit(function() {
+				if (username.val().length === 0) {
+					alert('Tên tài khoản không được để trống');
+					return false;
+				} else if (pass.val().length === 0) {
+					alert('Mật khẩu không được để trống');
+					return false;
+				} else
+					return true;
+		});
+	});
+</script>
 </head>
-
-
 <body>
 
 	<%
@@ -54,9 +70,9 @@
 								class="icon-bar"></span> <span class="icon-bar"></span> <span
 								class="icon-bar"></span>
 						</button>
-						<a class="navbar-brand" href="index.jsp"
-							data-toggle="tooltip" data-placement="top" title="Trang chủ">
-							<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+						<a class="navbar-brand" href="index.jsp" data-toggle="tooltip"
+							data-placement="top" title="Trang chủ"> <span
+							class="glyphicon glyphicon-home" aria-hidden="true"></span>
 						</a>
 					</div>
 
@@ -71,7 +87,6 @@
 						<ul class="nav navbar-nav navbar-right">
 							<li data-toggle="tooltip" data-placement="top" title="Đăng nhập"><a
 								href="Login.jsp">Đăng nhập</a></li>
-
 						</ul>
 					</div>
 					<!-- /.navbar-collapse -->
@@ -84,8 +99,7 @@
 				<div class="row">
 					<ol class="breadcrumb">
 						<li><span id="btn-home" class="glyphicon glyphicon-home"
-							aria-hidden="true"></span> <a href="index.jsp">Trang chủ</a>
-						</li>
+							aria-hidden="true"></span> <a href="index.jsp">Trang chủ</a></li>
 						<li class="active">Đăng nhập</li>
 					</ol>
 				</div>
@@ -98,124 +112,65 @@
 					</div>
 					<div class="col-md-6">
 
-						<div id="form-login" ng-app="demoApp" ng-controller="LoginCtrl">
+						<form id="login-form" method="post" action="UserServlet"
+							class="form-horizontal" name="form">
 
-							<form method="post" action="UserServlet" id="login-form"
-								class="form-horizontal" name="form" ng-submit="login()"
-								novalidate>
+							<div class="form-group">
+								<label for="username" class="col-xs-4 control-label required">*
+									Tài khoản</label>
 
-								<div class="form-group">
-									<label for="username" class="col-xs-4 control-label required">*
-										Tài khoản</label>
-
-									<div class="col-xs-8">
-										<input name="username" type="text" class="form-control"
-											placeholder="" ng-model="username" autocomplete="off"
-											required> <i class="fa fa-check text-success"
-											ng-show="form.username.$dirty && form.username.$valid"></i>
-
-										<!--Dấu check thể hiện việc nhập dữ liệu được nhập là hợp lệ-->
-
-										<div ng-show="form.username.$dirty && form.username.$invalid"
-											class="text-danger">
-											<i class="fa fa-times text-danger"></i>
-
-											<!--Nếu dữ liệu không hợp lệ-->
-											<span ng-show="form.username.$error.required">Không
-												được bỏ trống</span>
-										</div>
-									</div>
+								<div class="col-xs-8">
+									<input name="username" type="text" class="form-control"
+										id="user" placeholder="">
 								</div>
-								<div class="form-group">
-									<label for="password" class="col-xs-4 control-label required">*
-										Mật khẩu </label>
-									<div class="col-xs-8">
-										<input name="password" ng-model="password" type="password"
-											class="form-control" placeholder="" ng-minlength="6"
-											ng-maxlength="30" required> <i
-											class="fa fa-check text-success"
-											ng-show="form.password.$dirty && form.password.$valid"></i>
-										<div ng-show="form.password.$dirty && form.password.$invalid"
-											class="text-danger">
-											<i class="fa fa-times-circle" aria-hidden="true" text-danger></i>
-											<span ng-show="form.password.$error.required"> Mật
-												khẩu không được bỏ trống </span> <span
-												ng-show="form.password.$error.minlength"> Mật khẩu
-												phải dài hơn 6 ký tự </span> <span
-												ng-show="form.password.$error.maxlength"> Mật khẩu
-												không được hơn 30 ký tự </span>
-										</div>
-									</div>
+							</div>
+							<div class="form-group">
+								<label for="password" class="col-xs-4 control-label required">*
+									Mật khẩu </label>
+								<div class="col-xs-8">
+									<input name="password" type="password" id="pass"
+										class="form-control" placeholder="">
 								</div>
-								<div class="form-group">
-									<label class="col-xs-4 control-label required">* Role</label>
-									<div class="col-xs-8">
-										<select class="form-control input-sm" name="Role"
-											ng-model="role" required>
-											<%
-												for (Role c : roleDAO.getListRole()) {
-											%>
-											<option value="<%=c.getRoleID()%>">
-												<%=c.getRoleName()%>
-											</option>
-											<%
-												}
-											%>
-										</select> <i class="fa fa-check text-success"
-											ng-show="form.role.$dirty && form.role.$valid"></i>
-										<div ng-show="form.role.$dirty && form.role.$invalid"
-											class="text-danger"></div>
-									</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-4 control-label required">* Vai trò</label>
+								<div class="col-xs-8">
+									<select class="form-control input-sm" name="Role" id="roleid">
+										<%
+											for (Role c : roleDAO.getListRole()) {
+										%>
+										<option value="<%=c.getRoleID()%>">
+											<%=c.getRoleName()%>
+										</option>
+										<%
+											}
+										%>
+									</select>
 								</div>
-								<div class="form-group">
-
-									<div class="col-sm-offset-4 col-xs-8 col-xs-offset-4">
-										<input type="hidden" value="login" name="command">
-										<button type="submit" class="btn btn-primary"
-											ng-disabled="!form.$dirty || (form.$dirty && form.$invalid)">
-											Đăng nhập</button>
-
-
-									</div>
-
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-4 col-xs-8 col-xs-offset-4">
+									<input type="hidden" value="login" name="command">
+									<button type="submit" class="btn btn-primary" id="btn-login">
+										Đăng nhập</button>
 								</div>
-
-							</form>
-
-						</div>
+							</div>
+						</form>
+						
 					</div>
 				</div>
 			</div>
 		</div>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
+		<br> <br> <br> <br> <br> <br> <br>
+		<br> <br> <br> <br> <br> <br> <br>
 		<br>
 		<jsp:include page="Footer.jsp"></jsp:include>
+
+		<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+		<script src="assets/JS/angular.min.js" type="text/javascript"></script>
 	</div>
 
-	<script src="assets/bootstrap/js/bootstrap.min.js"></script>
 
-	<script>
-		var demoApp = angular.module('demoApp', []).controller("LoginCtrl",
-				[ '$scope', function($scope) {
-					$scope.success = false;
-					$scope.register = function() {
-						$scope.success = true;
-					}
-				} ]);
-	</script>
 </body>
 
 </html>

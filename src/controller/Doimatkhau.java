@@ -4,16 +4,14 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import dao.UsersDAO;
 import model.Users;
+import tools.MD5;
 
 /**
  * Servlet implementation class Doimatkhau
@@ -64,10 +62,10 @@ public class Doimatkhau extends HttpServlet {
 			e.printStackTrace();
 		}
 		String pass=users.getPassword();
-		if (currentpass.equals(pass)) {
-			if (newpass.equals(cofirmpass)) {
-				users.setUserName(request.getParameter("username"));
-				users.setPassword(request.getParameter("newpass"));
+		if (MD5.encryption(currentpass).equals(pass)) {
+			if (MD5.encryption(newpass).equals(MD5.encryption(cofirmpass))) {
+				users.setUserName(username);
+				users.setPassword(MD5.encryption(newpass));
 				usersDAO.updatePass(users);
 				if (users != null) {
 					response.sendRedirect("/ExamOnline/Login.jsp");
