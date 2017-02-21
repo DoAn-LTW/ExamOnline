@@ -45,14 +45,18 @@
                                 <p class="text-muted m-b-0 font-13 m-t-20">Enter your email address and we'll send you an email with instructions to reset your password.  </p>
                             </div>
                         </div>
-                        <form class="m-t-30" action="">
+                        <form class="m-t-30" action="QuenMatKhau" method="post">
                             <div class="form-group row">
                                 <div class="col-xs-12">
-                                    <input class="form-control" type="email" required="" placeholder="Enter email">
+                                    <input class="form-control" type="text" required="" name="username" placeholder="Username">
+                                </div>
+                                <div class="col-xs-12">
+                                    <input class="form-control" type="email" required="" name="email" placeholder="Enter email">
                                 </div>
                             </div>
 
                             <div class="form-group row text-center m-t-20 m-b-0">
+                            
                                 <div class="col-xs-12">
                                     <button class="btn btn-info btn-block waves-effect waves-light" type="submit">Send Email</button>
                                 </div>

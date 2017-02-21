@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import dao.UsersDAO;
 import model.Users;
 import tools.MD5;
+import tools.SendMail;
 
 /**
  * Servlet implementation class Doimatkhau
@@ -67,6 +68,9 @@ public class Doimatkhau extends HttpServlet {
 				users.setUserName(username);
 				users.setPassword(MD5.encryption(newpass));
 				usersDAO.updatePass(users);
+				SendMail.sendMail(request.getParameter("email"), "Đổi mật khẩu trang thi trắc nghiệm online"
+						, "<p>Chào bạn</p><br><p>Bạn đã đổi thành công mật khẩu trên trang trắc nghiệm online của tài khoản: "+username+" "
+								+ "và mật khẩu mới là "+newpass+"</p>");
 				if (users != null) {
 					response.sendRedirect("/ExamOnline/Login.jsp");
 				}

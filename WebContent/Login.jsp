@@ -38,14 +38,14 @@
 		var username = $("#user");
 		var pass = $("#pass");
 		form.submit(function() {
-				if (username.val().length === 0) {
-					alert('Tên tài khoản không được để trống');
-					return false;
-				} else if (pass.val().length === 0) {
-					alert('Mật khẩu không được để trống');
-					return false;
-				} else
-					return true;
+			if (username.val().length === 0) {
+				alert('Tên tài khoản không được để trống');
+				return false;
+			} else if (pass.val().length === 0) {
+				alert('Mật khẩu không được để trống');
+				return false;
+			} else
+				return true;
 		});
 	});
 </script>
@@ -148,6 +148,10 @@
 									</select>
 								</div>
 							</div>
+							<div class="forget-pass">
+								<span><a href="Forget-Pass.jsp">Quên
+										mật khẩu</a></span>
+							</div>
 							<div class="form-group">
 								<div class="col-sm-offset-4 col-xs-8 col-xs-offset-4">
 									<input type="hidden" value="login" name="command">
@@ -156,7 +160,7 @@
 								</div>
 							</div>
 						</form>
-						
+
 					</div>
 				</div>
 			</div>

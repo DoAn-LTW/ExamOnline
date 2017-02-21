@@ -623,6 +623,13 @@ table #datatable-buttons thead>tr>th {
 .list-group a:hover{
 	color: #ec5355 !important;
 }
-#login-form{
-	border
+button #btn-login{
+	width:100%;
+}
+.forget-pass >span>a{
+	float:right;
+}
+.forget-pass >span>a:hover{
+	color:#900;
+	text-decoration: underline;
 }

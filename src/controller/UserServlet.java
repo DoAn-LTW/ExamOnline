@@ -20,6 +20,7 @@ import tools.MD5;
  *
  * @author Kelvin
  */
+import tools.SendMail;
 public class UserServlet extends HttpServlet {
 
 	/**
@@ -31,6 +32,7 @@ public class UserServlet extends HttpServlet {
 	 */
 	UsersDAO usersDAO = new UsersDAO();
 	RoleDAO roleDAO = new RoleDAO();
+	SendMail sendMail=new SendMail();
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -58,6 +60,9 @@ public class UserServlet extends HttpServlet {
 			users.setRoleId(request.getParameter("Role"));
 			users.setMaLop(request.getParameter("lop"));
 			usersDAO.insertUsers(users);
+			SendMail.sendMail(request.getParameter("email"), "Tài khoản thi trắc nghiệm online"
+					, "<p>Chào bạn</p><br><p>Bạn đã được tạo một tài khoản trên trang trắc nghiệm online với tài khoản là MSSV và mật khẩu là"
+							+ ""+pass+"</p>");
 			HttpSession session = request.getSession();
 			if (users != null) {
 				session.setAttribute("insertUsers", users);
